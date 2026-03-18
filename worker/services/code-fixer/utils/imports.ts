@@ -62,7 +62,7 @@ export function findImportAtLocation(ast: t.File, line: number): ImportInfo | nu
                     if (t.isStringLiteral(arg)) {
                         const startLine = path.node.loc?.start.line ?? 0;
                         const endLine = path.node.loc?.end.line ?? startLine;
-                        
+
                         if (startLine <= line && endLine >= line) {
                             // Found a dynamic import at the target line
                             foundImport = {
@@ -77,7 +77,7 @@ export function findImportAtLocation(ast: t.File, line: number): ImportInfo | nu
                     }
                 }
             },
-            
+
             // Handle await import() patterns
             AwaitExpression(path) {
                 if (t.isCallExpression(path.node.argument) && t.isImport(path.node.argument.callee)) {
@@ -85,7 +85,7 @@ export function findImportAtLocation(ast: t.File, line: number): ImportInfo | nu
                     if (t.isStringLiteral(arg)) {
                         const startLine = path.node.loc?.start.line ?? 0;
                         const endLine = path.node.loc?.end.line ?? startLine;
-                        
+
                         if (startLine <= line && endLine >= line) {
                             foundImport = {
                                 specifier: arg.value,
@@ -99,17 +99,17 @@ export function findImportAtLocation(ast: t.File, line: number): ImportInfo | nu
                     }
                 }
             },
-            
+
             // Handle const module = await import() patterns
             VariableDeclarator(path) {
-                if (t.isAwaitExpression(path.node.init) && 
-                    t.isCallExpression(path.node.init.argument) && 
+                if (t.isAwaitExpression(path.node.init) &&
+                    t.isCallExpression(path.node.init.argument) &&
                     t.isImport(path.node.init.argument.callee)) {
                     const arg = path.node.init.argument.arguments[0];
                     if (t.isStringLiteral(arg) && t.isIdentifier(path.node.id)) {
                         const startLine = path.node.loc?.start.line ?? 0;
                         const endLine = path.node.loc?.end.line ?? startLine;
-                        
+
                         if (startLine <= line && endLine >= line) {
                             foundImport = {
                                 specifier: arg.value,
@@ -141,7 +141,7 @@ export function findImportAtLocation(ast: t.File, line: number): ImportInfo | nu
  */
 export function getAllImports(ast: t.File): ImportInfo[] {
     const imports: ImportInfo[] = [];
-    
+
     traverseAST(ast, {
         ImportDeclaration(path) {
             const moduleSpecifier = t.isStringLiteral(path.node.source) ? path.node.source.value : '';
@@ -150,7 +150,7 @@ export function getAllImports(ast: t.File): ImportInfo[] {
                 .filter(s => t.isImportSpecifier(s))
                 .map(s => t.isImportSpecifier(s) && t.isIdentifier(s.imported) ? s.imported.name : '')
                 .filter(Boolean);
-            
+
             imports.push({
                 specifier: moduleSpecifier,
                 moduleSpecifier: moduleSpecifier,
@@ -160,7 +160,7 @@ export function getAllImports(ast: t.File): ImportInfo[] {
             });
         }
     });
-    
+
     return imports;
 }
 
@@ -222,7 +222,7 @@ export function getFileExports(ast: t.File): ExportInfo {
                 }
             }
         },
-        
+
         ExportDefaultDeclaration(path) {
             // Handle default exports
             if (t.isIdentifier(path.node.declaration)) {
@@ -235,7 +235,7 @@ export function getFileExports(ast: t.File): ExportInfo {
                 defaultExport = 'default';
             }
         },
-        
+
         ExportAllDeclaration(path) {
             // Handle export * from './module'
             if (path.node.source) {
@@ -290,9 +290,9 @@ export function analyzeNameUsage(ast: t.File, name: string): ImportUsage | null 
     traverseAST(ast, {
         // Check for JSX component usage: <Name prop="value" />
         JSXElement: (path) => {
-            if (t.isJSXIdentifier(path.node.openingElement.name) && 
+            if (t.isJSXIdentifier(path.node.openingElement.name) &&
                 path.node.openingElement.name.name === name) {
-                
+
                 // Extract prop names from JSX attributes
                 const propNames = path.node.openingElement.attributes
                     .filter(attr => t.isJSXAttribute(attr) && t.isJSXIdentifier(attr.name))
@@ -301,7 +301,7 @@ export function analyzeNameUsage(ast: t.File, name: string): ImportUsage | null 
                         return t.isJSXIdentifier(jsxAttr.name) ? jsxAttr.name.name : '';
                     })
                     .filter(name => name !== '');
-                
+
                 properties.push(...propNames);
                 usage = {
                     name,
@@ -338,7 +338,7 @@ export function analyzeNameUsage(ast: t.File, name: string): ImportUsage | null 
                 if (t.isIdentifier(path.node.property)) {
                     properties.push(path.node.property.name);
                 }
-                
+
                 usage = {
                     name,
                     type: 'object-access',
@@ -349,10 +349,10 @@ export function analyzeNameUsage(ast: t.File, name: string): ImportUsage | null 
 
         // Check for simple variable reference: const x = Name;
         Identifier: (path) => {
-            if (path.node.name === name && 
-                !path.isBindingIdentifier() && 
+            if (path.node.name === name &&
+                !path.isBindingIdentifier() &&
                 !usage) { // Only set as fallback if no specific usage found
-                
+
                 usage = {
                     name,
                     type: 'variable-reference'
@@ -372,11 +372,11 @@ export function analyzeNameUsage(ast: t.File, name: string): ImportUsage | null 
  * Get file content from FileMap or fetch it if not available
  */
 export function getFileContent(
-    filePath: string, 
-    files: FileMap, 
+    filePath: string,
+    files: FileMap,
 ): string | null {
     logger.info(`ImportUtils: Getting content for file: ${filePath}`);
-    
+
     const file = files.get(filePath);
     if (file) {
         logger.info(`ImportUtils: Found file in context: ${filePath}`);
@@ -384,7 +384,7 @@ export function getFileContent(
     }
 
     logger.info(`ImportUtils: File not found in context: ${filePath}`);
-    
+
     return null;
 }
 
@@ -392,27 +392,27 @@ export function getFileContent(
  * Get file AST from FileMap with caching, or parse it if needed
  */
 export function getFileAST(
-    filePath: string, 
-    files: FileMap, 
+    filePath: string,
+    files: FileMap,
 ): t.File | null {
     logger.info(`ImportUtils: Getting AST for file: ${filePath}`);
-    
+
     const file = files.get(filePath);
-    
+
     if (file?.ast) {
         logger.info(`ImportUtils: Using cached AST for ${filePath}`);
         return file.ast;
     }
-    
+
     const content = getFileContent(filePath, files);
     if (!content) {
         logger.info(`ImportUtils: No content available for ${filePath}`);
         return null;
     }
-    
+
     logger.info(`ImportUtils: Attempting to parse AST for ${filePath} (${content.length} characters)`);
     logger.info(`ImportUtils: First 200 characters: ${content.substring(0, 200)}`);
-    
+
     try {
         const ast = parseCode(content);
         logger.info(`ImportUtils: Successfully parsed AST for ${filePath}`);
@@ -452,8 +452,8 @@ export function updateImportPath(ast: t.File, oldPath: string, newPath: string):
  * Enhanced to handle complex partial matches while preserving valid imports
  */
 export function fixImportExportMismatch(
-    ast: t.File, 
-    moduleSpecifier: string, 
+    ast: t.File,
+    moduleSpecifier: string,
     exports: ExportInfo
 ): { fixed: boolean; changes: string[] } {
     let fixed = false;
@@ -465,10 +465,10 @@ export function fixImportExportMismatch(
                 const defaultImport = path.node.specifiers.find(s => t.isImportDefaultSpecifier(s));
                 const namedImports = path.node.specifiers.filter(s => t.isImportSpecifier(s));
                 const namespaceImport = path.node.specifiers.find(s => t.isImportNamespaceSpecifier(s));
-                
+
                 // Build new specifiers list to preserve valid imports
                 const newSpecifiers: Array<t.ImportSpecifier | t.ImportDefaultSpecifier | t.ImportNamespaceSpecifier> = [];
-                
+
                 // Handle namespace imports
                 if (namespaceImport && t.isImportNamespaceSpecifier(namespaceImport)) {
                     // If module only has default export, convert namespace to default
@@ -489,10 +489,10 @@ export function fixImportExportMismatch(
                             newSpecifiers.push(defaultImport);
                         } else {
                             // No default export, try to convert to named
-                            const targetNamed = exports.namedExports.find(n => 
+                            const targetNamed = exports.namedExports.find(n =>
                                 n === localName || n.toLowerCase() === localName.toLowerCase()
                             ) || exports.namedExports[0];
-                            
+
                             if (targetNamed) {
                                 newSpecifiers.push(
                                     t.importSpecifier(
@@ -505,18 +505,18 @@ export function fixImportExportMismatch(
                             }
                         }
                     }
-                    
+
                     // Handle named imports - preserve valid ones, fix invalid ones
                     const processedNames = new Set<string>();
                     for (const namedImport of namedImports) {
                         if (t.isImportSpecifier(namedImport) && t.isIdentifier(namedImport.imported)) {
                             const namedImportName = namedImport.imported.name;
                             const localAlias = t.isIdentifier(namedImport.local) ? namedImport.local.name : namedImportName;
-                            
+
                             // Avoid duplicate processing
                             if (processedNames.has(namedImportName)) continue;
                             processedNames.add(namedImportName);
-                            
+
                             if (exports.namedExports.includes(namedImportName)) {
                                 // Valid named export, keep it
                                 newSpecifiers.push(namedImport);
@@ -531,7 +531,7 @@ export function fixImportExportMismatch(
                                 }
                             } else {
                                 // Try case-insensitive match
-                                const caseInsensitiveMatch = exports.namedExports.find(n => 
+                                const caseInsensitiveMatch = exports.namedExports.find(n =>
                                     n.toLowerCase() === namedImportName.toLowerCase()
                                 );
                                 if (caseInsensitiveMatch) {
@@ -552,7 +552,7 @@ export function fixImportExportMismatch(
                         }
                     }
                 }
-                
+
                 // Update specifiers if we made changes
                 if (fixed && newSpecifiers.length > 0) {
                     path.node.specifiers = newSpecifiers as typeof path.node.specifiers;

@@ -51,7 +51,7 @@
     "dispatch_namespaces": [
         {
             "binding": "DISPATCHER",
-            "namespace": "vibesdk-default-namespace",
+            "namespace": "orange-build-default-namespace",
             "remote": true
         }
     ],
@@ -61,13 +61,9 @@
 			"image": "./SandboxDockerfile",
             // "image": "registry.cloudflare.com/vibesdk-production-userappsandboxservice:cfe197fc",
             // Altering max_instances value will have no effect. Please use the MAX_SANDBOX_INSTANCES var instead.
-			"max_instances": 1400,
+			"max_instances": 10,
             // ATTENTION: Altering instance_type value will have no effect. Please use the SANDBOX_INSTANCE_TYPE var instead.
-            "instance_type": {
-                "vcpu": 4,
-                "memory_mib": 8192,
-                "disk_mb": 10240
-            },
+           "instance_type": "standard-3",
             "rollout_step_percentage": 100
 		}
 	],
@@ -75,11 +71,11 @@
 		{
 			"binding": "DB",
 			"database_name": "vibesdk-db",
-			"database_id": "09c6cf8c-49ee-4d00-b42e-7a7e3b658f11",
+			"database_id": "4f1bec68-257e-4aa7-ac98-d2220046453d",
 			"migrations_dir": "migrations",
 			"remote": true
 		}
-	],
+    ],
 	"durable_objects": {
 		"bindings": [
 			{
@@ -101,16 +97,17 @@
 		]
 	},
     "r2_buckets": [
-      {
-        "binding": "TEMPLATES_BUCKET",
-        "bucket_name": "vibesdk-templates",
-        "remote": true,"preview_bucket_name": "vibesdk-templates"
-      }
+        {
+            "binding": "TEMPLATES_BUCKET",
+            "bucket_name": "vibesdk-templates",
+            "remote": true,
+            "preview_bucket_name": "vibesdk-templates"
+        }
     ],
     "kv_namespaces": [
         {
             "binding": "VibecoderStore",
-            "id": "c3ed75ac22254e0296cbee3c34e30855",
+            "id": "e6c454eef8e542daaf98f5e3206d2dd7",
             "remote": true
         }
     ],
@@ -140,19 +137,18 @@
 	],
 	"routes": [
         {
-            "pattern": "build.cloudflare.dev",
+            "pattern": "vibesdk-app.megabyte.app",
             "custom_domain": true
         },
         {
-            "pattern": "*build-preview.cloudflare.dev/*",
+            "pattern": "*vibesdk-app.megabyte.app/*",
             "custom_domain": false,
-            "zone_id": "db01fac4261b2604aacad8410443a3e2"
+            "zone_id": "a70f14687a2194334e12062447e618f2"
         }
     ],
 	"vars": {
         "TEMPLATES_REPOSITORY": "https://github.com/cloudflare/vibesdk-templates",
         "ALLOWED_EMAIL": "choijjames@gmail.com",
-        "DISPATCH_NAMESPACE": "vibesdk-app-default-namespace",
         "ENABLE_READ_REPLICAS": "true",
         "CLOUDFLARE_AI_GATEWAY": "enl-ai-gateway",
         "PLATFORM_CAPABILITIES": {
@@ -169,9 +165,10 @@
             },
             "version": "1.0.0"
         },
-        "CUSTOM_DOMAIN": "vibesdk-app.megabyte.app",
         "MAX_SANDBOX_INSTANCES": "10",
-        "SANDBOX_INSTANCE_TYPE": "standard-3"
+        "SANDBOX_INSTANCE_TYPE": "standard-3",
+        "DISPATCH_NAMESPACE": "orange-build-default-namespace",
+        "CUSTOM_DOMAIN": "vibesdk-app.megabyte.app"
     },
 	"workers_dev": false,
 	"preview_urls": false
