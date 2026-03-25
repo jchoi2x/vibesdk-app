@@ -1,0 +1,44 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
+import path from 'path';
+import tailwindcss from '@tailwindcss/vite';
+
+// https://vite.dev/config/
+export default defineConfig({
+	optimizeDeps: {
+		exclude: ['format', 'editor.all'],
+		include: ['monaco-editor/esm/vs/editor/editor.api'],
+		force: true,
+	},
+	plugins: [react(), svgr(), tailwindcss()],
+	resolve: {
+		alias: {
+			debug: 'debug/src/browser',
+			'@': path.resolve(__dirname, './src'),
+			// Cross-app aliases: types are imported from vibesdk-api's worker code.
+			// These match the tsconfig.json path aliases above.
+			'shared': path.resolve(__dirname, '../vibesdk-api/shared'),
+			'worker': path.resolve(__dirname, '../vibesdk-api/worker'),
+		},
+	},
+	define: {
+		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+		global: 'globalThis',
+	},
+	worker: {
+		format: 'es',
+	},
+	server: {
+		allowedHosts: true,
+		// In local dev, proxy /api/* to the vibesdk-api wrangler dev server.
+		// vibesdk-api runs on port 8787 by default.
+		proxy: {
+			'/api': {
+				target: 'http://localhost:8787',
+				changeOrigin: true,
+			},
+		},
+	},
+	cacheDir: 'node_modules/.vite',
+});

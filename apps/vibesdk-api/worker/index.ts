@@ -176,9 +176,11 @@ const worker = {
 				return handleGitProtocolRequest(request, env, ctx);
 			}
 
-			// Serve static assets for all non-API routes from the ASSETS binding.
+			// Static assets are served by vibesdk-web (Cloudflare Pages).
+			// Non-API requests should not reach this worker under normal operation,
+			// because _routes.json on the Pages project only forwards /api/* here.
 			if (!pathname.startsWith('/api/')) {
-				return env.ASSETS.fetch(request);
+				return new Response('Not Found', { status: 404 });
 			}
 			// AI Gateway proxy for generated apps
 			if (pathname.startsWith('/api/proxy/openai')) {

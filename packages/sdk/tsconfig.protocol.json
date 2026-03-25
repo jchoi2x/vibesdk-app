@@ -5,8 +5,8 @@
 		"noUncheckedIndexedAccess": false,
 		"baseUrl": ".",
 		"paths": {
-			"worker/*": ["../worker/*"],
-			"shared/*": ["../shared/*"]
+			"worker/*": ["../../apps/vibesdk-api/worker/*"],
+			"shared/*": ["../../apps/vibesdk-api/shared/*"]
 		},
 		"types": []
 	},

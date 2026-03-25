@@ -26,9 +26,9 @@ export default defineWorkersConfig({
 		},
 		poolOptions: {
 			workers: {
-				main: './apps/vibecode/test/worker-entry.ts',
+				main: './apps/vibesdk-api/test/worker-entry.ts',
 				wrangler: {
-					configPath: './apps/vibecode/wrangler.test.jsonc',
+					configPath: './apps/vibesdk-api/wrangler.test.jsonc',
 				},
 				miniflare: {
 					compatibilityDate: '2024-12-12',

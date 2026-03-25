@@ -89,9 +89,10 @@ export function createApp(env: Env): Hono<AppEnv> {
     // Now setup all the routes
     setupRoutes(app);
 
-    // Add not found route to redirect to ASSETS
+    // vibesdk-api is a pure API worker — all routes are under /api/* so this
+    // should only be reached by malformed requests.
     app.notFound((c) => {
-        return c.env.ASSETS.fetch(c.req.raw);
+        return c.json({ error: 'Not Found' }, 404);
     });
     return app;
 }

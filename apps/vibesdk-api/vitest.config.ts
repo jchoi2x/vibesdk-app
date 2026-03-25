@@ -43,8 +43,6 @@ export default defineWorkersConfig({
       '**/test/worker-entry.ts',
       '**/container/monitor-cli.test.ts',
       '**/cf-git/**',
-      '**/sdk/test/**', // SDK tests run with bun test, not vitest
-      ...(runIntegrationTests ? [] : ['**/sdk/test/integration/**']),
     ],
   },
 });

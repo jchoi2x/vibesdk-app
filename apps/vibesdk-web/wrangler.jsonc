@@ -1,0 +1,16 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "vibesdk-web",
+	"pages_build_output_dir": "dist",
+	"compatibility_date": "2025-08-10",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1
+	},
+	// The Pages Function (_middleware.ts) receives all /api/* requests and
+	// proxies them to vibesdk-api via this service binding.
+	"services": [
+		{ "binding": "VIBESDK_API", "service": "vibesdk-api" }
+	]
+}
