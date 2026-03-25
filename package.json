@@ -14,7 +14,7 @@
 		"dev": "nx run-many -t dev --projects=vibesdk-api,vibesdk-web --parallel",
 		"dev:api": "nx run vibesdk-api:dev",
 		"dev:web": "nx run vibesdk-web:dev",
-		"build": "nx run-many -t build --projects=vibesdk-api,vibesdk-web",
+		"build": "nx run vibesdk-web:build",
 		"deploy": "nx run vibesdk-web:deploy",
 		"test": "nx run-many -t test",
 		"lint": "eslint .",
@@ -166,6 +166,5 @@
 	"overrides": {
 		"vite": "npm:rolldown-vite@latest",
 		"@cloudflare/containers": "^0.0.28"
-	},
-	"packageManager": "bun@1.3.10"
+	}
 }
