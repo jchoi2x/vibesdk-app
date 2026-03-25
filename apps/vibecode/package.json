@@ -1,0 +1,28 @@
+{
+	"name": "vibecode",
+	"private": true,
+	"version": "1.5.0",
+	"type": "module",
+	"scripts": {
+		"dev": "DEV_MODE=true vite",
+		"build": "tsc -b --incremental && vite build",
+		"typecheck": "tsc -b --incremental --noEmit",
+		"lint": "eslint .",
+		"preview": "bun run build && vite preview",
+		"deploy": "bun --env-file .prod.vars scripts/deploy.ts",
+		"cf-typegen": "wrangler types --include-runtime false",
+		"test": "vitest run",
+		"test:integration": "VIBESDK_RUN_INTEGRATION_TESTS=1 vitest run sdk/test/integration/integration.test.ts",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"db:generate": "drizzle-kit generate --config=drizzle.config.local.ts",
+		"db:generate:remote": "drizzle-kit generate --config=drizzle.config.remote.ts",
+		"db:migrate:local": "wrangler d1 migrations apply vibesdk-db --local",
+		"db:migrate:remote": "CI=true wrangler d1 migrations apply vibesdk-db --remote",
+		"db:studio": "drizzle-kit studio --config=drizzle.config.local.ts",
+		"db:studio:remote": "drizzle-kit studio --config=drizzle.config.remote.ts",
+		"db:drop": "drizzle-kit drop --config=drizzle.config.local.ts",
+		"db:check": "drizzle-kit check --config=drizzle.config.local.ts",
+		"db:up": "drizzle-kit up --config=drizzle.config.local.ts"
+	}
+}
