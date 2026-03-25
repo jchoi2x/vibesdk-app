@@ -1,9 +1,9 @@
-import type { CodeReviewOutputType, FileConceptType, FileOutputType } from "../agents/schemas";
-import type { AgentState } from "../agents/core/state";
-import type { ConversationState } from "../agents/inferutils/common";
-import type { CodeIssue, RuntimeError, StaticAnalysisResponse, TemplateDetails } from "../services/sandbox/sandboxTypes";
-import type { CodeFixResult } from "../services/code-fixer";
-import { type IssueReport } from "../agents/domain/values/IssueReport";
+import type { CodeReviewOutputType, FileConceptType, FileOutputType } from "@/agents/schemas";
+import type { AgentState } from "@/agents/core/state";
+import type { ConversationState } from "@/agents/inferutils/common";
+import type { CodeIssue, RuntimeError, StaticAnalysisResponse, TemplateDetails } from "@/services/sandbox/sandboxTypes";
+import type { CodeFixResult } from "@/services/code-fixer";
+import { type IssueReport } from "@/agents/domain/values/IssueReport";
 import type { RateLimitExceededError } from '@jchoi2x/types/errors';
 
 type ErrorMessage = {

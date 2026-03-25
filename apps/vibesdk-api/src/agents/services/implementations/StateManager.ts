@@ -1,5 +1,5 @@
 import { type BaseProjectState } from '@/agents/core/state';
-import { type IStateManager } from '../interfaces/IStateManager';
+import { type IStateManager } from '@/agents/services/interfaces/IStateManager';
 
 /**
  * State manager implementation for Durable Objects

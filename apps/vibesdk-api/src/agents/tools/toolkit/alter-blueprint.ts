@@ -1,5 +1,5 @@
-import { tool, type } from '../types';
-import { type StructuredLogger } from '../../../logger';
+import { tool, type } from '@/agents/tools/types';
+import { type StructuredLogger } from '@/logger';
 import { type ICodingAgent } from '@/agents/services/interfaces/ICodingAgent';
 import { type Blueprint } from '@/agents/schemas';
 import { z } from 'zod';

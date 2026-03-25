@@ -7,8 +7,8 @@ import { parse, type ParserOptions } from '@babel/parser';
 import traverse, { type Visitor } from '@babel/traverse';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
-import { type ParseOptions, type GenerateOptions } from '../types';
-import { createObjectLogger } from '../../../logger';
+import { type ParseOptions, type GenerateOptions } from '@/services/code-fixer/types';
+import { createObjectLogger } from '@/logger';
 
 const logger = createObjectLogger({ name: 'ASTUtils' }, 'ASTUtils');
 

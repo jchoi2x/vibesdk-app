@@ -1,9 +1,9 @@
-import { AppService } from '../../../database/services/AppService';
-import type { AppSortOption, SortOrder, TimePeriod, Visibility } from '../../../database/types';
-import { formatRelativeTime } from '../../../utils/timeFormatter';
-import { BaseController } from '../baseController';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import type { RouteContext } from '../../types/route-context';
+import { AppService } from '@/database/services/AppService';
+import type { AppSortOption, SortOrder, TimePeriod, Visibility } from '@/database/types';
+import { formatRelativeTime } from '@/utils/timeFormatter';
+import { BaseController } from '@/api/controllers/baseController';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import type { RouteContext } from '@/api/types/route-context';
 import { 
     type AppsListData,
     type PublicAppsData,
@@ -11,9 +11,9 @@ import {
     type FavoriteToggleData,
     type UpdateAppVisibilityData,
     type AppDeleteData
-} from './types';
-// import { withCache } from '../../../services/cache/wrapper';
-import { createLogger } from '../../../logger';
+} from '@/api/controllers/apps/types';
+// import { withCache } from '@/services/cache/wrapper';
+import { createLogger } from '@/logger';
 
 export class AppController extends BaseController {
     static logger = createLogger('AppController');

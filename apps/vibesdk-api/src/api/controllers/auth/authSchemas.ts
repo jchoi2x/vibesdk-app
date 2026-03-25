@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { commonSchemas } from '../../../utils/inputValidator';
+import { commonSchemas } from '@/utils/inputValidator';
 
 /**
  * Login request schema

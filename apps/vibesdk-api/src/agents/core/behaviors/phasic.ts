@@ -3,31 +3,31 @@ import {
     type PhaseConceptType,
     type FileOutputType,
     type PhaseImplementationSchemaType,
-} from '../../schemas';
-import { type StaticAnalysisResponse } from '../../../services/sandbox/sandboxTypes';
-import { CurrentDevState, MAX_PHASES, type PhasicState } from '../state';
-import { type AllIssues, type AgentInitArgs, type PhaseExecutionResult, type UserContext } from '../types';
-import { WebSocketMessageResponses } from '../../constants';
-import { UserConversationProcessor } from '../../operations/UserConversationProcessor';
-import { GenerationContext, type PhasicGenerationContext } from '../../domain/values/GenerationContext';
-import { IssueReport } from '../../domain/values/IssueReport';
-import { PhaseImplementationOperation } from '../../operations/PhaseImplementation';
-import { FileRegenerationOperation } from '../../operations/FileRegeneration';
-import { PhaseGenerationOperation } from '../../operations/PhaseGeneration';
-import { FastCodeFixerOperation } from '../../operations/PostPhaseCodeFixer';
-import { customizePackageJson, customizeTemplateFiles, generateProjectName } from '../../utils/templateCustomizer';
-import { generateBlueprint } from '../../planning/blueprint';
+} from '@/agents/schemas';
+import { type StaticAnalysisResponse } from '@/services/sandbox/sandboxTypes';
+import { CurrentDevState, MAX_PHASES, type PhasicState } from '@/agents/core/state';
+import { type AllIssues, type AgentInitArgs, type PhaseExecutionResult, type UserContext } from '@/agents/core/types';
+import { WebSocketMessageResponses } from '@/agents/constants';
+import { UserConversationProcessor } from '@/agents/operations/UserConversationProcessor';
+import { GenerationContext, type PhasicGenerationContext } from '@/agents/domain/values/GenerationContext';
+import { IssueReport } from '@/agents/domain/values/IssueReport';
+import { PhaseImplementationOperation } from '@/agents/operations/PhaseImplementation';
+import { FileRegenerationOperation } from '@/agents/operations/FileRegeneration';
+import { PhaseGenerationOperation } from '@/agents/operations/PhaseGeneration';
+import { FastCodeFixerOperation } from '@/agents/operations/PostPhaseCodeFixer';
+import { customizePackageJson, customizeTemplateFiles, generateProjectName } from '@/agents/utils/templateCustomizer';
+import { generateBlueprint } from '@/agents/planning/blueprint';
 import { RateLimitExceededError } from '@jchoi2x/types/errors';
-import {  type ImageAttachment, type ProcessedImageAttachment } from '../../../types/image-attachment';
-import { type OperationOptions } from '../../operations/common';
-import { type ConversationMessage } from '../../inferutils/common';
+import {  type ImageAttachment, type ProcessedImageAttachment } from '@/types/image-attachment';
+import { type OperationOptions } from '@/agents/operations/common';
+import { type ConversationMessage } from '@/agents/inferutils/common';
 import { generateNanoId } from '@/utils/idGenerator';
-import { IdGenerator } from '../../utils/idGenerator';
-import { BaseCodingBehavior, type BaseCodingOperations } from './base';
-import { type ICodingAgent } from '../../services/interfaces/ICodingAgent';
-import { SimpleCodeGenerationOperation } from '../../operations/SimpleCodeGeneration';
-import { StateMigration } from '../stateMigration';
-import { runPreDeploySafetyGate } from '../../utils/preDeploySafetyGate';
+import { IdGenerator } from '@/agents/utils/idGenerator';
+import { BaseCodingBehavior, type BaseCodingOperations } from '@/agents/core/behaviors/base';
+import { type ICodingAgent } from '@/agents/services/interfaces/ICodingAgent';
+import { SimpleCodeGenerationOperation } from '@/agents/operations/SimpleCodeGeneration';
+import { StateMigration } from '@/agents/core/stateMigration';
+import { runPreDeploySafetyGate } from '@/agents/utils/preDeploySafetyGate';
 
 interface PhasicOperations extends BaseCodingOperations {
     generateNextPhase: PhaseGenerationOperation;

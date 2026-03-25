@@ -3,7 +3,7 @@
  * Provides analytics data from Cloudflare AI Gateway GraphQL API
  */
 
-import { createLogger, type StructuredLogger } from '../../logger';
+import { createLogger, type StructuredLogger } from '@/logger';
 import {
   type AnalyticsConfig,
   type AnalyticsData,
@@ -16,7 +16,7 @@ import {
   type QueryResult,
   AnalyticsError,
   type AnalyticsQueryType
-} from './types';
+} from '@/services/analytics/types';
 
 export class AiGatewayAnalyticsService {
   private config: AnalyticsConfig;

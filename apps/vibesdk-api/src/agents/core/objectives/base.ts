@@ -1,21 +1,21 @@
-import { type BaseProjectState } from '../state';
+import { type BaseProjectState } from '@/agents/core/state';
 import {
 	type ProjectType,
 	type ExportResult,
 	type ExportOptions,
 	type DeployResult,
 	type DeployOptions,
-} from '../types';
-import { AgentComponent } from '../AgentComponent';
-import type { AgentInfrastructure } from '../AgentCore';
-import { WebSocketMessageResponses } from '../../constants';
-import { AppService } from '../../../database/services/AppService';
-import { GitHubService } from '../../../services/github';
+} from '@/agents/core/types';
+import { AgentComponent } from '@/agents/core/AgentComponent';
+import type { AgentInfrastructure } from '@/agents/core/AgentCore';
+import { WebSocketMessageResponses } from '@/agents/constants';
+import { AppService } from '@/database/services/AppService';
+import { GitHubService } from '@/services/github';
 import {
 	getAdditionalExportStrategy,
 	type AdditionalExportStrategy,
 	type ExportContext,
-} from './strategies';
+} from '@/agents/core/objectives/strategies';
 
 export class ProjectObjective<
 	TState extends BaseProjectState = BaseProjectState,

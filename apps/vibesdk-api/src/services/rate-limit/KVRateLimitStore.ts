@@ -1,6 +1,6 @@
-import { createObjectLogger } from '../../logger';
-import { type KVRateLimitConfig } from './config';
-import type { RateLimitResult } from './DORateLimitStore';
+import { createObjectLogger } from '@/logger';
+import { type KVRateLimitConfig } from '@/services/rate-limit/config';
+import type { RateLimitResult } from '@/services/rate-limit/DORateLimitStore';
 
 export class KVRateLimitStore {
 	static logger = createObjectLogger(this, 'KVRateLimitStore');

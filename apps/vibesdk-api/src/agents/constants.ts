@@ -1,5 +1,5 @@
-import { type WebSocketMessageType } from "../api/websocketTypes";
-import { type AgentActionKey } from "./inferutils/config.types";
+import { type WebSocketMessageType } from "@/api/websocketTypes";
+import { type AgentActionKey } from "@/agents/inferutils/config.types";
 
 export const WebSocketMessageResponses: Record<string, WebSocketMessageType> = {
     AGENT_CONNECTED: 'agent_connected',

@@ -6,7 +6,7 @@
 import {
 	type UserAnalyticsData,
 	type ChatAnalyticsData,
-} from '../../../services/analytics/types';
+} from '@/services/analytics/types';
 
 /**
  * User analytics response data

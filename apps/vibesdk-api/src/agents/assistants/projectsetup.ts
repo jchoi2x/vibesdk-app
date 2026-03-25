@@ -1,12 +1,12 @@
-import { type TemplateDetails } from "../../services/sandbox/sandboxTypes";
-import { type SetupCommandsType, type Blueprint } from "../schemas";
-import { createObjectLogger, type StructuredLogger } from '../../logger';
-import { generalSystemPromptBuilder, PROMPT_UTILS } from '../prompts';
-import { createAssistantMessage, createSystemMessage, createUserMessage } from "../inferutils/common";
-import { executeInference, } from "../inferutils/infer";
-import Assistant from "./assistant";
-import { AIModels, type InferenceContext } from "../inferutils/config.types";
-import { extractCommands } from "../utils/common";
+import { type TemplateDetails } from "@/services/sandbox/sandboxTypes";
+import { type SetupCommandsType, type Blueprint } from "@/agents/schemas";
+import { createObjectLogger, type StructuredLogger } from '@/logger';
+import { generalSystemPromptBuilder, PROMPT_UTILS } from '@/agents/prompts';
+import { createAssistantMessage, createSystemMessage, createUserMessage } from "@/agents/inferutils/common";
+import { executeInference, } from "@/agents/inferutils/infer";
+import Assistant from "@/agents/assistants/assistant";
+import { AIModels, type InferenceContext } from "@/agents/inferutils/config.types";
+import { extractCommands } from "@/agents/utils/common";
 
 interface GenerateSetupCommandsArgs {
     env: Env;

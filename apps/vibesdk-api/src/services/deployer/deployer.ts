@@ -1,12 +1,12 @@
-import { createObjectLogger } from '../../logger';
-import { CloudflareAPI } from './api/cloudflare-api';
+import { createObjectLogger } from '@/logger';
+import { CloudflareAPI } from '@/services/deployer/api/cloudflare-api';
 import {
 	type AssetManifest,
 	type WorkerMetadata,
 	type WorkerBinding,
 	type WranglerConfig,
-} from './types';
-import { mergeMigrations, extractDurableObjectClasses } from './utils/index';
+} from '@/services/deployer/types';
+import { mergeMigrations, extractDurableObjectClasses } from '@/services/deployer/utils/index';
 
 const logger = createObjectLogger('WorkerDeployer');
 

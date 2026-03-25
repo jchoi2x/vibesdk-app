@@ -1,10 +1,10 @@
 import { type Connection } from 'agents';
-import { createLogger } from '../../logger';
-import { WebSocketMessageRequests, WebSocketMessageResponses } from '../constants';
-import { type WebSocketMessage, type WebSocketMessageData, type WebSocketMessageType } from '../../api/websocketTypes';
-import { MAX_IMAGES_PER_MESSAGE, MAX_IMAGE_SIZE_BYTES } from '../../types/image-attachment';
-// import { credentialsToRuntimeOverrides, type CredentialsPayload } from '../inferutils/config.types';
-import type { CodeGeneratorAgent } from './codingAgent';
+import { createLogger } from '@/logger';
+import { WebSocketMessageRequests, WebSocketMessageResponses } from '@/agents/constants';
+import { type WebSocketMessage, type WebSocketMessageData, type WebSocketMessageType } from '@/api/websocketTypes';
+import { MAX_IMAGES_PER_MESSAGE, MAX_IMAGE_SIZE_BYTES } from '@/types/image-attachment';
+// import { credentialsToRuntimeOverrides, type CredentialsPayload } from '@/agents/inferutils/config.types';
+import type { CodeGeneratorAgent } from '@/agents/core/codingAgent';
 
 const logger = createLogger('CodeGeneratorWebSocket');
 

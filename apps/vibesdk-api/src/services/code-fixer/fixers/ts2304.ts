@@ -4,11 +4,11 @@
  */
 
 import * as t from '@babel/types';
-import type { CodeIssue } from '../../sandbox/sandboxTypes';
-import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '../types';
-import { generateCode, parseCode } from '../utils/ast';
-import { getFileContent } from '../utils/imports';
-import { handleFixerError } from '../utils/helpers';
+import type { CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '@/services/code-fixer/types';
+import { generateCode, parseCode } from '@/services/code-fixer/utils/ast';
+import { getFileContent } from '@/services/code-fixer/utils/imports';
+import { handleFixerError } from '@/services/code-fixer/utils/helpers';
 
 /**
  * Fix TS2304 "Cannot find name" errors

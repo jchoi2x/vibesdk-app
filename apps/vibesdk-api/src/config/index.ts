@@ -1,5 +1,5 @@
-import { type ConfigurableSecuritySettings, getConfigurableSecurityDefaults } from "./security";
-import { createLogger } from "../logger";
+import { type ConfigurableSecuritySettings, getConfigurableSecurityDefaults } from "@/config/security";
+import { createLogger } from "@/logger";
 
 const logger = createLogger('GlobalConfigurableSettings');
 

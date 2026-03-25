@@ -1,17 +1,17 @@
 import { getAgentByName } from 'agents';
-import { generateId } from '../utils/idGenerator';
-import { type StructuredLogger } from '../logger';
-import { type InferenceContext } from './inferutils/config.types';
-import { SandboxSdkClient } from '../services/sandbox/sandboxSdkClient';
-import { selectTemplate } from './planning/templateSelector';
-import { type TemplateDetails } from '../services/sandbox/sandboxTypes';
-import { createScratchTemplateDetails } from './utils/templates';
-import { type TemplateSelection } from './schemas';
-import type { ImageAttachment } from '../types/image-attachment';
+import { generateId } from '@/utils/idGenerator';
+import { type StructuredLogger } from '@/logger';
+import { type InferenceContext } from '@/agents/inferutils/config.types';
+import { SandboxSdkClient } from '@/services/sandbox/sandboxSdkClient';
+import { selectTemplate } from '@/agents/planning/templateSelector';
+import { type TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import { createScratchTemplateDetails } from '@/agents/utils/templates';
+import { type TemplateSelection } from '@/agents/schemas';
+import type { ImageAttachment } from '@/types/image-attachment';
 import { BaseSandboxService } from '@/services/sandbox/BaseSandboxService';
-import { type AgentState, CurrentDevState } from './core/state';
-import { type CodeGeneratorAgent } from './core/codingAgent';
-import { type BehaviorType, type ProjectType } from './core/types';
+import { type AgentState, CurrentDevState } from '@/agents/core/state';
+import { type CodeGeneratorAgent } from '@/agents/core/codingAgent';
+import { type BehaviorType, type ProjectType } from '@/agents/core/types';
 
 type AgentStubProps = {
     behaviorType?: BehaviorType;

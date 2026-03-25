@@ -1,8 +1,8 @@
-import { TemplateRegistry } from '../../inferutils/schemaFormatters';
-import { PhaseConceptSchema, type PhaseConceptType } from '../../schemas';
-import type { IssueReport } from '../../domain/values/IssueReport';
-import type { UserContext } from '../../core/types';
-import { issuesPromptFormatter, PROMPT_UTILS } from '../../prompts';
+import { TemplateRegistry } from '@/agents/inferutils/schemaFormatters';
+import { PhaseConceptSchema, type PhaseConceptType } from '@/agents/schemas';
+import type { IssueReport } from '@/agents/domain/values/IssueReport';
+import type { UserContext } from '@/agents/core/types';
+import { issuesPromptFormatter, PROMPT_UTILS } from '@/agents/prompts';
 
 export const PHASE_IMPLEMENTATION_SYSTEM_PROMPT = `You are implementing a phase in a React + TypeScript codebase.
 

@@ -1,5 +1,5 @@
-import { downloadR2Image, imageToBase64 } from "../../utils/images";
-import { type ConversationMessage, mapImagesInMultiModalMessage } from "../inferutils/common";
+import { downloadR2Image, imageToBase64 } from "@/utils/images";
+import { type ConversationMessage, mapImagesInMultiModalMessage } from "@/agents/inferutils/common";
 
 export function extractCommands(rawOutput: string, onlyInstallCommands: boolean = false): string[] {
 	const commands: string[] = [];

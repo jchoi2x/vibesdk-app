@@ -3,11 +3,11 @@
  * Handles missing named exports by adding stub exports to the target file
  */
 
-import { type CodeIssue } from '../../sandbox/sandboxTypes';
-import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '../types';
-import { generateCode } from '../utils/ast';
-import { getFileExports, analyzeImportUsage } from '../utils/imports';
-import { createObjectLogger } from '../../../logger';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '@/services/code-fixer/types';
+import { generateCode } from '@/services/code-fixer/utils/ast';
+import { getFileExports, analyzeImportUsage } from '@/services/code-fixer/utils/imports';
+import { createObjectLogger } from '@/logger';
 import * as t from '@babel/types';
 import {
     getSourceAndTargetFiles,
@@ -15,8 +15,8 @@ import {
     createExternalModuleError,
     handleFixerError,
     createFixerLogMessages
-} from '../utils/helpers';
-import { isExternalModule } from '../utils/modules';
+} from '@/services/code-fixer/utils/helpers';
+import { isExternalModule } from '@/services/code-fixer/utils/modules';
 
 const logger = createObjectLogger({ name: 'TS2305Fixer' }, 'TS2305Fixer');
 

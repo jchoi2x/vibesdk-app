@@ -2,8 +2,8 @@
  * Type definitions for ModelConfig Controller responses
  */
 
-import type { UserModelConfigWithMetadata, ModelTestResult } from '../../../database/types';
-import type { AgentActionKey, ModelConfig, AIModels } from '../../../agents/inferutils/config.types';
+import type { UserModelConfigWithMetadata, ModelTestResult } from '@/database/types';
+import type { AgentActionKey, ModelConfig, AIModels } from '@/agents/inferutils/config.types';
 
 export interface UserProviderStatus {
   provider: string;
@@ -14,7 +14,7 @@ export interface UserProviderStatus {
 export interface ModelsByProvider {
   [provider: string]: AIModels[];
 }
-import { type UserModelConfig } from '../../../database/schema';
+import { type UserModelConfig } from '@/database/schema';
 
 /**
  * Response data for getModelConfigs

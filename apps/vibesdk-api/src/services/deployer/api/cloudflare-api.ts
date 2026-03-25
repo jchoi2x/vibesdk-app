@@ -1,5 +1,5 @@
-import { type AssetManifest, type UploadAssetSession, type WorkerMetadata } from '../types';
-import { getMimeType } from '../utils/index';
+import { type AssetManifest, type UploadAssetSession, type WorkerMetadata } from '@/services/deployer/types';
+import { getMimeType } from '@/services/deployer/utils/index';
 
 /**
  * Cloudflare API client for Worker deployment operations

@@ -1,8 +1,8 @@
-import { type FileOutputType } from '../../schemas';
-import { type StaticAnalysisResponse, type RuntimeError, type PreviewType } from '../../../services/sandbox/sandboxTypes';
-import { type DeploymentStartedMessage, type DeploymentCompletedMessage, type DeploymentFailedMessage } from '../../../api/websocketTypes';
-import { type CloudflareDeploymentStartedMessage, type CloudflareDeploymentCompletedMessage, type CloudflareDeploymentErrorMessage } from '../../../api/websocketTypes';
-import { type DeploymentTarget } from '../../core/types';
+import { type FileOutputType } from '@/agents/schemas';
+import { type StaticAnalysisResponse, type RuntimeError, type PreviewType } from '@/services/sandbox/sandboxTypes';
+import { type DeploymentStartedMessage, type DeploymentCompletedMessage, type DeploymentFailedMessage } from '@/api/websocketTypes';
+import { type CloudflareDeploymentStartedMessage, type CloudflareDeploymentCompletedMessage, type CloudflareDeploymentErrorMessage } from '@/api/websocketTypes';
+import { type DeploymentTarget } from '@/agents/core/types';
 
 /**
  * Callbacks for sandbox deployment events

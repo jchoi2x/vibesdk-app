@@ -1,17 +1,17 @@
-import { type TemplateDetails } from "../../services/sandbox/sandboxTypes";
-import { createAssistantMessage, createSystemMessage, createUserMessage } from "../inferutils/common";
-import { type FileOutputType, type PhaseConceptType } from "../schemas";
-import { CodeSerializerType } from "../utils/codeSerializers";
-import { createObjectLogger } from "../../logger";
-import { executeInference } from "../inferutils/infer";
-import { PROMPT_UTILS } from "../prompts";
-import Assistant from "./assistant";
-import { applySearchReplaceDiff } from "../output-formats/diff-formats";
-import { infer } from "../inferutils/core";
-import { MatchingStrategy, type FailedBlock } from "../output-formats/diff-formats/search-replace";
-import { type AgentActionKey, AIModels, type InferenceContext } from "../inferutils/config.types";
-import { AGENT_CONFIG } from "../inferutils/config";
-// import { analyzeTypeScriptFile } from "../../services/code-fixer/analyzer";
+import { type TemplateDetails } from "@/services/sandbox/sandboxTypes";
+import { createAssistantMessage, createSystemMessage, createUserMessage } from "@/agents/inferutils/common";
+import { type FileOutputType, type PhaseConceptType } from "@/agents/schemas";
+import { CodeSerializerType } from "@/agents/utils/codeSerializers";
+import { createObjectLogger } from "@/logger";
+import { executeInference } from "@/agents/inferutils/infer";
+import { PROMPT_UTILS } from "@/agents/prompts";
+import Assistant from "@/agents/assistants/assistant";
+import { applySearchReplaceDiff } from "@/agents/output-formats/diff-formats";
+import { infer } from "@/agents/inferutils/core";
+import { MatchingStrategy, type FailedBlock } from "@/agents/output-formats/diff-formats/search-replace";
+import { type AgentActionKey, AIModels, type InferenceContext } from "@/agents/inferutils/config.types";
+import { AGENT_CONFIG } from "@/agents/inferutils/config";
+// import { analyzeTypeScriptFile } from "@/services/code-fixer/analyzer";
 
 // Constants for magic numbers
 const DEFAULT_PASSES = 5;

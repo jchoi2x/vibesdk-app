@@ -1,11 +1,11 @@
-import { type GitVersionControl } from "../git";
-import { type DeploymentManager } from "../services/implementations/DeploymentManager";
-import { type FileManager } from "../services/implementations/FileManager";
-import { type StructuredLogger } from "../../logger";
-import { type BaseProjectState } from "./state";
-import { type WebSocketMessageType } from "../../api/websocketTypes";
-import { type WebSocketMessageData } from "../../api/websocketTypes";
-import { type ConversationMessage, type ConversationState } from "../inferutils/common";
+import { type GitVersionControl } from "@/agents/git";
+import { type DeploymentManager } from "@/agents/services/implementations/DeploymentManager";
+import { type FileManager } from "@/agents/services/implementations/FileManager";
+import { type StructuredLogger } from "@/logger";
+import { type BaseProjectState } from "@/agents/core/state";
+import { type WebSocketMessageType } from "@/api/websocketTypes";
+import { type WebSocketMessageData } from "@/api/websocketTypes";
+import { type ConversationMessage, type ConversationState } from "@/agents/inferutils/common";
 import { type TemplateDetails } from "worker/services/sandbox/sandboxTypes";
 
 /**

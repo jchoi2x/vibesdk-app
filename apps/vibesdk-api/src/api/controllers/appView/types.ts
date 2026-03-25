@@ -3,8 +3,8 @@
  * Following strict DRY principles by reusing existing database types
  */
 
-import { type AgentSummary } from '../../../agents/core/types';
-import { type EnhancedAppData } from '../../../database/types';
+import { type AgentSummary } from '@/agents/core/types';
+import { type EnhancedAppData } from '@/database/types';
 
 /**
  * Generated code file structure

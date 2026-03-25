@@ -2,8 +2,8 @@
  * Centralized Database Types
  */
 
-import type * as schema from './schema';
-import type { ModelConfig } from '../agents/inferutils/config.types';
+import type * as schema from '@/database/schema';
+import type { ModelConfig } from '@/agents/inferutils/config.types';
 
 // ========================================
 // CORE SHARED INTERFACES

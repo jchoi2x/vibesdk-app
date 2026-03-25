@@ -3,10 +3,10 @@
  * Routes for custom model provider management
  */
 import { type Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { ModelProvidersController } from '../controllers/modelProviders/controller';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
-import { adaptController } from '../honoAdapter';
+import { type AppEnv } from '@/types/appenv';
+import { ModelProvidersController } from '@/api/controllers/modelProviders/controller';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
+import { adaptController } from '@/api/honoAdapter';
 
 export function setupModelProviderRoutes(app: Hono<AppEnv>): void {
     // Custom model provider routes

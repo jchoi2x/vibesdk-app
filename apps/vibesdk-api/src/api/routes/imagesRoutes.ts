@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { ScreenshotsController } from '../controllers/screenshots/controller';
-import { adaptController } from '../honoAdapter';
-import { setAuthLevel, AuthConfig } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { ScreenshotsController } from '@/api/controllers/screenshots/controller';
+import { adaptController } from '@/api/honoAdapter';
+import { setAuthLevel, AuthConfig } from '@/middleware/auth/routeAuth';
 
 export function setupScreenshotRoutes(app: Hono<AppEnv>): void {
   const screenshotsRouter = new Hono<AppEnv>();

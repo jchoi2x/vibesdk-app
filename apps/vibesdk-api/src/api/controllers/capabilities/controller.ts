@@ -6,13 +6,13 @@
  * on this platform instance.
  */
 
-import { BaseController } from '../baseController';
-import type { ApiResponse, ControllerResponse } from '../types';
-import type { RouteContext } from '../../types/route-context';
-import type { CapabilitiesData } from './types';
-import type { FeatureDefinition, PlatformCapabilities } from '../../../agents/core/features/types';
-import { DEFAULT_FEATURE_DEFINITIONS } from '../../../agents/core/features';
-import { createLogger } from '../../../logger';
+import { BaseController } from '@/api/controllers/baseController';
+import type { ApiResponse, ControllerResponse } from '@/api/controllers/types';
+import type { RouteContext } from '@/api/types/route-context';
+import type { CapabilitiesData } from '@/api/controllers/capabilities/types';
+import type { FeatureDefinition, PlatformCapabilities } from '@/agents/core/features/types';
+import { DEFAULT_FEATURE_DEFINITIONS } from '@/agents/core/features';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('CapabilitiesController');
 

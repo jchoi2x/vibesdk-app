@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
 
-import type { FileOutputType, PhaseConceptType } from '../schemas';
-import type { TemplateDetails } from '../../services/sandbox/sandboxTypes';
-import type { InferenceContext } from '../inferutils/config.types';
+import type { FileOutputType, PhaseConceptType } from '@/agents/schemas';
+import type { TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import type { InferenceContext } from '@/agents/inferutils/config.types';
 
 const mocked = vi.hoisted(() => ({
 	runMock: vi.fn(),
@@ -23,7 +23,7 @@ vi.mock('../assistants/realtimeCodeFixer', () => {
 	};
 });
 
-import { detectPreDeploySafetyFindings, runPreDeploySafetyGate } from './preDeploySafetyGate';
+import { detectPreDeploySafetyFindings, runPreDeploySafetyGate } from '@/agents/utils/preDeploySafetyGate';
 
 type PreDeploySafetyGateArgs = Parameters<typeof runPreDeploySafetyGate>[0];
 

@@ -1,4 +1,4 @@
-import { type TemplateDetails, type TemplateFile } from "./sandboxTypes";
+import { type TemplateDetails, type TemplateFile } from "@/services/sandbox/sandboxTypes";
 
 export function getTemplateImportantFiles(templateDetails: TemplateDetails, filterRedacted: boolean = true): TemplateFile[] {
     const { importantFiles, allFiles, redactedFiles } = templateDetails;

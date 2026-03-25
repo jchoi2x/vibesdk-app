@@ -1,5 +1,5 @@
 import { env } from 'cloudflare:workers';
-import { tool, t } from '../types';
+import { tool, t } from '@/agents/tools/types';
 
 interface SerpApiResponse {
     knowledge_graph?: {

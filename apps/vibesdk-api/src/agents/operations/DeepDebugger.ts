@@ -1,16 +1,16 @@
-import { createSystemMessage, createUserMessage, type Message } from '../inferutils/common';
-import { type AgentActionKey } from '../inferutils/config.types';
-import { type CompletionConfig, InferError, type InferResponseString } from '../inferutils/core';
-import { buildDebugTools } from '../tools/customTools';
-import { type RenderToolCall } from './UserConversationProcessor';
-import { PROMPT_UTILS } from '../prompts';
+import { createSystemMessage, createUserMessage, type Message } from '@/agents/inferutils/common';
+import { type AgentActionKey } from '@/agents/inferutils/config.types';
+import { type CompletionConfig, InferError, type InferResponseString } from '@/agents/inferutils/core';
+import { buildDebugTools } from '@/agents/tools/customTools';
+import { type RenderToolCall } from '@/agents/operations/UserConversationProcessor';
+import { PROMPT_UTILS } from '@/agents/prompts';
 import { type RuntimeError } from '@/services/sandbox/sandboxTypes';
-import { type FileState } from '../core/state';
-import { type ToolDefinition } from '../tools/types';
-import { AgentOperationWithTools, type OperationOptions, type ToolSession, type ToolCallbacks } from './common';
-import { type GenerationContext } from '../domain/values/GenerationContext';
-import { createMarkDebuggingCompleteTool } from '../tools/toolkit/completion-signals';
-import { SYSTEM_PROMPT } from './prompts/deepDebuggerPrompts';
+import { type FileState } from '@/agents/core/state';
+import { type ToolDefinition } from '@/agents/tools/types';
+import { AgentOperationWithTools, type OperationOptions, type ToolSession, type ToolCallbacks } from '@/agents/operations/common';
+import { type GenerationContext } from '@/agents/domain/values/GenerationContext';
+import { createMarkDebuggingCompleteTool } from '@/agents/tools/toolkit/completion-signals';
+import { SYSTEM_PROMPT } from '@/agents/operations/prompts/deepDebuggerPrompts';
 
 const USER_PROMPT = (
     issue: string, 

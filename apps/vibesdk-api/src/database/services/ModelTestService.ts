@@ -3,12 +3,12 @@
  * Handles testing of model configurations with user API keys
  */
 
-import { BaseService } from './BaseService';
-import { AIModels } from '../../agents/inferutils/config.types';
-import { infer, InferError } from '../../agents/inferutils/core';
-import { createUserMessage } from '../../agents/inferutils/common';
-import type { TestResult, ModelTestRequest, ModelTestResult } from '../types';
-import { isErrorWithMessage } from '../types';
+import { BaseService } from '@/database/services/BaseService';
+import { AIModels } from '@/agents/inferutils/config.types';
+import { infer, InferError } from '@/agents/inferutils/core';
+import { createUserMessage } from '@/agents/inferutils/common';
+import type { TestResult, ModelTestRequest, ModelTestResult } from '@/database/types';
+import { isErrorWithMessage } from '@/database/types';
 
 export class ModelTestService extends BaseService {
     /**

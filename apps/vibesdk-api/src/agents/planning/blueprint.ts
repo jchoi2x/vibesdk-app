@@ -1,16 +1,16 @@
-import { type TemplateDetails, TemplateFileSchema } from '../../services/sandbox/sandboxTypes'; // Import the type
-import { STRATEGIES, PROMPT_UTILS, generalSystemPromptBuilder } from '../prompts';
-import { executeInference } from '../inferutils/infer';
-import { type PhasicBlueprint, type LitePhasicBlueprint, type AgenticBlueprint, PhasicBlueprintSchema, LitePhasicBlueprintSchema, AgenticBlueprintSchema, type TemplateSelection, type Blueprint } from '../schemas';
-import { createLogger } from '../../logger';
-import { createSystemMessage, createUserMessage, createMultiModalUserMessage } from '../inferutils/common';
-import { type InferenceContext } from '../inferutils/config.types';
-import { TemplateRegistry } from '../inferutils/schemaFormatters';
+import { type TemplateDetails, TemplateFileSchema } from '@/services/sandbox/sandboxTypes'; // Import the type
+import { STRATEGIES, PROMPT_UTILS, generalSystemPromptBuilder } from '@/agents/prompts';
+import { executeInference } from '@/agents/inferutils/infer';
+import { type PhasicBlueprint, type LitePhasicBlueprint, type AgenticBlueprint, PhasicBlueprintSchema, LitePhasicBlueprintSchema, AgenticBlueprintSchema, type TemplateSelection, type Blueprint } from '@/agents/schemas';
+import { createLogger } from '@/logger';
+import { createSystemMessage, createUserMessage, createMultiModalUserMessage } from '@/agents/inferutils/common';
+import { type InferenceContext } from '@/agents/inferutils/config.types';
+import { TemplateRegistry } from '@/agents/inferutils/schemaFormatters';
 import z from 'zod';
 import { imagesToBase64 } from '@/utils/images';
 import { type ProcessedImageAttachment } from '@/types/image-attachment';
 import { getTemplateImportantFiles } from '@/services/sandbox/utils';
-import { type ProjectType } from '../core/types';
+import { type ProjectType } from '@/agents/core/types';
 
 const logger = createLogger('Blueprint');
 

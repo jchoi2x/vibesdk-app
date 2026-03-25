@@ -1,12 +1,12 @@
 /**
  * Base Controller Class
  */
-import { authMiddleware } from '../../middleware/auth/auth';
-import { successResponse, errorResponse } from '../responses';
-import { ControllerErrorHandler, ErrorHandler } from '../../utils/ErrorHandling';
-import { createLogger } from '../../logger';
-import { type AuthUser } from '../../types/auth-types';
-import type { ControllerResponse, ApiResponse } from './types';
+import { authMiddleware } from '@/middleware/auth/auth';
+import { successResponse, errorResponse } from '@/api/responses';
+import { ControllerErrorHandler, ErrorHandler } from '@/utils/ErrorHandling';
+import { createLogger } from '@/logger';
+import { type AuthUser } from '@/types/auth-types';
+import type { ControllerResponse, ApiResponse } from '@/api/controllers/types';
 
 /**
  * Base controller class that provides common functionality

@@ -5,8 +5,8 @@
 
 import { z } from 'zod';
 import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
-import { createLogger } from '../logger';
-import { validatePassword, validateEmail, validateUsername } from './validationUtils';
+import { createLogger } from '@/logger';
+import { validatePassword, validateEmail, validateUsername } from '@/utils/validationUtils';
 
 const logger = createLogger('InputValidator');
 

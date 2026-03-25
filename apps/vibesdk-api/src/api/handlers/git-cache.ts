@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
-import type { MemFS } from '../../agents/git/memfs';
-import type { TemplateDetails as SandboxTemplateDetails } from '../../services/sandbox/sandboxTypes';
+import type { MemFS } from '@/agents/git/memfs';
+import type { TemplateDetails as SandboxTemplateDetails } from '@/services/sandbox/sandboxTypes';
 
 interface GitCacheMetadata {
     agentHeadOid: string;

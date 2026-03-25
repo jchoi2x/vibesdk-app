@@ -3,9 +3,9 @@
  * Extracted from working ImportExportAnalyzer to preserve exact functionality
  */
 
-import { type FileMap } from '../types';
-import { isScriptFile } from './ast';
-import { getFileContent } from './imports';
+import { type FileMap } from '@/services/code-fixer/types';
+import { isScriptFile } from '@/services/code-fixer/utils/ast';
+import { getFileContent } from '@/services/code-fixer/utils/imports';
 
 // ============================================================================
 // PATH ALIAS RESOLUTION

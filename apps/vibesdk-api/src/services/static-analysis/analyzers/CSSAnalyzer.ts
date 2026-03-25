@@ -1,4 +1,4 @@
-import type { LanguageAnalyzer, FileInput, CodeIssue } from '../types';
+import type { LanguageAnalyzer, FileInput, CodeIssue } from '@/services/static-analysis/types';
 
 export class CSSAnalyzer implements LanguageAnalyzer {
 	readonly supportedExtensions = ['.css'];

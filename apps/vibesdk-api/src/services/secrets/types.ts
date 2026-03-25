@@ -3,4 +3,4 @@
  * Re-exports from vault-types.ts
  */
 
-export * from './vault-types';
+export * from '@/services/secrets/vault-types';

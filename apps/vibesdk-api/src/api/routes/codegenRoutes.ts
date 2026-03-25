@@ -1,8 +1,8 @@
-import { CodingAgentController } from '../controllers/agent/controller';
-import { type AppEnv } from '../../types/appenv';
+import { CodingAgentController } from '@/api/controllers/agent/controller';
+import { type AppEnv } from '@/types/appenv';
 import { type Hono } from 'hono';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
-import { adaptController } from '../honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
+import { adaptController } from '@/api/honoAdapter';
 
 /**
  * Setup and configure the application router

@@ -2,10 +2,10 @@
  * Model Providers Service
  */
 
-import { BaseService } from './BaseService';
-import * as schema from '../schema';
+import { BaseService } from '@/database/services/BaseService';
+import * as schema from '@/database/schema';
 import { eq, and, sql } from 'drizzle-orm';
-import { generateId } from '../../utils/idGenerator';
+import { generateId } from '@/utils/idGenerator';
 
 export interface CreateProviderData {
     name: string;

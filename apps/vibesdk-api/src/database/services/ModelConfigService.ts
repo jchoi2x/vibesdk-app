@@ -3,16 +3,16 @@
  * Handles CRUD operations for user model configurations with constraint enforcement
  */
 
-import { BaseService } from './BaseService';
-import { type UserModelConfig, type NewUserModelConfig, userModelConfigs } from '../schema';
+import { BaseService } from '@/database/services/BaseService';
+import { type UserModelConfig, type NewUserModelConfig, userModelConfigs } from '@/database/schema';
 import { eq, and } from 'drizzle-orm';
-import { type AgentActionKey, type ModelConfig } from '../../agents/inferutils/config.types';
-import { AGENT_CONFIG, AGENT_CONSTRAINTS } from '../../agents/inferutils/config';
-import type { ReasoningEffort } from '../../agents/inferutils/config.types';
-import { generateId } from '../../utils/idGenerator';
-import type { UserModelConfigWithMetadata } from '../types';
+import { type AgentActionKey, type ModelConfig } from '@/agents/inferutils/config.types';
+import { AGENT_CONFIG, AGENT_CONSTRAINTS } from '@/agents/inferutils/config';
+import type { ReasoningEffort } from '@/agents/inferutils/config.types';
+import { generateId } from '@/utils/idGenerator';
+import type { UserModelConfigWithMetadata } from '@/database/types';
 import { validateAgentConstraints } from '@/api/controllers/modelConfig/constraintHelper';
-import { toAIModel } from '../../agents/inferutils/config.types';
+import { toAIModel } from '@/agents/inferutils/config.types';
 
 type ConstraintStrategy = 'throw' | 'fallback';
 

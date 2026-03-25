@@ -1,6 +1,6 @@
-import type { ProjectType } from '../../types';
-import type { AdditionalExportStrategy } from './types';
-import { PresentationExportStrategy } from './presentation';
+import type { ProjectType } from '@/agents/core/types';
+import type { AdditionalExportStrategy } from '@/agents/core/objectives/strategies/types';
+import { PresentationExportStrategy } from '@/agents/core/objectives/strategies/presentation';
 
 export function getAdditionalExportStrategy(
 	projectType: ProjectType,
@@ -13,4 +13,4 @@ export function getAdditionalExportStrategy(
 	}
 }
 
-export type { AdditionalExportStrategy, ExportContext } from './types';
+export type { AdditionalExportStrategy, ExportContext } from '@/agents/core/objectives/strategies/types';

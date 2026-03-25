@@ -2,7 +2,7 @@
  * Base Controller Types
  */
 
-import { type BaseApiResponse } from "../responses";
+import { type BaseApiResponse } from "@/api/responses";
 
 
 /**

@@ -3,16 +3,16 @@
  * Handles missing module imports by either finding existing files or creating stubs
  */
 
-import { type CodeIssue } from '../../sandbox/sandboxTypes';
-import { type FixerContext, type FixResult, type FixedIssue, type ImportInfo } from '../types';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { type FixerContext, type FixResult, type FixedIssue, type ImportInfo } from '@/services/code-fixer/types';
 import * as t from '@babel/types';
-import { generateCode } from '../utils/ast';
-import { findImportAtLocation, getFileAST } from '../utils/imports';
-import { findModuleFile, makeRelativeImport, resolveImportToFilePath } from '../utils/paths';
-import { generateStubFileContent } from '../utils/stubs';
-import { createObjectLogger } from '../../../logger';
-import { isExternalModule } from '../utils/modules';
-import { createExternalModuleError, handleFixerError } from '../utils/helpers';
+import { generateCode } from '@/services/code-fixer/utils/ast';
+import { findImportAtLocation, getFileAST } from '@/services/code-fixer/utils/imports';
+import { findModuleFile, makeRelativeImport, resolveImportToFilePath } from '@/services/code-fixer/utils/paths';
+import { generateStubFileContent } from '@/services/code-fixer/utils/stubs';
+import { createObjectLogger } from '@/logger';
+import { isExternalModule } from '@/services/code-fixer/utils/modules';
+import { createExternalModuleError, handleFixerError } from '@/services/code-fixer/utils/helpers';
 
 const logger = createObjectLogger({ name: 'TS2307Fixer' }, 'TS2307Fixer');
 

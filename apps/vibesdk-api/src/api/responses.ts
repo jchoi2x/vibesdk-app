@@ -2,7 +2,7 @@
  * Standardized API response utilities
  */
 
-import { type RateLimitError } from "../services/rate-limit/errors";
+import { type RateLimitError } from "@/services/rate-limit/errors";
 import { SecurityError, type SecurityErrorType } from '@jchoi2x/types/errors';
 /**
  * Standard response shape for all API endpoints

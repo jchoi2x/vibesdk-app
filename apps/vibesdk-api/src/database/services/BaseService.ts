@@ -3,9 +3,9 @@
  * Provides common database functionality and patterns for all domain services
  */
 
-import { createDatabaseService, type DatabaseService } from '../database';
+import { createDatabaseService, type DatabaseService } from '@/database/database';
 import { type SQL, and } from 'drizzle-orm';
-import { createLogger } from '../../logger';
+import { createLogger } from '@/logger';
 
 /**
  * Base class for all database domain services

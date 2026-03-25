@@ -1,6 +1,6 @@
-import { AGENT_CONSTRAINTS } from '../../../agents/inferutils/config';
-import { type AgentActionKey, type AIModels } from '../../../agents/inferutils/config.types';
-import { isValidAIModel } from '../../../agents/inferutils/config.types';
+import { AGENT_CONSTRAINTS } from '@/agents/inferutils/config';
+import { type AgentActionKey, type AIModels } from '@/agents/inferutils/config.types';
+import { isValidAIModel } from '@/agents/inferutils/config.types';
 
 export interface ConstraintValidationResult {
 	valid: boolean;

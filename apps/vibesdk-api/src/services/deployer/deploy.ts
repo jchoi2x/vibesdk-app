@@ -1,14 +1,14 @@
-import { WorkerDeployer } from './deployer';
+import { WorkerDeployer } from '@/services/deployer/deployer';
 import {
 	type WorkerBinding,
 	type DeployConfig,
 	type DispatchDeployConfig,
 	type WranglerConfig,
-} from './types';
+} from '@/services/deployer/types';
 import {
 	validateConfig,
 	buildWorkerBindings,
-} from './utils/index';
+} from '@/services/deployer/utils/index';
 import { parse } from 'jsonc-parser';
 
 /**

@@ -3,35 +3,35 @@ import {
     createUserMessage,
     type Message,
     type ConversationMessage,
-} from '../inferutils/common';
-import { type AgentActionKey } from '../inferutils/config.types';
-import { withRenderer } from '../tools/customTools';
-import { type RenderToolCall } from './UserConversationProcessor';
-import { PROMPT_UTILS } from '../prompts';
-import { type FileState } from '../core/state';
-import { type ProjectType } from '../core/types';
-import { type Blueprint, type AgenticBlueprint } from '../schemas';
-import { prepareMessagesForInference } from '../utils/common';
-import { createMarkGenerationCompleteTool } from '../tools/toolkit/completion-signals';
-import { AgentOperationWithTools, type OperationOptions, type ToolSession, type ToolCallbacks } from './common';
-import { type GenerationContext } from '../domain/values/GenerationContext';
-import getSystemPrompt from './prompts/agenticBuilderPrompts';
-import { type ToolDefinition } from '../tools/types';
-import { type InferResponseString } from '../inferutils/core';
-import { createGenerateBlueprintTool } from '../tools/toolkit/generate-blueprint';
-import { createAlterBlueprintTool } from '../tools/toolkit/alter-blueprint';
-import { createInitSuitableTemplateTool } from '../tools/toolkit/init-suitable-template';
-import { createVirtualFilesystemTool } from '../tools/toolkit/virtual-filesystem';
-import { createGenerateFilesTool } from '../tools/toolkit/generate-files';
-import { createRegenerateFileTool } from '../tools/toolkit/regenerate-file';
-import { createRunAnalysisTool } from '../tools/toolkit/run-analysis';
-import { createDeployPreviewTool } from '../tools/toolkit/deploy-preview';
-import { createGetRuntimeErrorsTool } from '../tools/toolkit/get-runtime-errors';
-import { createGetLogsTool } from '../tools/toolkit/get-logs';
-import { createExecCommandsTool } from '../tools/toolkit/exec-commands';
-import { createWaitTool } from '../tools/toolkit/wait';
-import { createGitTool } from '../tools/toolkit/git';
-import { createGenerateImagesTool } from '../tools/toolkit/generate-images';
+} from '@/agents/inferutils/common';
+import { type AgentActionKey } from '@/agents/inferutils/config.types';
+import { withRenderer } from '@/agents/tools/customTools';
+import { type RenderToolCall } from '@/agents/operations/UserConversationProcessor';
+import { PROMPT_UTILS } from '@/agents/prompts';
+import { type FileState } from '@/agents/core/state';
+import { type ProjectType } from '@/agents/core/types';
+import { type Blueprint, type AgenticBlueprint } from '@/agents/schemas';
+import { prepareMessagesForInference } from '@/agents/utils/common';
+import { createMarkGenerationCompleteTool } from '@/agents/tools/toolkit/completion-signals';
+import { AgentOperationWithTools, type OperationOptions, type ToolSession, type ToolCallbacks } from '@/agents/operations/common';
+import { type GenerationContext } from '@/agents/domain/values/GenerationContext';
+import getSystemPrompt from '@/agents/operations/prompts/agenticBuilderPrompts';
+import { type ToolDefinition } from '@/agents/tools/types';
+import { type InferResponseString } from '@/agents/inferutils/core';
+import { createGenerateBlueprintTool } from '@/agents/tools/toolkit/generate-blueprint';
+import { createAlterBlueprintTool } from '@/agents/tools/toolkit/alter-blueprint';
+import { createInitSuitableTemplateTool } from '@/agents/tools/toolkit/init-suitable-template';
+import { createVirtualFilesystemTool } from '@/agents/tools/toolkit/virtual-filesystem';
+import { createGenerateFilesTool } from '@/agents/tools/toolkit/generate-files';
+import { createRegenerateFileTool } from '@/agents/tools/toolkit/regenerate-file';
+import { createRunAnalysisTool } from '@/agents/tools/toolkit/run-analysis';
+import { createDeployPreviewTool } from '@/agents/tools/toolkit/deploy-preview';
+import { createGetRuntimeErrorsTool } from '@/agents/tools/toolkit/get-runtime-errors';
+import { createGetLogsTool } from '@/agents/tools/toolkit/get-logs';
+import { createExecCommandsTool } from '@/agents/tools/toolkit/exec-commands';
+import { createWaitTool } from '@/agents/tools/toolkit/wait';
+import { createGitTool } from '@/agents/tools/toolkit/git';
+import { createGenerateImagesTool } from '@/agents/tools/toolkit/generate-images';
 
 export interface AgenticProjectBuilderInputs {
     query: string;

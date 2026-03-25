@@ -3,8 +3,8 @@
  * Types for custom model provider CRUD operations
  */
 
-import type { UserModelProvider } from '../../../database/schema';
-import type { ApiResponse } from '../types';
+import type { UserModelProvider } from '@/database/schema';
+import type { ApiResponse } from '@/api/controllers/types';
 
 // Response data types
 export interface ModelProvidersListData {

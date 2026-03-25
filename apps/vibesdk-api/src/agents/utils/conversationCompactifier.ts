@@ -1,8 +1,8 @@
-import { type ConversationMessage, type MessageRole, createUserMessage } from "../inferutils/common";
-import { executeInference } from "../inferutils/infer";
-import { type StructuredLogger } from "../../logger";
-import { IdGenerator } from './idGenerator';
-import { type OperationOptions } from "../operations/common";
+import { type ConversationMessage, type MessageRole, createUserMessage } from "@/agents/inferutils/common";
+import { executeInference } from "@/agents/inferutils/infer";
+import { type StructuredLogger } from "@/logger";
+import { IdGenerator } from '@/agents/utils/idGenerator';
+import { type OperationOptions } from "@/agents/operations/common";
 import type { ChatCompletionMessageFunctionToolCall } from 'openai/resources';
 
 /**

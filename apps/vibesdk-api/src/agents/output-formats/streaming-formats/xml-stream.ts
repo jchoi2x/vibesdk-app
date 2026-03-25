@@ -4,8 +4,8 @@
  * Extends the proven streaming infrastructure from SCOF format
  */
 
-import { CodeGenerationFormat, type CodeGenerationStreamingState, type ParsingState } from './base';
-import { type FileGenerationOutputType } from "../../schemas";
+import { CodeGenerationFormat, type CodeGenerationStreamingState, type ParsingState } from '@/agents/output-formats/streaming-formats/base';
+import { type FileGenerationOutputType } from "@/agents/schemas";
 
 // XML parsing state
 export interface XmlParsingState extends ParsingState {

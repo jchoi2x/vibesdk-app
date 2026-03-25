@@ -1,7 +1,7 @@
 import { jwtVerify, SignJWT } from 'jose';
-import { type TokenPayload } from '../types/auth-types';
+import { type TokenPayload } from '@/types/auth-types';
 import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
-import { createLogger } from '../logger';
+import { createLogger } from '@/logger';
 import { SessionService } from '@/database/services/SessionService';
 
 const logger = createLogger('JWTUtils');

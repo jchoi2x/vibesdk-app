@@ -3,11 +3,11 @@
  * Handles all API key-related database operations
  */
 
-import { BaseService } from './BaseService';
-import * as schema from '../schema';
+import { BaseService } from '@/database/services/BaseService';
+import * as schema from '@/database/schema';
 import { eq, and, desc, sql, or, isNull, gt } from 'drizzle-orm';
-import { generateId } from '../../utils/idGenerator';
-import { createLogger } from '../../logger';
+import { generateId } from '@/utils/idGenerator';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('ApiKeyService');
 

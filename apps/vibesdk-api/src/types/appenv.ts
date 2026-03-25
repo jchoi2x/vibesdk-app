@@ -1,6 +1,6 @@
-import { type GlobalConfigurableSettings } from "../config";
-import { type AuthLevelOptions, type AuthRequirement } from "../middleware/auth/routeAuth";
-import { type AuthUser } from "./auth-types";
+import { type GlobalConfigurableSettings } from "@/config";
+import { type AuthLevelOptions, type AuthRequirement } from "@/middleware/auth/routeAuth";
+import { type AuthUser } from "@/types/auth-types";
 
 
 export type AppEnv = {

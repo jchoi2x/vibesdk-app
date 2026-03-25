@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { applyDiff } from './udiff';
+import { applyDiff } from '@/agents/output-formats/diff-formats/udiff';
 
 describe('applyUnifiedDiff', () => {
   const applyUnifiedDiff = applyDiff; // Alias for compatibility

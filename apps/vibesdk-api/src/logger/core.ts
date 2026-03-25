@@ -2,7 +2,7 @@
  * Simple Structured Logger
  */
 import * as Sentry from '@sentry/cloudflare';
-import type { LoggerConfig, ObjectContext, LogEntry, LogLevel } from './types';
+import type { LoggerConfig, ObjectContext, LogEntry, LogLevel } from '@/logger/types';
 
 export const DEFAULT_CONFIG: LoggerConfig = {
 	level: 'info',

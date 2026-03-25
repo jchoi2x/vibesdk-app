@@ -1,8 +1,8 @@
 import { type Context } from 'hono';
-import { type RouteContext } from './types/route-context';
-import { type AppEnv } from '../types/appenv';
-import { type BaseController } from './controllers/baseController';
-import { enforceAuthRequirement } from '../middleware/auth/routeAuth';
+import { type RouteContext } from '@/api/types/route-context';
+import { type AppEnv } from '@/types/appenv';
+import { type BaseController } from '@/api/controllers/baseController';
+import { enforceAuthRequirement } from '@/middleware/auth/routeAuth';
 /*
 * This is a simple adapter to convert Hono context to our base controller's expected arguments
 */

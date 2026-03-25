@@ -1,7 +1,7 @@
-import { CodeGenerationFormat, type CodeGenerationStreamingState, type ParsingState } from './base';
-import { type FileGenerationOutputType } from "../../schemas";
-import { applyDiff } from '../diff-formats/udiff';
-import { extractCommands } from '../../utils/common';
+import { CodeGenerationFormat, type CodeGenerationStreamingState, type ParsingState } from '@/agents/output-formats/streaming-formats/base';
+import { type FileGenerationOutputType } from "@/agents/schemas";
+import { applyDiff } from '@/agents/output-formats/diff-formats/udiff';
+import { extractCommands } from '@/agents/utils/common';
 
 // SCOF-specific parsing state with comprehensive tracking
 export type SCOFParsingState = ParsingState;
@@ -675,7 +675,7 @@ EOF
 
 cat << 'EOF' | patch src/index.ts
 @@ -1,3 +1,4 @@
-+import { formatDate } from './utils/helper';
++import { formatDate } from '@/agents/output-formats/streaming-formats/utils/helper';
  console.log('Hello');
 EOF
 \`\`\`

@@ -1,5 +1,5 @@
 import { unzipSync } from 'fflate';
-import type { TemplateFile } from './sandboxTypes';
+import type { TemplateFile } from '@/services/sandbox/sandboxTypes';
 
 /**
  * In-memory zip extraction service for Cloudflare Workers

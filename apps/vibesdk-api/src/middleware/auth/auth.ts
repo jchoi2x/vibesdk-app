@@ -3,10 +3,10 @@
  * Handles JWT validation and session management
  */
 
-import { type AuthUserSession } from '../../types/auth-types';
-import { createLogger } from '../../logger';
-import { AuthService } from '../../database/services/AuthService';
-import { extractToken } from '../../utils/authUtils';
+import { type AuthUserSession } from '@/types/auth-types';
+import { createLogger } from '@/logger';
+import { AuthService } from '@/database/services/AuthService';
+import { extractToken } from '@/utils/authUtils';
 
 const logger = createLogger('AuthMiddleware');
 /**

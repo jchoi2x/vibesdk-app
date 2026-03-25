@@ -1,18 +1,18 @@
 
-import { BaseController } from '../baseController';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import type { RouteContext } from '../../types/route-context';
-import { getAgentStubLightweight } from '../../../agents';
-import { AppService } from '../../../database/services/AppService';
+import { BaseController } from '@/api/controllers/baseController';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import type { RouteContext } from '@/api/types/route-context';
+import { getAgentStubLightweight } from '@/agents';
+import { AppService } from '@/database/services/AppService';
 import { 
     type AppDetailsData, 
     type AppStarToggleData,
     type GitCloneTokenData,
-} from './types';
-import { type AgentSummary } from '../../../agents/core/types';
-import { createLogger } from '../../../logger';
+} from '@/api/controllers/appView/types';
+import { type AgentSummary } from '@/agents/core/types';
+import { createLogger } from '@/logger';
 import { buildUserWorkerUrl, buildGitCloneUrl } from '@/utils/urls';
-import { JWTUtils } from '../../../utils/jwtUtils';
+import { JWTUtils } from '@/utils/jwtUtils';
 
 export class AppViewController extends BaseController {
     static logger = createLogger('AppViewController');

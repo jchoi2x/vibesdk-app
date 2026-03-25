@@ -3,18 +3,18 @@
  */
 
 import { createMiddleware } from 'hono/factory';
-import { type AuthUser } from '../../types/auth-types';
-import { createLogger } from '../../logger';
-import { AppService } from '../../database';
-import { authMiddleware } from './auth';
-import { RateLimitService } from '../../services/rate-limit/rateLimits';
-import { errorResponse } from '../../api/responses';
+import { type AuthUser } from '@/types/auth-types';
+import { createLogger } from '@/logger';
+import { AppService } from '@/database';
+import { authMiddleware } from '@/middleware/auth/auth';
+import { RateLimitService } from '@/services/rate-limit/rateLimits';
+import { errorResponse } from '@/api/responses';
 import { type Context } from 'hono';
-import { type AppEnv } from '../../types/appenv';
+import { type AppEnv } from '@/types/appenv';
 import { RateLimitExceededError } from '@jchoi2x/types/errors';
 import * as Sentry from '@sentry/cloudflare';
 import { getUserConfigurableSettings } from '@/config';
-import { authenticateViaTicket, hasTicketParam } from './ticketAuth';
+import { authenticateViaTicket, hasTicketParam } from '@/middleware/auth/ticketAuth';
 
 const logger = createLogger('RouteAuth');
 

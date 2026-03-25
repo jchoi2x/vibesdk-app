@@ -1,5 +1,5 @@
-import { SCOFFormat } from '../output-formats/streaming-formats/scof';
-import { type FileOutputType } from '../schemas';
+import { SCOFFormat } from '@/agents/output-formats/streaming-formats/scof';
+import { type FileOutputType } from '@/agents/schemas';
 
 export enum CodeSerializerType {
 	SIMPLE = 'simple',

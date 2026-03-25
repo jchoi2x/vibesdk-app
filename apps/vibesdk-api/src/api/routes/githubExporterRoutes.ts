@@ -3,11 +3,11 @@
  * Handles GitHub repository export flows
  */
 
-import { GitHubExporterController } from '../controllers/githubExporter/controller';
+import { GitHubExporterController } from '@/api/controllers/githubExporter/controller';
 import { type Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 /**
  * Setup GitHub Exporter routes

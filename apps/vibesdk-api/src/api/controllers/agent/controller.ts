@@ -1,28 +1,28 @@
-import { WebSocketMessageResponses } from '../../../agents/constants';
-import { BaseController } from '../baseController';
-import { generateId } from '../../../utils/idGenerator';
-import { type AgentState } from '../../../agents/core/state';
-import { type BehaviorType, type ProjectType } from '../../../agents/core/types';
-import { getAgentStub, getTemplateForQuery } from '../../../agents';
+import { WebSocketMessageResponses } from '@/agents/constants';
+import { BaseController } from '@/api/controllers/baseController';
+import { generateId } from '@/utils/idGenerator';
+import { type AgentState } from '@/agents/core/state';
+import { type BehaviorType, type ProjectType } from '@/agents/core/types';
+import { getAgentStub, getTemplateForQuery } from '@/agents';
 import {
     type AgentConnectionData,
     type AgentPreviewResponse,
     type CodeGenArgs,
     MAX_AGENT_QUERY_LENGTH,
-} from './types';
+} from '@/api/controllers/agent/types';
 import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { type RouteContext } from '../../types/route-context';
-import { AppService, ModelConfigService } from '../../../database';
-import { type ModelConfig, credentialsToRuntimeOverrides } from '../../../agents/inferutils/config.types';
-import { RateLimitService } from '../../../services/rate-limit/rateLimits';
-import { validateWebSocketOrigin } from '../../../middleware/security/websocket';
-import { createLogger } from '../../../logger';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { type RouteContext } from '@/api/types/route-context';
+import { AppService, ModelConfigService } from '@/database';
+import { type ModelConfig, credentialsToRuntimeOverrides } from '@/agents/inferutils/config.types';
+import { RateLimitService } from '@/services/rate-limit/rateLimits';
+import { validateWebSocketOrigin } from '@/middleware/security/websocket';
+import { createLogger } from '@/logger';
 import { getPreviewDomain } from '@/utils/urls';
 import { ImageType, uploadImage } from '@/utils/images';
 import { type ProcessedImageAttachment } from '@/types/image-attachment';
 import { getTemplateImportantFiles } from '@/services/sandbox/utils';
-import { hasTicketParam } from '../../../middleware/auth/ticketAuth';
+import { hasTicketParam } from '@/middleware/auth/ticketAuth';
 
 const defaultCodeGenArgs: Partial<CodeGenArgs> = {
     language: 'typescript',

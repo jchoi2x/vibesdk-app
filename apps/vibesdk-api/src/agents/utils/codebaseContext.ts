@@ -1,4 +1,4 @@
-import { type FileOutputType } from "../schemas";
+import { type FileOutputType } from "@/agents/schemas";
 
 export function getCodebaseContext(allFiles: FileOutputType[]): FileOutputType[]  {
     // For now, just return all files except readme.md and .bootstrap.js

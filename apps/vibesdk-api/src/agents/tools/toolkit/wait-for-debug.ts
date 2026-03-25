@@ -1,5 +1,5 @@
-import { tool } from '../types';
-import { type StructuredLogger } from '../../../logger';
+import { tool } from '@/agents/tools/types';
+import { type StructuredLogger } from '@/logger';
 import { type ICodingAgent } from '@/agents/services/interfaces/ICodingAgent';
 
 export function createWaitForDebugTool(

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { SCOFFormat } from './scof';
-import { CodeGenerationStreamingState } from './base';
+import { SCOFFormat } from '@/agents/output-formats/streaming-formats/scof';
+import { CodeGenerationStreamingState } from '@/agents/output-formats/streaming-formats/base';
 
 describe('SCOF Parser - Comprehensive Tests', () => {
     let parser: SCOFFormat;

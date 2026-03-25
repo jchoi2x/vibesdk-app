@@ -1,11 +1,11 @@
 import * as _traverse from '@babel/traverse';
 import type { NodePath } from '@babel/traverse';
 import * as t from '@babel/types';
-import type { FileOutputType, PhaseConceptType } from '../schemas';
-import type { TemplateDetails } from '../../services/sandbox/sandboxTypes';
-import type { InferenceContext } from '../inferutils/config.types';
-import { parseCode, generateCode } from '../../services/code-fixer/utils/ast';
-import { RealtimeCodeFixer } from '../assistants/realtimeCodeFixer';
+import type { FileOutputType, PhaseConceptType } from '@/agents/schemas';
+import type { TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import type { InferenceContext } from '@/agents/inferutils/config.types';
+import { parseCode, generateCode } from '@/services/code-fixer/utils/ast';
+import { RealtimeCodeFixer } from '@/agents/assistants/realtimeCodeFixer';
 
 const traverse = _traverse.default;
 

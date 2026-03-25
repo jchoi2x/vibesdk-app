@@ -143,7 +143,7 @@ describe('truncate', () => {
 	});
 
 	it('uses a custom suffix', () => {
-		expect(truncate('hello world', 7, '…')).toBe('hello w…');
+		expect(truncate('hello world', 8, '…')).toBe('hello w…');
 	});
 
 	it('returns a string of exactly maxLen characters', () => {

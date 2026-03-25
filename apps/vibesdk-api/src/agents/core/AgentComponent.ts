@@ -1,12 +1,12 @@
-import { type AgentInfrastructure } from './AgentCore';
-import { type StructuredLogger } from '../../logger';
-import { type WebSocketMessageType } from '../../api/websocketTypes';
-import { type WebSocketMessageData } from '../../api/websocketTypes';
-import { type FileManager } from '../services/implementations/FileManager';
-import { type DeploymentManager } from '../services/implementations/DeploymentManager';
-import { type GitVersionControl } from '../git';
-import { type AgentState, type BaseProjectState } from './state';
-import { WebSocketMessageResponses } from '../constants';
+import { type AgentInfrastructure } from '@/agents/core/AgentCore';
+import { type StructuredLogger } from '@/logger';
+import { type WebSocketMessageType } from '@/api/websocketTypes';
+import { type WebSocketMessageData } from '@/api/websocketTypes';
+import { type FileManager } from '@/agents/services/implementations/FileManager';
+import { type DeploymentManager } from '@/agents/services/implementations/DeploymentManager';
+import { type GitVersionControl } from '@/agents/git';
+import { type AgentState, type BaseProjectState } from '@/agents/core/state';
+import { WebSocketMessageResponses } from '@/agents/constants';
 
 /**
  * Base class for all agent components (behaviors and objectives)

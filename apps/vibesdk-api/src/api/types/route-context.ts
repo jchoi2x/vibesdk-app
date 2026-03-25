@@ -2,8 +2,8 @@
  * Route Context Types
  */
 
-import { type GlobalConfigurableSettings } from '../../config';
-import { type AuthUser } from '../../types/auth-types';
+import { type GlobalConfigurableSettings } from '@/config';
+import { type AuthUser } from '@/types/auth-types';
 
 /**
  * Route context containing authenticated user and path parameters

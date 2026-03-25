@@ -4,10 +4,10 @@
  */
 
 import type * as t from '@babel/types';
-import { type CodeIssue } from '../../sandbox/sandboxTypes';
-import { type FixerContext, type UnfixableIssue } from '../types';
-import { getFileAST, findImportAtLocation } from './imports';
-import { resolveModuleFile, validateModuleOperation } from './modules';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { type FixerContext, type UnfixableIssue } from '@/services/code-fixer/types';
+import { getFileAST, findImportAtLocation } from '@/services/code-fixer/utils/imports';
+import { resolveModuleFile, validateModuleOperation } from '@/services/code-fixer/utils/modules';
 
 // ============================================================================
 // COMMON FIXER PATTERNS

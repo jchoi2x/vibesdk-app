@@ -1,10 +1,10 @@
-import { RateLimitType, RateLimitStore, type RateLimitSettings, type DORateLimitConfig, type KVRateLimitConfig } from './config';
-import { createObjectLogger } from '../../logger';
-import { type AuthUser } from '../../types/auth-types';
-import { extractTokenWithMetadata, extractRequestMetadata } from '../../utils/authUtils';
-import { captureSecurityEvent } from '../../observability/sentry';
-import { KVRateLimitStore } from './KVRateLimitStore';
-import { type RateLimitResult } from './DORateLimitStore';
+import { RateLimitType, RateLimitStore, type RateLimitSettings, type DORateLimitConfig, type KVRateLimitConfig } from '@/services/rate-limit/config';
+import { createObjectLogger } from '@/logger';
+import { type AuthUser } from '@/types/auth-types';
+import { extractTokenWithMetadata, extractRequestMetadata } from '@/utils/authUtils';
+import { captureSecurityEvent } from '@/observability/sentry';
+import { KVRateLimitStore } from '@/services/rate-limit/KVRateLimitStore';
+import { type RateLimitResult } from '@/services/rate-limit/DORateLimitStore';
 import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { isDev } from '@/utils/envs';
 import { AI_MODEL_CONFIG, type AIModels } from '@/agents/inferutils/config.types';

@@ -2,15 +2,15 @@
  * Vault Controller - API endpoints for the user secrets vault
  */
 
-import { BaseController } from '../baseController';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { type RouteContext } from '../../types/route-context';
-import { createLogger } from '../../../logger';
+import { BaseController } from '@/api/controllers/baseController';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { type RouteContext } from '@/api/types/route-context';
+import { createLogger } from '@/logger';
 import type {
 	VaultStatusResponse,
 	VaultConfigResponse,
 	SetupVaultRequest,
-} from '../../../services/secrets/vault-types';
+} from '@/services/secrets/vault-types';
 
 type VaultStatusData = VaultStatusResponse;
 type VaultConfigData = { config: VaultConfigResponse };

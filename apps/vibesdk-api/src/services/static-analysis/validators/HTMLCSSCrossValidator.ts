@@ -1,5 +1,5 @@
 import { Parser } from 'htmlparser2';
-import type { CrossFileValidator, FileInput, CodeIssue } from '../types';
+import type { CrossFileValidator, FileInput, CodeIssue } from '@/services/static-analysis/types';
 
 interface CSSUsage {
 	name: string;

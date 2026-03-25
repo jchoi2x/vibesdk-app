@@ -1,5 +1,5 @@
-import { type ProjectType } from "../../core/types";
-import { PROMPT_UTILS } from "../../prompts";
+import { type ProjectType } from "@/agents/core/types";
+import { PROMPT_UTILS } from "@/agents/prompts";
 
 const getSystemPrompt = (projectType: ProjectType, dynamicHints: string): string => {
     const isPresentationProject = projectType === 'presentation';

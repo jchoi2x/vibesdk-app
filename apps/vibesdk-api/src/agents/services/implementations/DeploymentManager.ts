@@ -4,18 +4,18 @@ import {
     type DeploymentResult,
     type SandboxDeploymentCallbacks,
     type CloudflareDeploymentCallbacks
-} from '../interfaces/IDeploymentManager';
-import { type BootstrapResponse, type StaticAnalysisResponse, type RuntimeError, type PreviewType } from '../../../services/sandbox/sandboxTypes';
-import { type FileOutputType } from '../../schemas';
-import { generateId } from '../../../utils/idGenerator';
-import { generateAppProxyToken, generateAppProxyUrl } from '../../../services/aigateway-proxy/controller';
-import { BaseAgentService } from './BaseAgentService';
-import { type ServiceOptions } from '../interfaces/IServiceOptions';
+} from '@/agents/services/interfaces/IDeploymentManager';
+import { type BootstrapResponse, type StaticAnalysisResponse, type RuntimeError, type PreviewType } from '@/services/sandbox/sandboxTypes';
+import { type FileOutputType } from '@/agents/schemas';
+import { generateId } from '@/utils/idGenerator';
+import { generateAppProxyToken, generateAppProxyUrl } from '@/services/aigateway-proxy/controller';
+import { BaseAgentService } from '@/agents/services/implementations/BaseAgentService';
+import { type ServiceOptions } from '@/agents/services/interfaces/IServiceOptions';
 import { type BaseSandboxService } from '@/services/sandbox/BaseSandboxService';
-import { getSandboxService } from '../../../services/sandbox/factory';
+import { getSandboxService } from '@/services/sandbox/factory';
 import { validateAndCleanBootstrapCommands } from '@/agents/utils/common';
-import { type DeploymentTarget } from '../../core/types';
-import { type BaseProjectState } from '../../core/state';
+import { type DeploymentTarget } from '@/agents/core/types';
+import { type BaseProjectState } from '@/agents/core/state';
 
 const PER_ATTEMPT_TIMEOUT_MS = 60000;  // 60 seconds per individual attempt
 const MASTER_DEPLOYMENT_TIMEOUT_MS = 300000;  // 5 minutes total

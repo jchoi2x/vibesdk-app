@@ -4,7 +4,7 @@
  */
 
 import { describe, test, beforeEach, expect, vi } from 'vitest';
-import { XmlStreamFormat, XmlStreamingCallbacks } from './xml-stream';
+import { XmlStreamFormat, XmlStreamingCallbacks } from '@/agents/output-formats/streaming-formats/xml-stream';
 
 describe('XmlStreamFormat', () => {
     let parser: XmlStreamFormat;

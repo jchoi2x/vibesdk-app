@@ -1,5 +1,5 @@
-import { type ToolCallResult } from '../tools/types';
-import { type CompletionSignal } from './common';
+import { type ToolCallResult } from '@/agents/tools/types';
+import { type CompletionSignal } from '@/agents/inferutils/common';
 
 /**
  * Detects completion signals from executed tool calls

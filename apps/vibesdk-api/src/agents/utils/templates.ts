@@ -1,4 +1,4 @@
-import type { TemplateDetails } from '../../services/sandbox/sandboxTypes';
+import type { TemplateDetails } from '@/services/sandbox/sandboxTypes';
 
 const VITE_CONFIG_MINIMAL = `
 // Making changes to this file is **STRICTLY** forbidden. All the code in here is 100% correct and audited.

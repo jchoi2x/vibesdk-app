@@ -4,7 +4,7 @@
  */
 
 import type * as t from '@babel/types';
-import { type CodeIssue } from '../sandbox/sandboxTypes';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
 
 // ============================================================================
 // CORE RESULT TYPES

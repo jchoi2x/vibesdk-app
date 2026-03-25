@@ -1,5 +1,5 @@
-import type { ExportOptions, ExportResult } from '../../types';
-import type { AdditionalExportStrategy, ExportContext } from './types';
+import type { ExportOptions, ExportResult } from '@/agents/core/types';
+import type { AdditionalExportStrategy, ExportContext } from '@/agents/core/objectives/strategies/types';
 
 const SUPPORTED_KINDS = ['pdf', 'pptx', 'googleslides'] as const;
 

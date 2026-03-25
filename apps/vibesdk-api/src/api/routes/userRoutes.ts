@@ -1,8 +1,8 @@
-import { UserController } from '../controllers/user/controller';
+import { UserController } from '@/api/controllers/user/controller';
 import { type Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 /**
  * Setup user management routes

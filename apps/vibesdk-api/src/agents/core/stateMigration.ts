@@ -1,10 +1,10 @@
-import { type AgentState, type FileState } from './state';
-import { type StructuredLogger } from '../../logger';
+import { type AgentState, type FileState } from '@/agents/core/state';
+import { type StructuredLogger } from '@/logger';
 import { type TemplateDetails } from '@/services/sandbox/sandboxTypes';
-import { generateNanoId } from '../../utils/idGenerator';
-import { generateProjectName } from '../utils/templateCustomizer';
+import { generateNanoId } from '@/utils/idGenerator';
+import { generateProjectName } from '@/agents/utils/templateCustomizer';
 import { MAX_AGENT_QUERY_LENGTH } from '@/api/controllers/agent/types';
-import type { InferenceMetadata } from '../inferutils/config.types';
+import type { InferenceMetadata } from '@/agents/inferutils/config.types';
 
 // Type guards for legacy state detection
 type LegacyFileFormat = {

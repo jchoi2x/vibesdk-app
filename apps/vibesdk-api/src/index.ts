@@ -1,20 +1,20 @@
-import { createLogger } from './logger';
-import { isDispatcherAvailable } from './utils/dispatcherUtils';
-import { createApp } from './app';
+import { createLogger } from '@/logger';
+import { isDispatcherAvailable } from '@/utils/dispatcherUtils';
+import { createApp } from '@/app';
 // import * as Sentry from '@sentry/cloudflare';
-// import { sentryOptions } from './observability/sentry';
-import { DORateLimitStore as BaseDORateLimitStore } from './services/rate-limit/DORateLimitStore';
-import { getPreviewDomain } from './utils/urls';
-import { proxyToAiGateway } from './services/aigateway-proxy/controller';
-import { isOriginAllowed } from './config/security';
-import { proxyToSandbox } from './services/sandbox/request-handler';
-import { handleGitProtocolRequest, isGitProtocolRequest } from './api/handlers/git-protocol';
-import { getAgentStub } from './agents';
+// import { sentryOptions } from '@/observability/sentry';
+import { DORateLimitStore as BaseDORateLimitStore } from '@/services/rate-limit/DORateLimitStore';
+import { getPreviewDomain } from '@/utils/urls';
+import { proxyToAiGateway } from '@/services/aigateway-proxy/controller';
+import { isOriginAllowed } from '@/config/security';
+import { proxyToSandbox } from '@/services/sandbox/request-handler';
+import { handleGitProtocolRequest, isGitProtocolRequest } from '@/api/handlers/git-protocol';
+import { getAgentStub } from '@/agents';
 
 // Durable Object and Service exports
-export { UserAppSandboxService } from './services/sandbox/sandboxSdkClient';
-export { CodeGeneratorAgent } from './agents/core/codingAgent';
-export { UserSecretsStore } from './services/secrets/UserSecretsStore';
+export { UserAppSandboxService } from '@/services/sandbox/sandboxSdkClient';
+export { CodeGeneratorAgent } from '@/agents/core/codingAgent';
+export { UserSecretsStore } from '@/services/secrets/UserSecretsStore';
 
 // export const CodeGeneratorAgent = Sentry.instrumentDurableObjectWithSentry(sentryOptions, CodeGeneratorAgent);
 // export const DORateLimitStore = Sentry.instrumentDurableObjectWithSentry(sentryOptions, BaseDORateLimitStore);

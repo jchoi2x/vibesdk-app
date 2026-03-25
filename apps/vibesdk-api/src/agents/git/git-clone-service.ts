@@ -4,9 +4,9 @@
  */
 
 import git from '@ashishkumar472/cf-git';
-import { MemFS } from './memfs';
-import { createLogger } from '../../logger';
-import type { TemplateDetails as SandboxTemplateDetails } from '../../services/sandbox/sandboxTypes';
+import { MemFS } from '@/agents/git/memfs';
+import { createLogger } from '@/logger';
+import type { TemplateDetails as SandboxTemplateDetails } from '@/services/sandbox/sandboxTypes';
 
 const logger = createLogger('GitCloneService');
 

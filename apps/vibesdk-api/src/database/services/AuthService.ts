@@ -3,30 +3,30 @@
  * Orchestrates all auth operations including login, registration, and OAuth
  */
 
-import * as schema from '../schema';
+import * as schema from '@/database/schema';
 import { eq, and, sql, or, lt, isNull } from 'drizzle-orm';
-import { JWTUtils } from '../../utils/jwtUtils';
-import { generateSecureToken } from '../../utils/cryptoUtils';
-import { SessionService } from './SessionService';
-import { PasswordService } from '../../utils/passwordService';
-import { GoogleOAuthProvider } from '../../services/oauth/google';
-import { GitHubOAuthProvider } from '../../services/oauth/github';
-import { BaseOAuthProvider } from '../../services/oauth/base';
+import { JWTUtils } from '@/utils/jwtUtils';
+import { generateSecureToken } from '@/utils/cryptoUtils';
+import { SessionService } from '@/database/services/SessionService';
+import { PasswordService } from '@/utils/passwordService';
+import { GoogleOAuthProvider } from '@/services/oauth/google';
+import { GitHubOAuthProvider } from '@/services/oauth/github';
+import { BaseOAuthProvider } from '@/services/oauth/base';
 import { 
     SecurityError, 
     SecurityErrorType 
 } from '@jchoi2x/types/errors';
-import { type AuthResult, type AuthUserSession, type OAuthUserInfo } from '../../types/auth-types';
-import { generateId } from '../../utils/idGenerator';
+import { type AuthResult, type AuthUserSession, type OAuthUserInfo } from '@/types/auth-types';
+import { generateId } from '@/utils/idGenerator';
 import {
     type AuthUser, 
     type OAuthProvider
-} from '../../types/auth-types';
-import { mapUserResponse, validateRedirectUrl } from '../../utils/authUtils';
-import { createLogger } from '../../logger';
-import { validateEmail, validatePassword } from '../../utils/validationUtils';
-import { extractRequestMetadata } from '../../utils/authUtils';
-import { BaseService } from './BaseService';
+} from '@/types/auth-types';
+import { mapUserResponse, validateRedirectUrl } from '@/utils/authUtils';
+import { createLogger } from '@/logger';
+import { validateEmail, validatePassword } from '@/utils/validationUtils';
+import { extractRequestMetadata } from '@/utils/authUtils';
+import { BaseService } from '@/database/services/BaseService';
 
 const logger = createLogger('AuthService');
 

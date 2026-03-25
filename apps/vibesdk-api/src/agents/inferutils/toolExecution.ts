@@ -1,6 +1,6 @@
 import type { ChatCompletionMessageFunctionToolCall } from 'openai/resources';
-import type { ToolDefinition, ToolCallResult, ResourceAccess } from '../tools/types';
-import { hasResourceConflict } from '../tools/resources';
+import type { ToolDefinition, ToolCallResult, ResourceAccess } from '@/agents/tools/types';
+import { hasResourceConflict } from '@/agents/tools/resources';
 
 export interface ExecutionPlan {
 	parallelGroups: ChatCompletionMessageFunctionToolCall[][];

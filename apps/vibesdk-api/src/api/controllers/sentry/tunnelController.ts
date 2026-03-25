@@ -1,5 +1,5 @@
-import { BaseController } from '../baseController';
-import { type RouteContext } from '../../types/route-context';
+import { BaseController } from '@/api/controllers/baseController';
+import { type RouteContext } from '@/api/types/route-context';
 
 /**
  * Sentry Tunnel Controller

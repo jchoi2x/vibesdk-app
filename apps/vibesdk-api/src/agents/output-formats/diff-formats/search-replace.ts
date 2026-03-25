@@ -1002,9 +1002,9 @@ new content
 			input: `# Comment
 \`\`\`
 <<<<<<< SEARCH
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
 =======
-// import { ErrorBoundary } from './components/ErrorBoundary';
+// import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
 \`\`\``,
 			expectedBlocks: 1,
 			expectedErrors: 0
@@ -1104,11 +1104,11 @@ More text`,
 
 \`\`\`
 <<<<<<< SEARCH
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
+import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';
 =======
-// import { ErrorBoundary } from './components/ErrorBoundary';
-// import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+// import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
+// import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';
 =======
 \`\`\`
 

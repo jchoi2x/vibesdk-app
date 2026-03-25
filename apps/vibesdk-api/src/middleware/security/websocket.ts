@@ -1,5 +1,5 @@
-import { isOriginAllowed } from '../../config/security';
-import { createLogger } from '../../logger';
+import { isOriginAllowed } from '@/config/security';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('WebSocketSecurity');
 

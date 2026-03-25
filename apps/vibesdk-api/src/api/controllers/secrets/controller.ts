@@ -1,7 +1,7 @@
-import { BaseController } from '../baseController';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { type SecretTemplatesData } from './types';
-import { getTemplatesData } from '../../../types/secretsTemplates';
+import { BaseController } from '@/api/controllers/baseController';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { type SecretTemplatesData } from '@/api/controllers/secrets/types';
+import { getTemplatesData } from '@/types/secretsTemplates';
 
 export class SecretsController extends BaseController {
 

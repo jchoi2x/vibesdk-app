@@ -1,20 +1,20 @@
-import { type PhaseConceptType, type FileOutputType } from '../schemas';
-import { type IssueReport } from '../domain/values/IssueReport';
-import { createUserMessage, createMultiModalUserMessage } from '../inferutils/common';
-import { executeInference } from '../inferutils/infer';
-import { type CodeGenerationStreamingState } from '../output-formats/streaming-formats/base';
-import { FileProcessing } from '../domain/pure/FileProcessing';
-import { AgentOperation, getSystemPromptWithProjectContext, type OperationOptions } from '../operations/common';
-import { SCOFFormat, type SCOFParsingState } from '../output-formats/streaming-formats/scof';
-import { IsRealtimeCodeFixerEnabled, RealtimeCodeFixer } from '../assistants/realtimeCodeFixer';
-import { CodeSerializerType } from '../utils/codeSerializers';
-import type { UserContext } from '../core/types';
-import { imagesToBase64 } from '../../utils/images';
-import { type PhasicGenerationContext } from '../domain/values/GenerationContext';
+import { type PhaseConceptType, type FileOutputType } from '@/agents/schemas';
+import { type IssueReport } from '@/agents/domain/values/IssueReport';
+import { createUserMessage, createMultiModalUserMessage } from '@/agents/inferutils/common';
+import { executeInference } from '@/agents/inferutils/infer';
+import { type CodeGenerationStreamingState } from '@/agents/output-formats/streaming-formats/base';
+import { FileProcessing } from '@/agents/domain/pure/FileProcessing';
+import { AgentOperation, getSystemPromptWithProjectContext, type OperationOptions } from '@/agents/operations/common';
+import { SCOFFormat, type SCOFParsingState } from '@/agents/output-formats/streaming-formats/scof';
+import { IsRealtimeCodeFixerEnabled, RealtimeCodeFixer } from '@/agents/assistants/realtimeCodeFixer';
+import { CodeSerializerType } from '@/agents/utils/codeSerializers';
+import type { UserContext } from '@/agents/core/types';
+import { imagesToBase64 } from '@/utils/images';
+import { type PhasicGenerationContext } from '@/agents/domain/values/GenerationContext';
 import {
 	PHASE_IMPLEMENTATION_SYSTEM_PROMPT,
 	buildPhaseImplementationUserPrompt,
-} from './prompts/phaseImplementationPrompts';
+} from '@/agents/operations/prompts/phaseImplementationPrompts';
 
 export interface PhaseImplementationInputs {
     phase: PhaseConceptType

@@ -1,6 +1,6 @@
-import { type ToolDefinition } from '../tools/types';
-import { type LoopDetector } from '../inferutils/loopDetection';
-import { createLogger } from '../../logger';
+import { type ToolDefinition } from '@/agents/tools/types';
+import { type LoopDetector } from '@/agents/inferutils/loopDetection';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('LoopDetection');
 

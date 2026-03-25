@@ -3,25 +3,25 @@
  * Stateless, functional approach to fixing TypeScript compilation issues
  */
 
-import { type FileObject } from './types';
-import { type CodeIssue } from '../sandbox/sandboxTypes';
+import { type FileObject } from '@/services/code-fixer/types';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
 import { 
     type CodeFixResult, 
     type FixerContext, 
     type FileMap, 
     type ProjectFile,
     type FixerRegistry
-} from './types';
-import { isScriptFile } from './utils/ast';
-import { canModifyFile } from './utils/modules';
+} from '@/services/code-fixer/types';
+import { isScriptFile } from '@/services/code-fixer/utils/ast';
+import { canModifyFile } from '@/services/code-fixer/utils/modules';
 
 // Import all fixers
-import { fixModuleNotFound } from './fixers/ts2307';
-import { fixModuleIsNotModule } from './fixers/ts2613';
-import { fixUndefinedName } from './fixers/ts2304';
-import { fixMissingExportedMember } from './fixers/ts2305';
-import { fixImportExportTypeMismatch } from './fixers/ts2614';
-import { fixIncorrectNamedImport } from './fixers/ts2724';
+import { fixModuleNotFound } from '@/services/code-fixer/fixers/ts2307';
+import { fixModuleIsNotModule } from '@/services/code-fixer/fixers/ts2613';
+import { fixUndefinedName } from '@/services/code-fixer/fixers/ts2304';
+import { fixMissingExportedMember } from '@/services/code-fixer/fixers/ts2305';
+import { fixImportExportTypeMismatch } from '@/services/code-fixer/fixers/ts2614';
+import { fixIncorrectNamedImport } from '@/services/code-fixer/fixers/ts2724';
 
 
 // ============================================================================
@@ -353,10 +353,10 @@ export type {
     FixerContext,
     FileMap,
     ProjectFile
-} from './types';
+} from '@/services/code-fixer/types';
 
 // Re-export utility functions that might be useful
-export { isScriptFile } from './utils/ast';
-export { resolvePathAlias, makeRelativeImport } from './utils/paths';
-export { analyzeImportUsage } from './utils/imports';
-export { generateStubFileContent } from './utils/stubs';
+export { isScriptFile } from '@/services/code-fixer/utils/ast';
+export { resolvePathAlias, makeRelativeImport } from '@/services/code-fixer/utils/paths';
+export { analyzeImportUsage } from '@/services/code-fixer/utils/imports';
+export { generateStubFileContent } from '@/services/code-fixer/utils/stubs';

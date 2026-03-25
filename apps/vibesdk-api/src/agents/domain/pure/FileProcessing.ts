@@ -1,7 +1,7 @@
-import { type FileGenerationOutputType, type FileOutputType, type PhaseConceptType } from '../../schemas';
-import type { StructuredLogger } from '../../../logger';
-import { type TemplateDetails } from '../../../services/sandbox/sandboxTypes';
-import { applyUnifiedDiff } from '../../output-formats/diff-formats';
+import { type FileGenerationOutputType, type FileOutputType, type PhaseConceptType } from '@/agents/schemas';
+import type { StructuredLogger } from '@/logger';
+import { type TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import { applyUnifiedDiff } from '@/agents/output-formats/diff-formats';
 import { type FileState } from '@/agents/core/state';
 import { getTemplateFiles, getTemplateImportantFiles } from '@/services/sandbox/utils';
 

@@ -2,7 +2,7 @@
 This code is borrowed from Cloudflare Sandbox-sdk's npm package
 */
 
-import { createObjectLogger } from "../../logger";
+import { createObjectLogger } from "@/logger";
 import { getSandbox, type Sandbox } from "@cloudflare/sandbox";
 import { switchPort } from '@cloudflare/containers';
 

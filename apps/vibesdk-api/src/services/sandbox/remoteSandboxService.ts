@@ -29,8 +29,8 @@ import {
     type GitHubPushResponse,
     GitHubPushResponseSchema,
     type InstanceCreationRequest,
-} from './sandboxTypes';
-import { BaseSandboxService } from "./BaseSandboxService";
+} from '@/services/sandbox/sandboxTypes';
+import { BaseSandboxService } from "@/services/sandbox/BaseSandboxService";
 import { type DeploymentTarget } from '@/agents/core/types';
 import { env } from 'cloudflare:workers'
 import type z from 'zod';

@@ -1,8 +1,8 @@
-import { type FileGenerationOutputType } from '../schemas';
-import { AgentOperation, type OperationOptions } from '../operations/common';
-import { RealtimeCodeFixer } from '../assistants/realtimeCodeFixer';
-import { type FileOutputType } from '../schemas';
-import { type GenerationContext } from '../domain/values/GenerationContext';
+import { type FileGenerationOutputType } from '@/agents/schemas';
+import { AgentOperation, type OperationOptions } from '@/agents/operations/common';
+import { RealtimeCodeFixer } from '@/agents/assistants/realtimeCodeFixer';
+import { type FileOutputType } from '@/agents/schemas';
+import { type GenerationContext } from '@/agents/domain/values/GenerationContext';
 
 export interface FileRegenerationInputs {
     file: FileOutputType;

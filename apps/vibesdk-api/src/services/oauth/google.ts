@@ -3,10 +3,10 @@
  * Implements Google OAuth 2.0 authentication
  */
 
-import { BaseOAuthProvider } from './base';
-import type { OAuthUserInfo } from '../../types/auth-types';
-import { type OAuthProvider } from '../../types/auth-types';
-import { createLogger } from '../../logger';
+import { BaseOAuthProvider } from '@/services/oauth/base';
+import type { OAuthUserInfo } from '@/types/auth-types';
+import { type OAuthProvider } from '@/types/auth-types';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('GoogleOAuth');
 

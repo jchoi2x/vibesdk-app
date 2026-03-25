@@ -3,7 +3,7 @@
  * No side effects, handles package.json and dependency merging
  */
 
-import type { StructuredLogger } from '../../../logger';
+import type { StructuredLogger } from '@/logger';
 export class DependencyManagement {
     /**
      * Merge dependencies from template and package.json

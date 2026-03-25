@@ -1,8 +1,8 @@
-import { tool, t } from '../types';
-import { type StructuredLogger } from '../../../logger';
+import { tool, t } from '@/agents/tools/types';
+import { type StructuredLogger } from '@/logger';
 import { type ICodingAgent } from '@/agents/services/interfaces/ICodingAgent';
 import { generateBlueprint, type AgenticBlueprintGenerationArgs } from '@/agents/planning/blueprint';
-import { WebSocketMessageResponses } from '../../constants';
+import { WebSocketMessageResponses } from '@/agents/constants';
 
 export function createGenerateBlueprintTool(
 	agent: ICodingAgent,

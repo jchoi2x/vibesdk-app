@@ -23,9 +23,9 @@ import {
 	SESSION_TIMEOUT_MS,
 	CLEANUP_INTERVAL_MS,
 	STORAGE_LIMITS,
-} from './vault-types';
-import { type PendingWsTicket, type TicketConsumptionResult } from '../../types/auth-types';
-import { WsTicketManager } from '../../utils/wsTicketManager';
+} from '@/services/secrets/vault-types';
+import { type PendingWsTicket, type TicketConsumptionResult } from '@/types/auth-types';
+import { WsTicketManager } from '@/utils/wsTicketManager';
 
 interface VaultSession {
 	encryptedVMK: ArrayBuffer;

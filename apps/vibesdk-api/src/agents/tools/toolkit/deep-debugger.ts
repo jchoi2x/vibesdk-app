@@ -1,5 +1,5 @@
-import { tool, t, type Type, type } from '../types';
-import { type StructuredLogger } from '../../../logger';
+import { tool, t, type Type, type } from '@/agents/tools/types';
+import { type StructuredLogger } from '@/logger';
 import { type ICodingAgent } from '@/agents/services/interfaces/ICodingAgent';
 import { type RenderToolCall } from '@/agents/operations/UserConversationProcessor';
 import { z } from 'zod';

@@ -1,14 +1,14 @@
-import { type FileConceptType, type FileOutputType } from '../schemas';
-import { createUserMessage, createSystemMessage } from '../inferutils/common';
-import { executeInference } from '../inferutils/infer';
-import { PROMPT_UTILS } from '../prompts';
-import { AgentOperation, getSystemPromptWithProjectContext, type OperationOptions } from './common';
-import { SCOFFormat, type SCOFParsingState } from '../output-formats/streaming-formats/scof';
-import { type CodeGenerationStreamingState } from '../output-formats/streaming-formats/base';
-import { FileProcessing } from '../domain/pure/FileProcessing';
-import { CodeSerializerType } from '../utils/codeSerializers';
-import { type GenerationContext } from '../domain/values/GenerationContext';
-import { type FileState } from '../core/state';
+import { type FileConceptType, type FileOutputType } from '@/agents/schemas';
+import { createUserMessage, createSystemMessage } from '@/agents/inferutils/common';
+import { executeInference } from '@/agents/inferutils/infer';
+import { PROMPT_UTILS } from '@/agents/prompts';
+import { AgentOperation, getSystemPromptWithProjectContext, type OperationOptions } from '@/agents/operations/common';
+import { SCOFFormat, type SCOFParsingState } from '@/agents/output-formats/streaming-formats/scof';
+import { type CodeGenerationStreamingState } from '@/agents/output-formats/streaming-formats/base';
+import { FileProcessing } from '@/agents/domain/pure/FileProcessing';
+import { CodeSerializerType } from '@/agents/utils/codeSerializers';
+import { type GenerationContext } from '@/agents/domain/values/GenerationContext';
+import { type FileState } from '@/agents/core/state';
 
 export interface SimpleCodeGenerationInputs {
     phaseName: string;

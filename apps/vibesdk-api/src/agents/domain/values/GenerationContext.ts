@@ -1,10 +1,10 @@
-import { type PhasicBlueprint, type AgenticBlueprint } from '../../schemas';
-import { type FileTreeNode, type TemplateDetails } from '../../../services/sandbox/sandboxTypes';
-import { type FileState, type PhaseState, type PhasicState, type AgenticState } from '../../core/state';
-import { DependencyManagement } from '../pure/DependencyManagement';
-import type { StructuredLogger } from '../../../logger';
-import { FileProcessing } from '../pure/FileProcessing';
-import { type Plan } from '../../core/types';
+import { type PhasicBlueprint, type AgenticBlueprint } from '@/agents/schemas';
+import { type FileTreeNode, type TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import { type FileState, type PhaseState, type PhasicState, type AgenticState } from '@/agents/core/state';
+import { DependencyManagement } from '@/agents/domain/pure/DependencyManagement';
+import type { StructuredLogger } from '@/logger';
+import { FileProcessing } from '@/agents/domain/pure/FileProcessing';
+import { type Plan } from '@/agents/core/types';
 
 /** Common fields shared by all generation contexts */
 interface BaseGenerationContext {

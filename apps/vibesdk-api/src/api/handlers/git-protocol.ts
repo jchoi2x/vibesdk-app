@@ -5,12 +5,12 @@
  * 
  * Architecture: Export git objects from DO, build repo in worker to save DO memory
  */
-import { getAgentStub } from '../../agents';
-import { createLogger } from '../../logger';
-import { GitCloneService } from '../../agents/git/git-clone-service';
-import { AppService } from '../../database/services/AppService';
-import { JWTUtils } from '../../utils/jwtUtils';
-import { GitCache } from './git-cache';
+import { getAgentStub } from '@/agents';
+import { createLogger } from '@/logger';
+import { GitCloneService } from '@/agents/git/git-clone-service';
+import { AppService } from '@/database/services/AppService';
+import { JWTUtils } from '@/utils/jwtUtils';
+import { GitCache } from '@/api/handlers/git-cache';
 
 const logger = createLogger('GitProtocol');
 

@@ -2,8 +2,8 @@
  * Type definitions for App Controller responses
  */
 
-import { type App } from '../../../database/schema';
-import { type AppWithFavoriteStatus, type PaginationInfo, type FavoriteToggleResult, type EnhancedAppData } from '../../../database/types';
+import { type App } from '@/database/schema';
+import { type AppWithFavoriteStatus, type PaginationInfo, type FavoriteToggleResult, type EnhancedAppData } from '@/database/types';
 
 /**
  * App with extended user and social stats for public listings

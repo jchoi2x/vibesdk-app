@@ -1,10 +1,10 @@
 
-import { BaseController } from '../baseController';
-import { type RouteContext } from '../../types/route-context';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { type UserStatsData, type UserActivityData } from './types';
-import { AnalyticsService } from '../../../database/services/AnalyticsService';
-import { createLogger } from '../../../logger';
+import { BaseController } from '@/api/controllers/baseController';
+import { type RouteContext } from '@/api/types/route-context';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { type UserStatsData, type UserActivityData } from '@/api/controllers/stats/types';
+import { AnalyticsService } from '@/database/services/AnalyticsService';
+import { createLogger } from '@/logger';
 
 export class StatsController extends BaseController {
     static logger = createLogger('StatsController');

@@ -1,11 +1,11 @@
 /**
  * Authentication Routes
  */
-import { AuthController } from '../controllers/auth/controller';
+import { AuthController } from '@/api/controllers/auth/controller';
 import { Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 /**
  * Setup authentication routes

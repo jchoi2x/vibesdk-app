@@ -1,12 +1,12 @@
-import { createSystemMessage, createUserMessage } from '../inferutils/common';
-import { executeInference } from '../inferutils/infer';
-import { PROMPT_UTILS } from '../prompts';
-import { AgentOperation, type OperationOptions } from './common';
-import { type FileOutputType, type PhaseConceptType } from '../schemas';
-import { SCOFFormat } from '../output-formats/streaming-formats/scof';
-import { type CodeIssue } from '../../services/sandbox/sandboxTypes';
-import { CodeSerializerType } from '../utils/codeSerializers';
-import { type PhasicGenerationContext } from '../domain/values/GenerationContext';
+import { createSystemMessage, createUserMessage } from '@/agents/inferutils/common';
+import { executeInference } from '@/agents/inferutils/infer';
+import { PROMPT_UTILS } from '@/agents/prompts';
+import { AgentOperation, type OperationOptions } from '@/agents/operations/common';
+import { type FileOutputType, type PhaseConceptType } from '@/agents/schemas';
+import { SCOFFormat } from '@/agents/output-formats/streaming-formats/scof';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { CodeSerializerType } from '@/agents/utils/codeSerializers';
+import { type PhasicGenerationContext } from '@/agents/domain/values/GenerationContext';
 
 export interface FastCodeFixerInputs {
     query: string;

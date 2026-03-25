@@ -1,20 +1,20 @@
-import { setupAuthRoutes } from './authRoutes';
-import { setupAppRoutes } from './appRoutes';
-import { setupUserRoutes } from './userRoutes';
-import { setupStatsRoutes } from './statsRoutes';
-import { setupAnalyticsRoutes } from './analyticsRoutes';
-// import { setupUserSecretsRoutes } from './userSecretsRoutes';
-import { setupModelConfigRoutes } from './modelConfigRoutes';
-import { setupModelProviderRoutes } from './modelProviderRoutes';
-import { setupGitHubExporterRoutes } from './githubExporterRoutes';
-import { setupCodegenRoutes } from './codegenRoutes';
-import { setupScreenshotRoutes } from './imagesRoutes';
-import { setupSentryRoutes } from './sentryRoutes';
-import { setupCapabilitiesRoutes } from './capabilitiesRoutes';
-import { setupTicketRoutes } from './ticketRoutes';
+import { setupAuthRoutes } from '@/api/routes/authRoutes';
+import { setupAppRoutes } from '@/api/routes/appRoutes';
+import { setupUserRoutes } from '@/api/routes/userRoutes';
+import { setupStatsRoutes } from '@/api/routes/statsRoutes';
+import { setupAnalyticsRoutes } from '@/api/routes/analyticsRoutes';
+// import { setupUserSecretsRoutes } from '@/api/routes/userSecretsRoutes';
+import { setupModelConfigRoutes } from '@/api/routes/modelConfigRoutes';
+import { setupModelProviderRoutes } from '@/api/routes/modelProviderRoutes';
+import { setupGitHubExporterRoutes } from '@/api/routes/githubExporterRoutes';
+import { setupCodegenRoutes } from '@/api/routes/codegenRoutes';
+import { setupScreenshotRoutes } from '@/api/routes/imagesRoutes';
+import { setupSentryRoutes } from '@/api/routes/sentryRoutes';
+import { setupCapabilitiesRoutes } from '@/api/routes/capabilitiesRoutes';
+import { setupTicketRoutes } from '@/api/routes/ticketRoutes';
 import { type Hono } from "hono";
-import { type AppEnv } from "../../types/appenv";
-import { setupStatusRoutes } from './statusRoutes';
+import { type AppEnv } from "@/types/appenv";
+import { setupStatusRoutes } from '@/api/routes/statusRoutes';
 
 export function setupRoutes(app: Hono<AppEnv>): void {
     // Health check route

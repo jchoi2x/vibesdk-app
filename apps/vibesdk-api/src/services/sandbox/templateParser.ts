@@ -1,4 +1,4 @@
-import { type StructuredLogger } from '../../logger';
+import { type StructuredLogger } from '@/logger';
 
 export interface PlaceholderInfo {
     placeholder: string;

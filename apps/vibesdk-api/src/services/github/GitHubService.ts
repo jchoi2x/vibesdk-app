@@ -3,19 +3,19 @@
  */
 
 import { Octokit } from '@octokit/rest';
-import { createLogger } from '../../logger';
+import { createLogger } from '@/logger';
 import {
     type GitHubRepository,
     type CreateRepositoryOptions,
     type CreateRepositoryResult,
     GitHubServiceError,
-} from './types';
-import { type GitHubPushResponse, type TemplateDetails } from '../sandbox/sandboxTypes';
-import { GitCloneService } from '../../agents/git/git-clone-service';
+} from '@/services/github/types';
+import { type GitHubPushResponse, type TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import { GitCloneService } from '@/agents/git/git-clone-service';
 import git from '@ashishkumar472/cf-git';
 import http from '@ashishkumar472/cf-git/http/web';
-import { prepareCloudflareButton } from '../../utils/deployToCf';
-import type { MemFS } from '../../agents/git/memfs';
+import { prepareCloudflareButton } from '@/utils/deployToCf';
+import type { MemFS } from '@/agents/git/memfs';
 
 export class GitHubService {
     private static readonly logger = createLogger('GitHubService');

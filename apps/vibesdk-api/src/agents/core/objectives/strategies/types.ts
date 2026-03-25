@@ -1,5 +1,5 @@
-import type { ExportOptions, ExportResult } from '../../types';
-import type { BaseProjectState } from '../../state';
+import type { ExportOptions, ExportResult } from '@/agents/core/types';
+import type { BaseProjectState } from '@/agents/core/state';
 import type { StructuredLogger } from '@/logger';
 import type { WebSocketMessageType, WebSocketMessageData } from '@/api/websocketTypes';
 

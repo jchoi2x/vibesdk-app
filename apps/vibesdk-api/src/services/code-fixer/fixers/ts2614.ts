@@ -3,14 +3,14 @@
  * Handles cases where imports use wrong syntax (named vs default)
  */
 
-import { type CodeIssue } from '../../sandbox/sandboxTypes';
-import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '../types';
-import { generateCode, traverseAST } from '../utils/ast';
-import { findImportAtLocation, getFileAST, getFileExports } from '../utils/imports';
-import { findModuleFile } from '../utils/paths';
-import { createObjectLogger } from '../../../logger';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '@/services/code-fixer/types';
+import { generateCode, traverseAST } from '@/services/code-fixer/utils/ast';
+import { findImportAtLocation, getFileAST, getFileExports } from '@/services/code-fixer/utils/imports';
+import { findModuleFile } from '@/services/code-fixer/utils/paths';
+import { createObjectLogger } from '@/logger';
 import * as t from '@babel/types';
-import { handleFixerError } from '../utils/helpers';
+import { handleFixerError } from '@/services/code-fixer/utils/helpers';
 
 const logger = createObjectLogger({ name: 'TS2614Fixer' }, 'TS2614Fixer');
 

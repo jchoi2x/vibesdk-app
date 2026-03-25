@@ -1,13 +1,13 @@
-import { createSystemMessage, createUserMessage, createMultiModalUserMessage } from '../inferutils/common';
-import { type TemplateInfo } from '../../services/sandbox/sandboxTypes';
-import { createLogger } from '../../logger';
-import { executeInference } from '../inferutils/infer';
-import { type InferenceContext } from '../inferutils/config.types';
+import { createSystemMessage, createUserMessage, createMultiModalUserMessage } from '@/agents/inferutils/common';
+import { type TemplateInfo } from '@/services/sandbox/sandboxTypes';
+import { createLogger } from '@/logger';
+import { executeInference } from '@/agents/inferutils/infer';
+import { type InferenceContext } from '@/agents/inferutils/config.types';
 import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
-import { type TemplateSelection, TemplateSelectionSchema, ProjectTypePredictionSchema } from '../../agents/schemas';
+import { type TemplateSelection, TemplateSelectionSchema, ProjectTypePredictionSchema } from '@/agents/schemas';
 import { generateSecureToken } from '@/utils/cryptoUtils';
-import type { ImageAttachment } from '../../types/image-attachment';
-import { type ProjectType } from '../core/types';
+import type { ImageAttachment } from '@/types/image-attachment';
+import { type ProjectType } from '@/agents/core/types';
 
 const logger = createLogger('TemplateSelector');
 interface SelectTemplateArgs {

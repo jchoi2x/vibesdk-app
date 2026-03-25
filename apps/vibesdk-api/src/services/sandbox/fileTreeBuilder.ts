@@ -1,4 +1,4 @@
-import type { FileTreeNode } from './sandboxTypes';
+import type { FileTreeNode } from '@/services/sandbox/sandboxTypes';
 
 export class FileTreeBuilder {
     /**

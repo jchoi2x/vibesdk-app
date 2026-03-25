@@ -1,11 +1,11 @@
-import { type FileTreeNode, type RuntimeError, type StaticAnalysisResponse, type TemplateDetails } from "../services/sandbox/sandboxTypes";
-import { TemplateRegistry } from "./inferutils/schemaFormatters";
+import { type FileTreeNode, type RuntimeError, type StaticAnalysisResponse, type TemplateDetails } from "@/services/sandbox/sandboxTypes";
+import { TemplateRegistry } from "@/agents/inferutils/schemaFormatters";
 import z from 'zod';
-import { type PhasicBlueprint, type AgenticBlueprint, BlueprintSchemaLite, AgenticBlueprintSchema, type FileOutputType, PhaseConceptLiteSchema, PhaseConceptSchema, type PhaseConceptType, type TemplateSelection, type Blueprint } from "./schemas";
-import { type IssueReport } from "./domain/values/IssueReport";
-import { type FileState, MAX_PHASES } from "./core/state";
-import { CODE_SERIALIZERS, CodeSerializerType } from "./utils/codeSerializers";
-import { getCodebaseContext } from "./utils/codebaseContext";
+import { type PhasicBlueprint, type AgenticBlueprint, BlueprintSchemaLite, AgenticBlueprintSchema, type FileOutputType, PhaseConceptLiteSchema, PhaseConceptSchema, type PhaseConceptType, type TemplateSelection, type Blueprint } from "@/agents/schemas";
+import { type IssueReport } from "@/agents/domain/values/IssueReport";
+import { type FileState, MAX_PHASES } from "@/agents/core/state";
+import { CODE_SERIALIZERS, CodeSerializerType } from "@/agents/utils/codeSerializers";
+import { getCodebaseContext } from "@/agents/utils/codebaseContext";
 
 export const PROMPT_UTILS = {
     /**
@@ -372,7 +372,7 @@ COMMON_PITFALLS: `<AVOID COMMON PITFALLS>
     ✅ \`import './styles/globals.css';\` → **CORRECT**: CSS import
     
     1. **IMPORT SYNTAX**: Always use \`import [item] from '[package]';\` - never use commas instead of 'from'
-    2. **UNDEFINED VARIABLES**: Always import/define variables before use. \`cn is not defined\` = missing \`import { cn } from './lib/utils'\`
+    2. **UNDEFINED VARIABLES**: Always import/define variables before use. \`cn is not defined\` = missing \`import { cn } from '@/agents/lib/utils'\`
 
     **CRITICAL ERROR RECOVERY PATTERNS:**
     •   **API Call Safety:** Always wrap in try-catch with user-friendly fallbacks:

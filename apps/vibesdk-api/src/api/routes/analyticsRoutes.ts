@@ -1,11 +1,11 @@
 /**
  * Setup routes for AI Gateway analytics endpoints
  */
-import { AnalyticsController } from '../controllers/analytics/controller';
+import { AnalyticsController } from '@/api/controllers/analytics/controller';
 import { type Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
-import { adaptController } from '../honoAdapter';
+import { type AppEnv } from '@/types/appenv';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
+import { adaptController } from '@/api/honoAdapter';
 
 /**
  * Setup analytics routes

@@ -5,9 +5,9 @@ export type {
 	ViewDefinition,
 	PlatformCapabilities,
 	PlatformCapabilitiesConfig,
-} from './types';
+} from '@/agents/core/features/types';
 
 export {
 	DEFAULT_FEATURE_DEFINITIONS,
 	getBehaviorTypeForProject,
-} from './types';
+} from '@/agents/core/features/types';

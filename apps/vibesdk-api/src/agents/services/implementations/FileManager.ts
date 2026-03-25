@@ -1,12 +1,12 @@
 import * as Diff from 'diff';
-import { type IFileManager } from '../interfaces/IFileManager';
-import { type IStateManager } from '../interfaces/IStateManager';
-import { type FileOutputType } from '../../schemas';
-import { FileProcessing } from '../../domain/pure/FileProcessing';
+import { type IFileManager } from '@/agents/services/interfaces/IFileManager';
+import { type IStateManager } from '@/agents/services/interfaces/IStateManager';
+import { type FileOutputType } from '@/agents/schemas';
+import { FileProcessing } from '@/agents/domain/pure/FileProcessing';
 import { type BaseProjectState, type FileState } from '@/agents/core/state';
-import { type TemplateDetails } from '../../../services/sandbox/sandboxTypes';
+import { type TemplateDetails } from '@/services/sandbox/sandboxTypes';
 import { type GitVersionControl } from '@/agents/git';
-import { isFileModifiable } from '../../../services/sandbox/utils';
+import { isFileModifiable } from '@/services/sandbox/utils';
 
 /**
  * Manages file operations for code generation

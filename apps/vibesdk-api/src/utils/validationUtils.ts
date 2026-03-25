@@ -2,7 +2,7 @@
  * Centralized Validation Utilities
  */
 
-import type { PasswordValidationResult } from '../types/auth-types';
+import type { PasswordValidationResult } from '@/types/auth-types';
 import { z } from 'zod';
 
 /**

@@ -3,9 +3,9 @@
  * Provides comprehensive security settings for Hono middleware
  */
 
-import { DEFAULT_RATE_LIMIT_SETTINGS, type RateLimitSettings } from "../services/rate-limit/config";
+import { DEFAULT_RATE_LIMIT_SETTINGS, type RateLimitSettings } from "@/services/rate-limit/config";
 import { type Context } from "hono";
-import { isDev } from "../utils/envs";
+import { isDev } from "@/utils/envs";
 
 // Type definitions for security configurations
 export interface CORSConfig {

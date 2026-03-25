@@ -1,5 +1,5 @@
 import { Parser } from 'htmlparser2';
-import type { LanguageAnalyzer, FileInput, CodeIssue } from '../types';
+import type { LanguageAnalyzer, FileInput, CodeIssue } from '@/services/static-analysis/types';
 
 export class HTMLAnalyzer implements LanguageAnalyzer {
 	readonly supportedExtensions = ['.html', '.htm'];

@@ -2,14 +2,14 @@
  * Analytics and Count Queries Service
  */
 
-import { BaseService } from './BaseService';
-import * as schema from '../schema';
+import { BaseService } from '@/database/services/BaseService';
+import * as schema from '@/database/schema';
 import { eq, count, and, inArray, sql } from 'drizzle-orm';
 import type {
     UserStats,
     UserActivity,
     BatchAppStats
-} from '../types';
+} from '@/database/types';
 
 export class AnalyticsService extends BaseService {
 

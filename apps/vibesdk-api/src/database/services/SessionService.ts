@@ -3,15 +3,15 @@
  * Provides session creation, validation, and cleanup
  */
 
-import { type AuthSession } from '../../types/auth-types';
+import { type AuthSession } from '@/types/auth-types';
 import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
-import * as schema from '../schema';
+import * as schema from '@/database/schema';
 import { eq, and, lt, gt, desc, ne } from 'drizzle-orm';
-import { createLogger } from '../../logger';
-import { generateId } from '../../utils/idGenerator';
-import { JWTUtils } from '../../utils/jwtUtils';
-import { extractRequestMetadata } from '../../utils/authUtils';
-import { BaseService } from './BaseService';
+import { createLogger } from '@/logger';
+import { generateId } from '@/utils/idGenerator';
+import { JWTUtils } from '@/utils/jwtUtils';
+import { extractRequestMetadata } from '@/utils/authUtils';
+import { BaseService } from '@/database/services/BaseService';
 
 const logger = createLogger('SessionService');
 

@@ -1,11 +1,11 @@
 import { type ChatCompletionFunctionTool, type ChatCompletionMessageFunctionToolCall } from 'openai/resources';
 import { z } from 'zod';
-import { mergeResources, type Resources } from './resources';
-import { type Type } from './resource-types';
+import { mergeResources, type Resources } from '@/agents/tools/resources';
+import { type Type } from '@/agents/tools/resource-types';
 
-export { t, type } from './resource-types';
-export type { Type } from './resource-types';
-export type { Resources as ResourceAccess } from './resources';
+export { t, type } from '@/agents/tools/resource-types';
+export type { Type } from '@/agents/tools/resource-types';
+export type { Resources as ResourceAccess } from '@/agents/tools/resources';
 
 export interface MCPServerConfig {
 	name: string;

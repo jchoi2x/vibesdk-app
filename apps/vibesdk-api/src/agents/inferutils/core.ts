@@ -6,23 +6,23 @@ import {
     type FormatterOptions,
     generateTemplateForSchema,
     parseContentForSchema,
-} from './schemaFormatters';
+} from '@/agents/inferutils/schemaFormatters';
 import { zodResponseFormat } from 'openai/helpers/zod.mjs';
 import {
     type ChatCompletionMessageFunctionToolCall,
     type ReasoningEffort,
     type ChatCompletionChunk,
 } from 'openai/resources.mjs';
-import { type CompletionSignal, type Message, type MessageContent, type MessageRole } from './common';
-import { type ToolCallResult, type ToolDefinition, toOpenAITool } from '../tools/types';
-import { type AgentActionKey, AI_MODEL_CONFIG, type AIModelConfig, type AIModels, type InferenceMetadata, type InferenceRuntimeOverrides } from './config.types';
-import { RateLimitService } from '../../services/rate-limit/rateLimits';
-import { getUserConfigurableSettings } from '../../config';
+import { type CompletionSignal, type Message, type MessageContent, type MessageRole } from '@/agents/inferutils/common';
+import { type ToolCallResult, type ToolDefinition, toOpenAITool } from '@/agents/tools/types';
+import { type AgentActionKey, AI_MODEL_CONFIG, type AIModelConfig, type AIModels, type InferenceMetadata, type InferenceRuntimeOverrides } from '@/agents/inferutils/config.types';
+import { RateLimitService } from '@/services/rate-limit/rateLimits';
+import { getUserConfigurableSettings } from '@/config';
 import { SecurityError, RateLimitExceededError } from '@jchoi2x/types/errors';
 import { RateLimitType } from '@/services/rate-limit/config';
-import { getMaxToolCallingDepth, MAX_LLM_MESSAGES } from '../constants';
-import { executeToolCallsWithDependencies } from './toolExecution';
-import { type CompletionDetector } from './completionDetection';
+import { getMaxToolCallingDepth, MAX_LLM_MESSAGES } from '@/agents/constants';
+import { executeToolCallsWithDependencies } from '@/agents/inferutils/toolExecution';
+import { type CompletionDetector } from '@/agents/inferutils/completionDetection';
 
 function optimizeInputs(messages: Message[]): Message[] {
     return messages.map((message) => ({

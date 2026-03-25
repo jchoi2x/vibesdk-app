@@ -1,7 +1,7 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
-import { createLogger } from '../../logger';
-import { type MCPServerConfig } from './types';
+import { createLogger } from '@/logger';
+import { type MCPServerConfig } from '@/agents/tools/types';
 
 const logger = createLogger('MCPManager');
 

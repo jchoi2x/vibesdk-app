@@ -1,4 +1,4 @@
-import { type StructuredLogger } from '../../logger';
+import { type StructuredLogger } from '@/logger';
 import { env } from 'cloudflare:workers';
 
 export interface ResourceProvisionResult {

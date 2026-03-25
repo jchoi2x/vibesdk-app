@@ -8,7 +8,7 @@ import type {
     Root, Content, Node as UnistNode,
     Heading, List, ListItem, Code, ThematicBreak
 } from 'mdast';
-import { createLogger, type StructuredLogger } from '../../logger';
+import { createLogger, type StructuredLogger } from '@/logger';
 
 // --- Existing Types and Logger Setup ---
 export type SchemaFormat = 'markdown';

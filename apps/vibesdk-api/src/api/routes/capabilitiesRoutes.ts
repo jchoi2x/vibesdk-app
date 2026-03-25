@@ -5,10 +5,10 @@
  */
 
 import { Hono } from 'hono';
-import { CapabilitiesController } from '../controllers/capabilities/controller';
-import { adaptController } from '../honoAdapter';
-import { type AppEnv } from '../../types/appenv';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { CapabilitiesController } from '@/api/controllers/capabilities/controller';
+import { adaptController } from '@/api/honoAdapter';
+import { type AppEnv } from '@/types/appenv';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 export function setupCapabilitiesRoutes(app: Hono<AppEnv>): void {
 	const capabilitiesRouter = new Hono<AppEnv>();

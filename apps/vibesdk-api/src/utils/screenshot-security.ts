@@ -1,4 +1,4 @@
-import { JWTUtils } from './jwtUtils';
+import { JWTUtils } from '@/utils/jwtUtils';
 
 const SCREENSHOT_PATH_PREFIX = '/api/screenshots/';
 

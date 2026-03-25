@@ -2,7 +2,7 @@
  * Type definitions for User Controller responses
  */
 
-import { type EnhancedAppData, type PaginationInfo } from '../../../database/types';
+import { type EnhancedAppData, type PaginationInfo } from '@/database/types';
 
 /**
  * Response data for getApps

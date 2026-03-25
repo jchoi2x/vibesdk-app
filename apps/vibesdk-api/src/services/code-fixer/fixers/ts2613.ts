@@ -3,15 +3,15 @@
  * Handles import/export mismatches by converting between default and named imports
  */
 
-import { type CodeIssue } from '../../sandbox/sandboxTypes';
-import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '../types';
-import { generateCode } from '../utils/ast';
-import { findImportAtLocation, getFileAST, getFileExports, fixImportExportMismatch } from '../utils/imports';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '@/services/code-fixer/types';
+import { generateCode } from '@/services/code-fixer/utils/ast';
+import { findImportAtLocation, getFileAST, getFileExports, fixImportExportMismatch } from '@/services/code-fixer/utils/imports';
 import * as t from '@babel/types';
-import { traverseAST } from '../utils/ast';
-import { findModuleFile } from '../utils/paths';
-import { createObjectLogger } from '../../../logger';
-import { handleFixerError } from '../utils/helpers';
+import { traverseAST } from '@/services/code-fixer/utils/ast';
+import { findModuleFile } from '@/services/code-fixer/utils/paths';
+import { createObjectLogger } from '@/logger';
+import { handleFixerError } from '@/services/code-fixer/utils/helpers';
 
 const logger = createObjectLogger({ name: 'TS2613Fixer' }, 'TS2613Fixer');
 

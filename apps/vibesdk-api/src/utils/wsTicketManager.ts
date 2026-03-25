@@ -2,7 +2,7 @@
  * WebSocket Ticket Manager
  */
 
-import { type PendingWsTicket, type TicketConsumptionResult } from '../types/auth-types';
+import { type PendingWsTicket, type TicketConsumptionResult } from '@/types/auth-types';
 
 /**
  * Manages in-memory storage of WebSocket tickets.

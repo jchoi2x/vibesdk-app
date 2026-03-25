@@ -1,8 +1,8 @@
-import { type IStateManager } from '../interfaces/IStateManager';
-import { type IFileManager } from '../interfaces/IFileManager';
-import { type StructuredLogger } from '../../../logger';
-import { type ServiceOptions } from '../interfaces/IServiceOptions';
-import { type BaseProjectState } from '../../core/state';
+import { type IStateManager } from '@/agents/services/interfaces/IStateManager';
+import { type IFileManager } from '@/agents/services/interfaces/IFileManager';
+import { type StructuredLogger } from '@/logger';
+import { type ServiceOptions } from '@/agents/services/interfaces/IServiceOptions';
+import { type BaseProjectState } from '@/agents/core/state';
 
 /**
  * Base class for all agent services

@@ -1,13 +1,13 @@
-import { BaseController } from '../baseController';
-import { type RouteContext } from '../../types/route-context';
-import { GitHubService } from '../../../services/github';
-import { GitHubExporterOAuthProvider } from '../../../services/oauth/github-exporter';
-import { getAgentStub } from '../../../agents';
-import { createLogger } from '../../../logger';
-import { AppService } from '../../../database/services/AppService';
+import { BaseController } from '@/api/controllers/baseController';
+import { type RouteContext } from '@/api/types/route-context';
+import { GitHubService } from '@/services/github';
+import { GitHubExporterOAuthProvider } from '@/services/oauth/github-exporter';
+import { getAgentStub } from '@/agents';
+import { createLogger } from '@/logger';
+import { AppService } from '@/database/services/AppService';
 import { type ExportResult } from '@/agents/core/types';
 import { SignJWT, jwtVerify, type JWTPayload } from 'jose';
-import { validateRedirectUrl } from '../../../utils/authUtils';
+import { validateRedirectUrl } from '@/utils/authUtils';
 
 export interface GitHubExportData {
     success: boolean;

@@ -1,4 +1,4 @@
-import { type Message, createUserMessage } from './common';
+import { type Message, createUserMessage } from '@/agents/inferutils/common';
 
 /**
  * Represents a single tool call record for loop detection

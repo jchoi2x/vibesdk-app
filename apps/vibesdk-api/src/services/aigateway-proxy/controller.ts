@@ -1,10 +1,10 @@
-import { getConfigurationForModel } from '../../agents/inferutils/core';
+import { getConfigurationForModel } from '@/agents/inferutils/core';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/d1';
-import { apps } from '../../database/schema';
+import { apps } from '@/database/schema';
 import { jwtVerify, SignJWT } from 'jose';
 import { isDev } from '@/utils/envs';
-import { RateLimitService } from '../rate-limit/rateLimits';
+import { RateLimitService } from '@/services/rate-limit/rateLimits';
 import { getUserConfigurableSettings } from '@/config';
 import { AI_MODEL_CONFIG, type AIModels } from '@/agents/inferutils/config.types';
 

@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
-import { SentryTunnelController } from '../controllers/sentry/tunnelController';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { SentryTunnelController } from '@/api/controllers/sentry/tunnelController';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 export function setupSentryRoutes(app: Hono<AppEnv>): void {
     const sentryRouter = new Hono<AppEnv>();

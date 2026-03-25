@@ -1,8 +1,8 @@
-import { BaseController } from '../baseController';
-import type { ControllerResponse, ApiResponse } from '../types';
-import type { RouteContext } from '../../types/route-context';
-import { createLogger } from '../../../logger';
-import { ScreenshotSecurity } from '../../../utils/screenshot-security';
+import { BaseController } from '@/api/controllers/baseController';
+import type { ControllerResponse, ApiResponse } from '@/api/controllers/types';
+import type { RouteContext } from '@/api/types/route-context';
+import { createLogger } from '@/logger';
+import { ScreenshotSecurity } from '@/utils/screenshot-security';
 
 // -------------------------
 // Helpers

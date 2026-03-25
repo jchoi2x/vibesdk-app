@@ -1,11 +1,11 @@
 
-import type { RuntimeError, StaticAnalysisResponse, GitHubPushRequest } from '../../services/sandbox/sandboxTypes';
-import type { FileOutputType, PhaseConceptType } from '../schemas';
-import type { ConversationMessage } from '../inferutils/common';
-import type { InferenceContext } from '../inferutils/config.types';
-import type { TemplateDetails } from '../../services/sandbox/sandboxTypes';
-import { type TemplateSelection } from '../schemas';
-import { type CurrentDevState, type PhasicState, type AgenticState } from './state';
+import type { RuntimeError, StaticAnalysisResponse, GitHubPushRequest } from '@/services/sandbox/sandboxTypes';
+import type { FileOutputType, PhaseConceptType } from '@/agents/schemas';
+import type { ConversationMessage } from '@/agents/inferutils/common';
+import type { InferenceContext } from '@/agents/inferutils/config.types';
+import type { TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import { type TemplateSelection } from '@/agents/schemas';
+import { type CurrentDevState, type PhasicState, type AgenticState } from '@/agents/core/state';
 import { type ProcessedImageAttachment } from '@/types/image-attachment';
 
 export type BehaviorType = 'phasic' | 'agentic';

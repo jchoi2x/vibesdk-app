@@ -4,9 +4,9 @@
  */
 
 import * as t from '@babel/types';
-import { type ImportInfo, type ExportInfo, type ImportUsage, type FileMap } from '../types';
-import { parseCode, traverseAST } from './ast';
-import { createObjectLogger } from '../../../logger';
+import { type ImportInfo, type ExportInfo, type ImportUsage, type FileMap } from '@/services/code-fixer/types';
+import { parseCode, traverseAST } from '@/services/code-fixer/utils/ast';
+import { createObjectLogger } from '@/logger';
 
 const logger = createObjectLogger({ name: 'ImportUtils' }, 'ImportUtils');
 
@@ -180,14 +180,14 @@ export function getFileExports(ast: t.File): ExportInfo {
 
     traverseAST(ast, {
         ExportNamedDeclaration(path) {
-            // Handle re-exports (export * from './module' or export { x } from './module')
+            // Handle re-exports (export * from '@/services/code-fixer/utils/module' or export { x } from '@/services/code-fixer/utils/module')
             if (path.node.source) {
                 // This is a re-export
                 if (path.node.specifiers.length === 0) {
-                    // export * from './module' - we can't determine specific exports without analyzing the source
+                    // export * from '@/services/code-fixer/utils/module' - we can't determine specific exports without analyzing the source
                     reExports.push('*');
                 } else {
-                    // export { specific } from './module'
+                    // export { specific } from '@/services/code-fixer/utils/module'
                     for (const spec of path.node.specifiers) {
                         if (t.isExportSpecifier(spec) && t.isIdentifier(spec.exported)) {
                             namedExports.push(spec.exported.name);
@@ -237,7 +237,7 @@ export function getFileExports(ast: t.File): ExportInfo {
         },
 
         ExportAllDeclaration(path) {
-            // Handle export * from './module'
+            // Handle export * from '@/services/code-fixer/utils/module'
             if (path.node.source) {
                 reExports.push('*');
             }

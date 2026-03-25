@@ -3,17 +3,17 @@
  * Handles CRUD operations for user model configurations
  */
 
-import { BaseController } from '../baseController';
-import { type RouteContext } from '../../types/route-context';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { ModelConfigService } from '../../../database/services/ModelConfigService';
-import { ModelTestService } from '../../../database/services/ModelTestService';
+import { BaseController } from '@/api/controllers/baseController';
+import { type RouteContext } from '@/api/types/route-context';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { ModelConfigService } from '@/database/services/ModelConfigService';
+import { ModelTestService } from '@/database/services/ModelTestService';
 import {
     type AgentActionKey,
     type ModelConfig,
     type AIModels
-} from '../../../agents/inferutils/config.types';
-import { AGENT_CONFIG } from '../../../agents/inferutils/config';
+} from '@/agents/inferutils/config.types';
+import { AGENT_CONFIG } from '@/agents/inferutils/config';
 import {
     type ModelConfigsData,
     type ModelConfigData,
@@ -23,16 +23,16 @@ import {
     type ModelConfigDefaultsData,
     type ModelConfigDeleteData,
     type ByokProvidersData
-} from './types';
+} from '@/api/controllers/modelConfig/types';
 import { 
     getUserProviderStatus, 
     getByokModels,
     getPlatformAvailableModels,
     validateModelAccessForEnvironment
-} from './byokHelper';
+} from '@/api/controllers/modelConfig/byokHelper';
 import { z } from 'zod';
-import { createLogger } from '../../../logger';
-import { getFilteredModelsForAgent } from './constraintHelper';
+import { createLogger } from '@/logger';
+import { getFilteredModelsForAgent } from '@/api/controllers/modelConfig/constraintHelper';
 
 // Validation schemas
 const modelConfigUpdateSchema = z.object({

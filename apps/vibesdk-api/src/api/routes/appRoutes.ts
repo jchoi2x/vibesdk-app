@@ -1,9 +1,9 @@
-import { AppController } from '../controllers/apps/controller';
-import { AppViewController } from '../controllers/appView/controller';
+import { AppController } from '@/api/controllers/apps/controller';
+import { AppViewController } from '@/api/controllers/appView/controller';
 import { Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 /**
  * Setup app management routes

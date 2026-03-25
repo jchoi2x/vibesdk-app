@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
-import { StatusController } from '../controllers/status/controller';
-import { adaptController } from '../honoAdapter';
-import { type AppEnv } from '../../types/appenv';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { StatusController } from '@/api/controllers/status/controller';
+import { adaptController } from '@/api/honoAdapter';
+import { type AppEnv } from '@/types/appenv';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 export function setupStatusRoutes(app: Hono<AppEnv>): void {
     const statusRouter = new Hono<AppEnv>();

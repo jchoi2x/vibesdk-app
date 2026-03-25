@@ -1,14 +1,14 @@
-import { PhaseConceptGenerationSchema, type PhaseConceptGenerationSchemaType } from '../schemas';
-import { type IssueReport } from '../domain/values/IssueReport';
-import { createUserMessage, createMultiModalUserMessage } from '../inferutils/common';
-import { executeInference } from '../inferutils/infer';
-import { issuesPromptFormatter, PROMPT_UTILS, STRATEGIES } from '../prompts';
-import { type Message } from '../inferutils/common';
-import { AgentOperation, getSystemPromptWithProjectContext, type OperationOptions } from '../operations/common';
-import { AGENT_CONFIG } from '../inferutils/config';
-import type { UserContext } from '../core/types';
+import { PhaseConceptGenerationSchema, type PhaseConceptGenerationSchemaType } from '@/agents/schemas';
+import { type IssueReport } from '@/agents/domain/values/IssueReport';
+import { createUserMessage, createMultiModalUserMessage } from '@/agents/inferutils/common';
+import { executeInference } from '@/agents/inferutils/infer';
+import { issuesPromptFormatter, PROMPT_UTILS, STRATEGIES } from '@/agents/prompts';
+import { type Message } from '@/agents/inferutils/common';
+import { AgentOperation, getSystemPromptWithProjectContext, type OperationOptions } from '@/agents/operations/common';
+import { AGENT_CONFIG } from '@/agents/inferutils/config';
+import type { UserContext } from '@/agents/core/types';
 import { imagesToBase64 } from '@/utils/images';
-import { type PhasicGenerationContext } from '../domain/values/GenerationContext';
+import { type PhasicGenerationContext } from '@/agents/domain/values/GenerationContext';
 
 export interface PhaseGenerationInputs {
     issues: IssueReport;

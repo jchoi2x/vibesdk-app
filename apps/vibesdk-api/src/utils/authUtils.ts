@@ -2,9 +2,9 @@
  * Centralized Authentication Utilities
  */
 
-import type {  AuthUser } from '../types/auth-types';
-import type { User } from '../database/schema';
-import { createLogger } from '../logger';
+import type {  AuthUser } from '@/types/auth-types';
+import type { User } from '@/database/schema';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('AuthUtils');
 

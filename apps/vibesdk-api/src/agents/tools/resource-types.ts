@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { mergeResources, type Resources } from './resources';
+import { mergeResources, type Resources } from '@/agents/tools/resources';
 
 export interface Type<T> {
 	schema: z.ZodType<T>;

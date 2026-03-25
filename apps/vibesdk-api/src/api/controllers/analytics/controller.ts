@@ -3,14 +3,14 @@
  * Handles AI Gateway analytics API endpoints
  */
 
-import { BaseController } from '../baseController';
-import { type RouteContext } from '../../types/route-context';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { AiGatewayAnalyticsService } from '../../../services/analytics/AiGatewayAnalyticsService';
+import { BaseController } from '@/api/controllers/baseController';
+import { type RouteContext } from '@/api/types/route-context';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { AiGatewayAnalyticsService } from '@/services/analytics/AiGatewayAnalyticsService';
 
-import { type UserAnalyticsResponseData, type AgentAnalyticsResponseData } from './types';
-import { AnalyticsError } from '../../../services/analytics/types';
-import { createLogger } from '../../../logger';
+import { type UserAnalyticsResponseData, type AgentAnalyticsResponseData } from '@/api/controllers/analytics/types';
+import { AnalyticsError } from '@/services/analytics/types';
+import { createLogger } from '@/logger';
 
 export class AnalyticsController extends BaseController {
     static logger = createLogger('AnalyticsController');

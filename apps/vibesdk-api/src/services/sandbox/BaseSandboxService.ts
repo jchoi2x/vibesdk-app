@@ -30,12 +30,12 @@ import {
     type TemplateDetails,
     type TemplateInfo,
     type InstanceCreationRequest,
-} from './sandboxTypes';
+} from '@/services/sandbox/sandboxTypes';
   
-import { createObjectLogger, type StructuredLogger } from '../../logger';
+import { createObjectLogger, type StructuredLogger } from '@/logger';
 import { env } from 'cloudflare:workers'
-import { ZipExtractor } from './zipExtractor';
-import { FileTreeBuilder } from './fileTreeBuilder';
+import { ZipExtractor } from '@/services/sandbox/zipExtractor';
+import { FileTreeBuilder } from '@/services/sandbox/fileTreeBuilder';
 import { type DeploymentTarget } from '@/agents/core/types';
 
 /**

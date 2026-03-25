@@ -1,5 +1,5 @@
-import { type RuntimeError, type StaticAnalysisResponse } from '../../../services/sandbox/sandboxTypes';
-import { type AllIssues } from '../../core/types';
+import { type RuntimeError, type StaticAnalysisResponse } from '@/services/sandbox/sandboxTypes';
+import { type AllIssues } from '@/agents/core/types';
 
 /**
  * Immutable report of issues found during code generation

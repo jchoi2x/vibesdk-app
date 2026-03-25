@@ -3,9 +3,9 @@
  * Centralized logic for determining external vs internal modules
  */
 
-import { type FixerContext } from '../types';
-import { getFileContent } from './imports';
-import { findModuleFile } from './paths';
+import { type FixerContext } from '@/services/code-fixer/types';
+import { getFileContent } from '@/services/code-fixer/utils/imports';
+import { findModuleFile } from '@/services/code-fixer/utils/paths';
 
 // ============================================================================
 // EXTERNAL MODULE DETECTION

@@ -1,8 +1,8 @@
-import { SecretsController } from '../controllers/secrets/controller';
+import { SecretsController } from '@/api/controllers/secrets/controller';
 import { Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 export function setupSecretsRoutes(app: Hono<AppEnv>): void {
     const secretsRouter = new Hono<AppEnv>();

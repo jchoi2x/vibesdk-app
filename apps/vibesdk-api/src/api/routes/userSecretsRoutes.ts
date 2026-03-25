@@ -2,11 +2,11 @@
  * Vault Routes - API routes for user secrets vault
  */
 
-import { UserSecretsController } from '../controllers/user-secrets/controller';
+import { UserSecretsController } from '@/api/controllers/user-secrets/controller';
 import { Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 export function setupUserSecretsRoutes(app: Hono<AppEnv>): void {
 	// Vault lifecycle routes

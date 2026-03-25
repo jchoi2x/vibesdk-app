@@ -1,4 +1,4 @@
-import { type StructuredLogger } from "../../logger";
+import { type StructuredLogger } from "@/logger";
 
 /**
  * Utility for consistent error handling in operations

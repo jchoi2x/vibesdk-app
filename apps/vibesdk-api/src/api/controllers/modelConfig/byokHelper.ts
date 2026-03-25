@@ -1,6 +1,6 @@
-import { AIModels } from '../../../agents/inferutils/config.types';
-import type { UserProviderStatus, ModelsByProvider } from './types';
-import { getBYOKTemplates } from '../../../types/secretsTemplates';
+import { AIModels } from '@/agents/inferutils/config.types';
+import type { UserProviderStatus, ModelsByProvider } from '@/api/controllers/modelConfig/types';
+import { getBYOKTemplates } from '@/types/secretsTemplates';
 
 export async function getUserProviderStatus(
 	_userId: string,

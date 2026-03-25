@@ -1,7 +1,7 @@
 // An assistant to agents
 
-import { type Message } from "../inferutils/common";
-import { type InferenceContext } from "../inferutils/config.types";
+import { type Message } from "@/agents/inferutils/common";
+import { type InferenceContext } from "@/agents/inferutils/config.types";
 
 class Assistant<Env> {
     protected history: Message[] = [];

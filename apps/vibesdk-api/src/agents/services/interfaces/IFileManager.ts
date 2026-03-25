@@ -1,5 +1,5 @@
-import { type FileOutputType } from '../../schemas';
-import { type FileState } from '../../core/state';
+import { type FileOutputType } from '@/agents/schemas';
+import { type FileState } from '@/agents/core/state';
 
 /**
  * Interface for file management operations

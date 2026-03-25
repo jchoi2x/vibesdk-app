@@ -5,7 +5,7 @@
  * each with the same API but different approaches to handling changes.
  */
 
-import { applyDiff as applyUnifiedDiff } from './udiff';
+import { applyDiff as applyUnifiedDiff } from '@/agents/output-formats/diff-formats/udiff';
 import { 
 	applyDiff as applySearchReplaceDiff,
 	createSearchReplaceDiff,
@@ -13,7 +13,7 @@ import {
 	type ApplyResult,
 	type FailedBlock,
 	MatchingStrategy
-} from './search-replace';
+} from '@/agents/output-formats/diff-formats/search-replace';
 
 export {
 	// Unified Diff Format (git-style)

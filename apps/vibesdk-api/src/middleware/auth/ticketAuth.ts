@@ -9,10 +9,10 @@
  * - Vault: tkv_{userId}_{random} (resource ID encoded in token)
  */
 
-import { getAgentStub } from '../../agents';
-import type { AuthUserSession, PendingWsTicket, TicketConsumptionResult } from '../../types/auth-types';
-import { createLogger } from '../../logger';
-import type { TicketAuthConfig, TicketResourceType } from './routeAuth';
+import { getAgentStub } from '@/agents';
+import type { AuthUserSession, PendingWsTicket, TicketConsumptionResult } from '@/types/auth-types';
+import { createLogger } from '@/logger';
+import type { TicketAuthConfig, TicketResourceType } from '@/middleware/auth/routeAuth';
 
 const logger = createLogger('TicketAuth');
 

@@ -2,7 +2,7 @@
  * Authentication Type Definitions
  */
 
-import type { ApiKey, AuthAttempt as SchemaAuthAttempt, AuditLog, OAuthState } from '../database/schema';
+import type { ApiKey, AuthAttempt as SchemaAuthAttempt, AuditLog, OAuthState } from '@/database/schema';
 
 /**
  * OAuth provider types

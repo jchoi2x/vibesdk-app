@@ -4,13 +4,13 @@
  * Example: "'@/components/ui/sonner' has no exported member named 'toast'. Did you mean 'Toaster'?"
  */
 
-import { type CodeIssue } from '../../sandbox/sandboxTypes';
-import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '../types';
-import { generateCode } from '../utils/ast';
-import { getFileAST, findImportAtLocation, getFileExports } from '../utils/imports';
-import { createObjectLogger } from '../../../logger';
+import { type CodeIssue } from '@/services/sandbox/sandboxTypes';
+import { type FixerContext, type FixResult, type FixedIssue, type UnfixableIssue, type FileObject } from '@/services/code-fixer/types';
+import { generateCode } from '@/services/code-fixer/utils/ast';
+import { getFileAST, findImportAtLocation, getFileExports } from '@/services/code-fixer/utils/imports';
+import { createObjectLogger } from '@/logger';
 import * as t from '@babel/types';
-import { resolvePathAlias, findModuleFile } from '../utils/paths';
+import { resolvePathAlias, findModuleFile } from '@/services/code-fixer/utils/paths';
 import {
     createUnfixableIssue,
     createExternalModuleError,
@@ -18,8 +18,8 @@ import {
     createFixerLogMessages,
     createSourceFileParseError,
     createMissingImportError
-} from '../utils/helpers';
-import { isExternalModule } from '../utils/modules';
+} from '@/services/code-fixer/utils/helpers';
+import { isExternalModule } from '@/services/code-fixer/utils/modules';
 
 const logger = createObjectLogger({ name: 'TS2724Fixer' }, 'TS2724Fixer');
 

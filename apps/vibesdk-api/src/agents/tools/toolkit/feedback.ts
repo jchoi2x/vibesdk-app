@@ -1,6 +1,6 @@
 import { captureMessage, withScope, flush } from '@sentry/cloudflare';
 import { env } from 'cloudflare:workers';
-import { type ErrorResult, tool, t } from '../types';
+import { type ErrorResult, tool, t } from '@/agents/tools/types';
 
 type FeedbackArgs = {
 	message: string;

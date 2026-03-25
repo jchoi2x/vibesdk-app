@@ -2,7 +2,7 @@
  * Type definitions for Stats Controller responses
  */
 
-import { type UserStats, type UserActivity } from '../../../database/types';
+import { type UserStats, type UserActivity } from '@/database/types';
 
 /**
  * Response data for getUserStats - uses UserStats directly

@@ -1,15 +1,15 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
-import { getCORSConfig, getSecureHeadersConfig } from './config/security';
-import { RateLimitService } from './services/rate-limit/rateLimits';
-import { type AppEnv } from './types/appenv';
-import { setupRoutes } from './api/routes';
-import { CsrfService } from './services/csrf/CsrfService';
+import { getCORSConfig, getSecureHeadersConfig } from '@/config/security';
+import { RateLimitService } from '@/services/rate-limit/rateLimits';
+import { type AppEnv } from '@/types/appenv';
+import { setupRoutes } from '@/api/routes';
+import { CsrfService } from '@/services/csrf/CsrfService';
 import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
-import { getGlobalConfigurableSettings } from './config';
-import { AuthConfig, setAuthLevel } from './middleware/auth/routeAuth';
-// import { initHonoSentry } from './observability/sentry';
+import { getGlobalConfigurableSettings } from '@/config';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
+// import { initHonoSentry } from '@/observability/sentry';
 
 export function createApp(env: Env): Hono<AppEnv> {
     const app = new Hono<AppEnv>();

@@ -2,11 +2,11 @@
  * App Service - Database operations for apps
  */
 
-import { BaseService } from './BaseService';
-import * as schema from '../schema';
+import { BaseService } from '@/database/services/BaseService';
+import * as schema from '@/database/schema';
 import { eq, and, or, desc, asc, sql, isNull, inArray } from 'drizzle-orm';
-import { generateId } from '../../utils/idGenerator';
-import { formatRelativeTime } from '../../utils/timeFormatter';
+import { generateId } from '@/utils/idGenerator';
+import { formatRelativeTime } from '@/utils/timeFormatter';
 import type {
     EnhancedAppData,
     AppWithFavoriteStatus,
@@ -18,7 +18,7 @@ import type {
     AppVisibilityUpdateResult,
     TimePeriod,
     PaginationParams
-} from '../types';
+} from '@/database/types';
 import { ScreenshotSecurity } from '@/utils/screenshot-security';
 
 // Type definitions

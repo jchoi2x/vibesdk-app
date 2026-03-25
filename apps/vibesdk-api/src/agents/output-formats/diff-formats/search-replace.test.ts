@@ -1,4 +1,4 @@
-import { applyDiff, createSearchReplaceDiff, validateDiff, MatchingStrategy } from './search-replace';
+import { applyDiff, createSearchReplaceDiff, validateDiff, MatchingStrategy } from '@/agents/output-formats/diff-formats/search-replace';
 
 describe('Search/Replace Diff Format', () => {
 	describe('Basic Operations', () => {
@@ -539,18 +539,18 @@ const x = 2;
 		test('should handle malformed blocks with extra ======= separator', () => {
 			// LLMs sometimes add an extra ======= line before >>>>>>> REPLACE
 			// Our robust parser now correctly identifies this as malformed and ignores it
-			const original = `import { Grid, Tile } from './types';
+			const original = `import { Grid, Tile } from '@/agents/output-formats/diff-formats/types';
 export const GRID_SIZE = 4;
 export const WINNING_VALUE = 2048;
 let tileIdCounter = 1;`;
 			
 			const diff = `<<<<<<< SEARCH
-import { Grid, Tile } from './types';
+import { Grid, Tile } from '@/agents/output-formats/diff-formats/types';
 export const GRID_SIZE = 4;
 export const WINNING_VALUE = 2048;
 let tileIdCounter = 1;
 =======
-import { Grid, Tile, MoveResult } from './types';
+import { Grid, Tile, MoveResult } from '@/agents/output-formats/diff-formats/types';
 export const GRID_SIZE = 4;
 export const WINNING_VALUE = 2048;
 let tileIdCounter = 1;
@@ -1142,17 +1142,17 @@ function hello() {
     // Enhanced Parser Robustness Tests
     describe('Enhanced Parser Robustness', () => {
         test('should handle blocks within code fences', () => {
-            const original = `import { ErrorBoundary } from './components/ErrorBoundary';
-import { RouteErrorBoundary } from './components/RouteErrorBoundary';`;
+            const original = `import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
+import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';`;
             
             const diff = `# Comment
 \`\`\`
 <<<<<<< SEARCH
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
+import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';
 \`\`\`
-// import { ErrorBoundary } from './components/ErrorBoundary';  
-// import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+// import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';  
+// import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';
 \`\`\``;
             
             const result = applyDiff(original, diff);
@@ -1213,9 +1213,9 @@ extra separator that should be ignored
         });
         
         test('should handle the specific malformed case from logs', () => {
-            const original = `import { ErrorBoundary } from './components/ErrorBoundary';
-import { RouteErrorBoundary } from './components/RouteErrorBoundary';
-import { EditorPage } from './pages/EditorPage';
+            const original = `import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
+import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';
+import { EditorPage } from '@/agents/output-formats/diff-formats/pages/EditorPage';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -1244,11 +1244,11 @@ createRoot(rootElement).render(
 
 \`\`\`
 <<<<<<< SEARCH
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
+import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';
 =======
-// import { ErrorBoundary } from './components/ErrorBoundary';
-// import { RouteErrorBoundary } from './components/RouteErrorBoundary';
+// import { ErrorBoundary } from '@/agents/output-formats/diff-formats/components/ErrorBoundary';
+// import { RouteErrorBoundary } from '@/agents/output-formats/diff-formats/components/RouteErrorBoundary';
 =======
 \`\`\`
 

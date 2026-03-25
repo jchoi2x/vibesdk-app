@@ -5,9 +5,9 @@
  */
 
 import * as t from '@babel/types';
-import { type ImportInfo, type ImportUsage, type FileMap } from '../types';
-import { createFileAST, shouldUseJSXExtension, generateCode, parseCode } from './ast';
-import { analyzeImportUsage, getFileAST } from './imports';
+import { type ImportInfo, type ImportUsage, type FileMap } from '@/services/code-fixer/types';
+import { createFileAST, shouldUseJSXExtension, generateCode, parseCode } from '@/services/code-fixer/utils/ast';
+import { analyzeImportUsage, getFileAST } from '@/services/code-fixer/utils/imports';
 
 // ============================================================================
 // USAGE ANALYSIS FOR STUB GENERATION

@@ -1,5 +1,5 @@
 import * as acorn from 'acorn';
-import type { LanguageAnalyzer, FileInput, CodeIssue } from '../types';
+import type { LanguageAnalyzer, FileInput, CodeIssue } from '@/services/static-analysis/types';
 
 export class JavaScriptAnalyzer implements LanguageAnalyzer {
 	readonly supportedExtensions = ['.js', '.mjs'];

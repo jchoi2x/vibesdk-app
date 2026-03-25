@@ -4,7 +4,7 @@
 // ===============================
 
 import { type ImageAttachment, type ProcessedImageAttachment, type SupportedImageMimeType } from "worker/types/image-attachment";
-import { getProtocolForHost } from "./urls";
+import { getProtocolForHost } from "@/utils/urls";
 
 // ===============================
 // Blank screenshot detection

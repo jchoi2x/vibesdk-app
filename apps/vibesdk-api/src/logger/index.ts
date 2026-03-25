@@ -2,11 +2,11 @@
  * Simple Structured Logging System
  */
 
-export * from './types';
-export * from './core';
+export * from '@/logger/types';
+export * from '@/logger/core';
 
-import { createLogger, createObjectLogger, LoggerFactory } from './core';
-import { DEFAULT_CONFIG } from './core';
+import { createLogger, createObjectLogger, LoggerFactory } from '@/logger/core';
+import { DEFAULT_CONFIG } from '@/logger/core';
 
 // Configure logger for Cloudflare Workers environment
 LoggerFactory.configure(DEFAULT_CONFIG);

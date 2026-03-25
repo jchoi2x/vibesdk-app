@@ -5,13 +5,13 @@
  * Tickets are stored in the appropriate DO and consumed on connection.
  */
 
-import { BaseController } from '../baseController';
-import { type RouteContext } from '../../types/route-context';
-import { createLogger } from '../../../logger';
-import { checkAppOwnership } from '../../../middleware/auth/routeAuth';
-import { generateTicketToken, getResourceStub } from '../../../middleware/auth/ticketAuth';
-import type { TicketResourceType } from '../../../middleware/auth/routeAuth';
-import type { PendingWsTicket, AuthUser } from '../../../types/auth-types';
+import { BaseController } from '@/api/controllers/baseController';
+import { type RouteContext } from '@/api/types/route-context';
+import { createLogger } from '@/logger';
+import { checkAppOwnership } from '@/middleware/auth/routeAuth';
+import { generateTicketToken, getResourceStub } from '@/middleware/auth/ticketAuth';
+import type { TicketResourceType } from '@/middleware/auth/routeAuth';
+import type { PendingWsTicket, AuthUser } from '@/types/auth-types';
 
 const TICKET_TTL_MS = 15_000;
 

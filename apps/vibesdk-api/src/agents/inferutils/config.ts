@@ -6,7 +6,7 @@ import {
     AllModels,
     LiteModels,
     RegularModels,
-} from "./config.types";
+} from "@/agents/inferutils/config.types";
 import { env } from 'cloudflare:workers';
 
 // Common configs - these are good defaults

@@ -3,12 +3,12 @@
  * Implements double-submit cookie pattern for CSRF protection
  */
 
-import { createLogger } from '../../logger';
+import { createLogger } from '@/logger';
 import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
-import { generateSecureToken } from '../../utils/cryptoUtils';
-import { parseCookies, createSecureCookie } from '../../utils/authUtils';
-import { getCSRFConfig } from '../../config/security';
-import { captureSecurityEvent } from '../../observability/sentry';
+import { generateSecureToken } from '@/utils/cryptoUtils';
+import { parseCookies, createSecureCookie } from '@/utils/authUtils';
+import { getCSRFConfig } from '@/config/security';
+import { captureSecurityEvent } from '@/observability/sentry';
 import { env } from 'cloudflare:workers'
 
 const logger = createLogger('CsrfService');

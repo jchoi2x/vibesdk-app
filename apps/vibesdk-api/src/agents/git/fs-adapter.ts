@@ -7,7 +7,7 @@
  *   Metadata (parent_path, is_dir, size, mtime) lives on chunk_index 0.
  */
 
-import { concatBuffers, rowDataToBytes, toBuffer,  } from '../../utils/encoding';
+import { concatBuffers, rowDataToBytes, toBuffer,  } from '@/utils/encoding';
 
 export type SqlValue = string | number | boolean | null | ArrayBuffer;
 

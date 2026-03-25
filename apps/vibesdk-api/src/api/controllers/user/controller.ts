@@ -1,11 +1,11 @@
-import { BaseController } from '../baseController';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { type RouteContext } from '../../types/route-context';
-import { UserService } from '../../../database/services/UserService';
-import { AppService } from '../../../database/services/AppService';
-import { type Visibility, type AppSortOption, type SortOrder, type TimePeriod } from '../../../database/types';
-import { type UserAppsData, type ProfileUpdateData } from './types';
-import { createLogger } from '../../../logger';
+import { BaseController } from '@/api/controllers/baseController';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { type RouteContext } from '@/api/types/route-context';
+import { UserService } from '@/database/services/UserService';
+import { AppService } from '@/database/services/AppService';
+import { type Visibility, type AppSortOption, type SortOrder, type TimePeriod } from '@/database/types';
+import { type UserAppsData, type ProfileUpdateData } from '@/api/controllers/user/types';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('UserController');
 

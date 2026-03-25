@@ -24,28 +24,28 @@ import {
     type StoredError,
     type TemplateFile,
     type InstanceCreationRequest,
-} from './sandboxTypes';
+} from '@/services/sandbox/sandboxTypes';
 
-import { createObjectLogger } from '../../logger';
+import { createObjectLogger } from '@/logger';
 import { env } from 'cloudflare:workers'
-import { BaseSandboxService } from './BaseSandboxService';
+import { BaseSandboxService } from '@/services/sandbox/BaseSandboxService';
 
 import { 
     buildDeploymentConfig, 
     parseWranglerConfig, 
     deployToDispatch, 
     deployWorker,
-} from '../deployer/deploy';
+} from '@/services/deployer/deploy';
 import { 
     createAssetManifest 
-} from '../deployer/utils/index';
-import { generateId } from '../../utils/idGenerator';
-import { ResourceProvisioner } from './resourceProvisioner';
-import { TemplateParser } from './templateParser';
-import { type ResourceProvisioningResult } from './types';
-import { getPreviewDomain, migratePreviewUrl } from '../../utils/urls';
+} from '@/services/deployer/utils/index';
+import { generateId } from '@/utils/idGenerator';
+import { ResourceProvisioner } from '@/services/sandbox/resourceProvisioner';
+import { TemplateParser } from '@/services/sandbox/templateParser';
+import { type ResourceProvisioningResult } from '@/services/sandbox/types';
+import { getPreviewDomain, migratePreviewUrl } from '@/utils/urls';
 import { isDev } from '@/utils/envs'
-import { FileTreeBuilder } from './fileTreeBuilder';
+import { FileTreeBuilder } from '@/services/sandbox/fileTreeBuilder';
 import { type DeploymentTarget } from '@/agents/core/types';
 // Export the Sandbox class in your Worker
 export { Sandbox as UserAppSandboxService } from "@cloudflare/sandbox";

@@ -5,10 +5,10 @@
 
 import { drizzle } from 'drizzle-orm/d1';
 import * as Sentry from '@sentry/cloudflare';
-import * as schema from './schema';
+import * as schema from '@/database/schema';
 import type { DrizzleD1Database } from 'drizzle-orm/d1';
 
-import type { HealthStatusResult } from './types';
+import type { HealthStatusResult } from '@/database/types';
 
 // ========================================
 // TYPE DEFINITIONS AND INTERFACES
@@ -21,7 +21,7 @@ export type {
     AppView, NewAppView, OAuthState, NewOAuthState,
     SystemSetting, NewSystemSetting,
     UserModelConfig, NewUserModelConfig,
-} from './schema';
+} from '@/database/schema';
 
 
 /**

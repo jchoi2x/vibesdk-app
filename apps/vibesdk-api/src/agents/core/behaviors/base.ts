@@ -5,44 +5,44 @@ import {
     type Blueprint,
     type AgenticBlueprint,
     type PhasicBlueprint,
-} from '../../schemas';
-import { type ExecuteCommandsResponse, type PreviewType, type RuntimeError, type StaticAnalysisResponse, type TemplateDetails, type TemplateFile } from '../../../services/sandbox/sandboxTypes';
-import { type BaseProjectState, type AgenticState, type FileState } from '../state';
-import { type AllIssues, type AgentSummary, type AgentInitArgs, type BehaviorType, type DeploymentTarget, type ProjectType } from '../types';
-import { WebSocketMessageResponses } from '../../constants';
-import { ProjectSetupAssistant } from '../../assistants/projectsetup';
-import { UserConversationProcessor, type RenderToolCall } from '../../operations/UserConversationProcessor';
-import { FileRegenerationOperation } from '../../operations/FileRegeneration';
+} from '@/agents/schemas';
+import { type ExecuteCommandsResponse, type PreviewType, type RuntimeError, type StaticAnalysisResponse, type TemplateDetails, type TemplateFile } from '@/services/sandbox/sandboxTypes';
+import { type BaseProjectState, type AgenticState, type FileState } from '@/agents/core/state';
+import { type AllIssues, type AgentSummary, type AgentInitArgs, type BehaviorType, type DeploymentTarget, type ProjectType } from '@/agents/core/types';
+import { WebSocketMessageResponses } from '@/agents/constants';
+import { ProjectSetupAssistant } from '@/agents/assistants/projectsetup';
+import { UserConversationProcessor, type RenderToolCall } from '@/agents/operations/UserConversationProcessor';
+import { FileRegenerationOperation } from '@/agents/operations/FileRegeneration';
 // Database schema imports removed - using zero-storage OAuth flow
-import { BaseSandboxService } from '../../../services/sandbox/BaseSandboxService';
-import { getTemplateImportantFiles } from '../../../services/sandbox/utils';
-import { createScratchTemplateDetails } from '../../utils/templates';
-import { type WebSocketMessageData, type WebSocketMessageType } from '../../../api/websocketTypes';
-import { type AgentActionKey, type InferenceContext, type InferenceRuntimeOverrides, type ModelConfig } from '../../inferutils/config.types';
-import { ModelConfigService } from '../../../database/services/ModelConfigService';
-import { fixProjectIssues } from '../../../services/code-fixer';
-import { FastCodeFixerOperation } from '../../operations/PostPhaseCodeFixer';
-import { looksLikeCommand, validateAndCleanBootstrapCommands } from '../../utils/common';
-import { customizeTemplateFiles, generateBootstrapScript } from '../../utils/templateCustomizer';
-import { AppService } from '../../../database';
+import { BaseSandboxService } from '@/services/sandbox/BaseSandboxService';
+import { getTemplateImportantFiles } from '@/services/sandbox/utils';
+import { createScratchTemplateDetails } from '@/agents/utils/templates';
+import { type WebSocketMessageData, type WebSocketMessageType } from '@/api/websocketTypes';
+import { type AgentActionKey, type InferenceContext, type InferenceRuntimeOverrides, type ModelConfig } from '@/agents/inferutils/config.types';
+import { ModelConfigService } from '@/database/services/ModelConfigService';
+import { fixProjectIssues } from '@/services/code-fixer';
+import { FastCodeFixerOperation } from '@/agents/operations/PostPhaseCodeFixer';
+import { looksLikeCommand, validateAndCleanBootstrapCommands } from '@/agents/utils/common';
+import { customizeTemplateFiles, generateBootstrapScript } from '@/agents/utils/templateCustomizer';
+import { AppService } from '@/database';
 import { RateLimitExceededError } from '@jchoi2x/types/errors';
-import { type ImageAttachment, type ProcessedImageAttachment } from '../../../types/image-attachment';
-import { type OperationOptions } from '../../operations/common';
+import { type ImageAttachment, type ProcessedImageAttachment } from '@/types/image-attachment';
+import { type OperationOptions } from '@/agents/operations/common';
 import { ImageType, uploadImage, detectBlankScreenshot } from '@/utils/images';
 import { ScreenshotSecurity } from '@/utils/screenshot-security';
-import { type DeepDebugResult } from '../types';
-import { updatePackageJson } from '../../utils/packageSyncer';
-import { type ICodingAgent } from '../../services/interfaces/ICodingAgent';
-import { SimpleCodeGenerationOperation } from '../../operations/SimpleCodeGeneration';
-import { AgentComponent } from '../AgentComponent';
-import type { AgentInfrastructure } from '../AgentCore';
-import { type GitVersionControl } from '../../git';
-import { DeepDebuggerOperation } from '../../operations/DeepDebugger';
-import type { DeepDebuggerInputs } from '../../operations/DeepDebugger';
+import { type DeepDebugResult } from '@/agents/core/types';
+import { updatePackageJson } from '@/agents/utils/packageSyncer';
+import { type ICodingAgent } from '@/agents/services/interfaces/ICodingAgent';
+import { SimpleCodeGenerationOperation } from '@/agents/operations/SimpleCodeGeneration';
+import { AgentComponent } from '@/agents/core/AgentComponent';
+import type { AgentInfrastructure } from '@/agents/core/AgentCore';
+import { type GitVersionControl } from '@/agents/git';
+import { DeepDebuggerOperation } from '@/agents/operations/DeepDebugger';
+import type { DeepDebuggerInputs } from '@/agents/operations/DeepDebugger';
 import { generatePortToken } from '@/utils/cryptoUtils';
 import { getPreviewDomain, getProtocolForHost } from '@/utils/urls';
 import { isDev } from '@/utils/envs';
-import { InMemoryAnalyzer } from '../../../services/static-analysis';
+import { InMemoryAnalyzer } from '@/services/static-analysis';
 
 // Screenshot capture configuration
 const SCREENSHOT_CONFIG = {

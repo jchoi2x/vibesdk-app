@@ -1,8 +1,8 @@
-import type { IStaticAnalyzer, LanguageAnalyzer, CrossFileValidator, FileInput, StaticAnalysisResponse, CodeIssue } from './types';
-import { JavaScriptAnalyzer } from './analyzers/JavaScriptAnalyzer';
-import { HTMLAnalyzer } from './analyzers/HTMLAnalyzer';
-import { CSSAnalyzer } from './analyzers/CSSAnalyzer';
-import { HTMLCSSCrossValidator } from './validators/HTMLCSSCrossValidator';
+import type { IStaticAnalyzer, LanguageAnalyzer, CrossFileValidator, FileInput, StaticAnalysisResponse, CodeIssue } from '@/services/static-analysis/types';
+import { JavaScriptAnalyzer } from '@/services/static-analysis/analyzers/JavaScriptAnalyzer';
+import { HTMLAnalyzer } from '@/services/static-analysis/analyzers/HTMLAnalyzer';
+import { CSSAnalyzer } from '@/services/static-analysis/analyzers/CSSAnalyzer';
+import { HTMLCSSCrossValidator } from '@/services/static-analysis/validators/HTMLCSSCrossValidator';
 
 export class InMemoryAnalyzer implements IStaticAnalyzer {
 	private analyzers: LanguageAnalyzer[];

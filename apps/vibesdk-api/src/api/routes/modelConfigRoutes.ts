@@ -2,11 +2,11 @@
  * Routes for managing user model configurations
  */
 
-import { ModelConfigController } from '../controllers/modelConfig/controller';
+import { ModelConfigController } from '@/api/controllers/modelConfig/controller';
 import { Hono } from 'hono';
-import { type AppEnv } from '../../types/appenv';
-import { adaptController } from '../honoAdapter';
-import { AuthConfig, setAuthLevel } from '../../middleware/auth/routeAuth';
+import { type AppEnv } from '@/types/appenv';
+import { adaptController } from '@/api/honoAdapter';
+import { AuthConfig, setAuthLevel } from '@/middleware/auth/routeAuth';
 
 /**
  * Setup model configuration routes

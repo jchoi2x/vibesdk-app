@@ -1,9 +1,9 @@
-import { tool, type } from '../types';
-import { type StructuredLogger } from '../../../logger';
+import { tool, type } from '@/agents/tools/types';
+import { type StructuredLogger } from '@/logger';
 import { type ICodingAgent } from '@/agents/services/interfaces/ICodingAgent';
 import { BaseSandboxService } from '@/services/sandbox/BaseSandboxService';
-import { selectTemplate } from '../../planning/templateSelector';
-import { type TemplateSelection } from '../../schemas';
+import { selectTemplate } from '@/agents/planning/templateSelector';
+import { type TemplateSelection } from '@/agents/schemas';
 import { type TemplateFile } from '@/services/sandbox/sandboxTypes';
 import { z } from 'zod';
 

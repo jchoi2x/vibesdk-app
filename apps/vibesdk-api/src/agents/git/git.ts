@@ -3,8 +3,8 @@
  */
 
 import git from '@ashishkumar472/cf-git';
-import { SqliteFS, type SqlExecutor } from './fs-adapter';
-import type { FileOutputType } from '../schemas';
+import { SqliteFS, type SqlExecutor } from '@/agents/git/fs-adapter';
+import type { FileOutputType } from '@/agents/schemas';
 import * as Diff from 'diff';
 
 export interface CommitInfo {

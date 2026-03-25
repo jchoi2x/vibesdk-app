@@ -3,8 +3,8 @@
  * Abstract base class for OAuth provider implementations
  */
 
-import { type OAuthProvider, type OAuthUserInfo } from '../../types/auth-types';
-import { createLogger } from '../../logger';
+import { type OAuthProvider, type OAuthUserInfo } from '@/types/auth-types';
+import { createLogger } from '@/logger';
 
 const logger = createLogger('OAuthProvider');
 

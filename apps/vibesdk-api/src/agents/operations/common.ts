@@ -1,18 +1,18 @@
-import { type StructuredLogger } from "../../logger";
-import { GenerationContext } from "../domain/values/GenerationContext";
-import { type Message } from "../inferutils/common";
-import { type InferenceContext, type AgentActionKey } from "../inferutils/config.types";
-import { createUserMessage, createSystemMessage, createAssistantMessage } from "../inferutils/common";
-import { generalSystemPromptBuilder, USER_PROMPT_FORMATTER } from "../prompts";
-import { CodeSerializerType } from "../utils/codeSerializers";
-import { type ICodingAgent } from "../services/interfaces/ICodingAgent";
-import { executeInference } from "../inferutils/infer";
-import { type ToolDefinition } from "../tools/types";
-import { LoopDetector } from "../inferutils/loopDetection";
-import { wrapToolsWithLoopDetection } from "../assistants/utils";
-import { type CompletionConfig, type InferResponseString, InferError } from "../inferutils/core";
-import { CompletionDetector } from "../inferutils/completionDetection";
-import { type RenderToolCall } from "./UserConversationProcessor";
+import { type StructuredLogger } from "@/logger";
+import { GenerationContext } from "@/agents/domain/values/GenerationContext";
+import { type Message } from "@/agents/inferutils/common";
+import { type InferenceContext, type AgentActionKey } from "@/agents/inferutils/config.types";
+import { createUserMessage, createSystemMessage, createAssistantMessage } from "@/agents/inferutils/common";
+import { generalSystemPromptBuilder, USER_PROMPT_FORMATTER } from "@/agents/prompts";
+import { CodeSerializerType } from "@/agents/utils/codeSerializers";
+import { type ICodingAgent } from "@/agents/services/interfaces/ICodingAgent";
+import { executeInference } from "@/agents/inferutils/infer";
+import { type ToolDefinition } from "@/agents/tools/types";
+import { LoopDetector } from "@/agents/inferutils/loopDetection";
+import { wrapToolsWithLoopDetection } from "@/agents/assistants/utils";
+import { type CompletionConfig, type InferResponseString, InferError } from "@/agents/inferutils/core";
+import { CompletionDetector } from "@/agents/inferutils/completionDetection";
+import { type RenderToolCall } from "@/agents/operations/UserConversationProcessor";
 
 export function getSystemPromptWithProjectContext(
     systemPrompt: string,

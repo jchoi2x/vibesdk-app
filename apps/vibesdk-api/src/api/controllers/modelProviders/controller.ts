@@ -2,10 +2,10 @@
  * Model Providers Controller
  */
 
-import { BaseController } from '../baseController';
-import { type RouteContext } from '../../types/route-context';
-import { type ApiResponse, type ControllerResponse } from '../types';
-import { ModelProvidersService } from '../../../database/services/ModelProvidersService';
+import { BaseController } from '@/api/controllers/baseController';
+import { type RouteContext } from '@/api/types/route-context';
+import { type ApiResponse, type ControllerResponse } from '@/api/controllers/types';
+import { ModelProvidersService } from '@/database/services/ModelProvidersService';
 import { z } from 'zod';
 import {
     type ModelProvidersListData,
@@ -17,8 +17,8 @@ import {
     type CreateProviderRequest,
     type UpdateProviderRequest,
     type TestProviderRequest
-} from './types';
-import { createLogger } from '../../../logger';
+} from '@/api/controllers/modelProviders/types';
+import { createLogger } from '@/logger';
 
 // Validation schemas
 const createProviderSchema = z.object({

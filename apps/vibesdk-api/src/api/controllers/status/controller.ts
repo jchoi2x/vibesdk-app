@@ -1,7 +1,7 @@
-import { BaseController } from '../baseController';
-import type { ApiResponse, ControllerResponse } from '../types';
-import type { RouteContext } from '../../types/route-context';
-import type { PlatformStatusData } from './types';
+import { BaseController } from '@/api/controllers/baseController';
+import type { ApiResponse, ControllerResponse } from '@/api/controllers/types';
+import type { RouteContext } from '@/api/types/route-context';
+import type { PlatformStatusData } from '@/api/controllers/status/types';
 
 export class StatusController extends BaseController {
     static async getPlatformStatus(
