@@ -8,11 +8,11 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc -b --incremental && vite build",
+		"build": "tsc -b --incremental && vite build && wrangler pages functions build --outdir=\"./dist/_worker.js/\" && cp .assetsignore dist/.assetsignore",
 		"typecheck": "tsc -b --incremental --noEmit",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"deploy": "wrangler pages deploy dist",
+		"deploy": "pnpm run build && wrangler deploy",
 		"cf-typegen": "wrangler types"
 	}
 }

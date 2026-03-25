@@ -11,11 +11,11 @@ import { IdGenerator } from '@/agents/utils/idGenerator';
 import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { buildTools } from "@/agents/tools/customTools";
 import { PROMPT_UTILS } from "@/agents/prompts";
-import { type RuntimeError } from "worker/services/sandbox/sandboxTypes";
+import { type RuntimeError } from "@/services/sandbox/sandboxTypes";
 import { CodeSerializerType } from "@/agents/utils/codeSerializers";
 import { type ConversationState } from "@/agents/inferutils/common";
-import { imagesToBase64 } from "worker/utils/images";
-import { type ProcessedImageAttachment } from "worker/types/image-attachment";
+import { imagesToBase64 } from "@/utils/images";
+import { type ProcessedImageAttachment } from "@/types/image-attachment";
 import { AbortError, type InferResponseString } from "@/agents/inferutils/core";
 import { type GenerationContext } from "@/agents/domain/values/GenerationContext";
 import { compactifyContext } from "@/agents/utils/conversationCompactifier";
@@ -88,7 +88,7 @@ const SYSTEM_PROMPT = `You are Orange, the conversational AI interface for Cloud
 
 1. **For general questions or discussions**: Simply respond naturally and helpfully. Be friendly and informative.
 
-2. **When users want to modify their app or point out issues/bugs**: 
+2. **When users want to modify their app or point out issues/bugs**:
    - First acknowledge in first person: "I'll add that", "I'll fix that issue"
    - Then call the queue_request tool with a clear, actionable description (this internally relays to the dev agent)
    - The modification request should be specific but NOT include code-level implementation details
@@ -155,7 +155,7 @@ Users may face issues, bugs and runtime errors. You have TWO options:
     - ✅ If user asks for another session: Frame it as verification, not fixing: "I'll verify everything is working correctly and check for any other issues."
     - ❌ DON'T say: "fix remaining issues" or "problems that weren't fully resolved" - this misleads the user
     - ❌ DON'T reference past failed attempts when the issue is now fixed
-    
+
     - **If transcript shows incomplete work or errors persist:**
     - Acknowledge what was attempted and what remains
     - Be specific about next steps
@@ -193,7 +193,7 @@ Users may face issues, bugs and runtime errors. You have TWO options:
     - DO NOT repeat your previous message
     - Either:
     - Say nothing more (system will show tool completion)
-    - OR add a brief confirmation: "✓" or "Done" 
+    - OR add a brief confirmation: "✓" or "Done"
     - NEVER repeat your entire previous explanation
 
     **Examples:**
@@ -216,16 +216,16 @@ deep_debug can be more expensive to run cost-wise than queue_request for complex
         - After this initial loop, the system goes into a maintainance loop of code review <> file regeneration where a CodeReview Agent reviews the code and patches files in parallel as needed.
         - After few reviewcycles, we finish the app.
     - If a user makes any demands, the request is first sent to you. And then your job is to queue the request using the queue_request tool.
-        - If the phase generation <> implementation loop is not finished, the queued requests would be fetched whenever the next phase planning happens. 
+        - If the phase generation <> implementation loop is not finished, the queued requests would be fetched whenever the next phase planning happens.
         - If the review loop is running, then after code reviews are finished, the state machine next enters phase generation loop again.
         - If the state machine had ended, we restart it in the phase generation loop with your queued requests.
         - Any queued request thus might take some time for implementation.
     - During each phase generation and phase implementation, the agents try to fetch the latest runtime errors from the sandbox too.
         - They do their best to fix them, however sometimes they might fail, so they need to be prompted again. The agents don't have full visibility on server logs though, they can only see the errors and static analysis. User must report their own experiences and issues through you.
-    - The frontend has several buttons for the user - 
+    - The frontend has several buttons for the user -
         - Deploy to cloudflare: button to deploy the app to cloudflare workers, as sandbox previews are ephemeral.
         - Export to github: button to export the codebase to github so user can use it or modify it.
-        - Refresh: button to refresh the preview. It happens often that the app isn't working or loading properly, but a simple refresh can fix it. Although you should still report this by queueing a request. 
+        - Refresh: button to refresh the preview. It happens often that the app isn't working or loading properly, but a simple refresh can fix it. Although you should still report this by queueing a request.
         - Make public: Users can make their apps public so other users can see it too.
         - Discover page: Users can see other public apps here.
 
@@ -319,7 +319,7 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
     async execute(inputs: UserConversationInputs, options: OperationOptions<GenerationContext>): Promise<UserConversationOutputs> {
         const { env, logger, context, agent } = options;
         const { userMessage, conversationState, errors, images, projectUpdates } = inputs;
-        logger.info("Processing user message", { 
+        logger.info("Processing user message", {
             messageLength: inputs.userMessage.length,
             hasImages: !!images && images.length > 0,
             imageCount: images?.length || 0
@@ -327,7 +327,7 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
 
         try {
             const systemPromptMessages = getSystemPromptWithProjectContext(SYSTEM_PROMPT, context, CodeSerializerType.SIMPLE);
-            
+
             // Create user message with optional images for inference
             const userPromptForInference = buildUserMessageWithContext(userMessage, errors, projectUpdates, true);
             const userMessageForInference = images && images.length > 0
@@ -339,7 +339,7 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
                 : createUserMessage(userPromptForInference);
 
             let extractedUserResponse = "";
-            
+
             // Generate unique conversation ID for this turn
             const aiConversationId = IdGenerator.generateConversationId();
 
@@ -368,7 +368,7 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
 
             const compactHistory = await compactifyContext(runningHistory, env, options, toolCallRenderer, logger);
             if (compactHistory.length !== runningHistory.length) {
-                logger.info("Conversation history compactified", { 
+                logger.info("Conversation history compactified", {
                     fullHistoryLength: conversationState.fullHistory.length,
                     runningHistoryLength: conversationState.runningHistory.length,
                     compactifiedRunningHistoryLength: compactHistory.length,
@@ -379,12 +379,12 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
             const messagesForInference =  [...systemPromptMessages, ...compactHistory, {...userMessageForInference, conversationId: IdGenerator.generateConversationId()}];
 
 
-            logger.info("Executing inference for user message", { 
+            logger.info("Executing inference for user message", {
                 messageLength: userMessage.length,
                 aiConversationId,
                 tools,
             });
-            
+
             // Don't save the system prompts so that every time new initial prompts can be generated with latest project context
             // Use inference message (with images) for AI, but store text-only in history
             let result : InferResponseString;
@@ -412,7 +412,7 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
                     throw error;
                 }
             }
-            
+
             logger.info("Successfully processed user message", {
                 streamingSuccess: !!extractedUserResponse,
             });
@@ -421,7 +421,7 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
                 userResponse: extractedUserResponse
             };
 
-            
+
             // For conversation history, store only text (images are ephemeral and not persisted)
             const userPromptForHistory = buildUserMessageWithContext(userMessage, errors, projectUpdates, false);
             const userMessageForHistory = images && images.length > 0
@@ -432,7 +432,7 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
                 )
                 : createUserMessage(userPromptForHistory);
 
-            
+
             const messages = [{...userMessageForHistory, conversationId: IdGenerator.generateConversationId()}];
 
             // Save the assistant's response to conversation history
@@ -443,13 +443,13 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
                         .map((message) => ({ ...message, conversationId: IdGenerator.generateConversationId() }))
                 );
             }
-            
+
             // Check if final response is duplicate of last assistant message in tool context
             const finalResponse = createAssistantMessage(result.string);
             const lastToolContextMessage = result.toolCallContext?.messages?.[result.toolCallContext.messages.length - 1];
-            const isDuplicate = lastToolContextMessage?.role === 'assistant' && 
+            const isDuplicate = lastToolContextMessage?.role === 'assistant' &&
                                lastToolContextMessage?.content === finalResponse.content;
-            
+
             if (!isDuplicate) {
                 messages.push({...finalResponse, conversationId: IdGenerator.generateConversationId()});
                 logger.info("Added final assistant response to history");
@@ -482,13 +482,13 @@ export class UserConversationProcessor extends AgentOperation<GenerationContext,
             logger.error("Error processing user message:", error);
             if (error instanceof RateLimitExceededError || error instanceof SecurityError) {
                 throw error;
-            }   
+            }
 
             const fallbackMessages = [
                 {...createUserMessage(userMessage), conversationId: IdGenerator.generateConversationId()},
                 {...createAssistantMessage(FALLBACK_USER_RESPONSE), conversationId: IdGenerator.generateConversationId()}
             ]
-            
+
             // Fallback response
             return {
                 conversationResponse: {

@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite';
+import { cloudflare } from '@cloudflare/vite-plugin';
+
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
@@ -11,7 +13,9 @@ export default defineConfig({
 		include: ['monaco-editor/esm/vs/editor/editor.api'],
 		force: true,
 	},
-	plugins: [react(), svgr(), tailwindcss()],
+	plugins: [react(), svgr(), tailwindcss(), cloudflare({
+		configPath: './wrangler.jsonc',
+	})],
 	resolve: {
 		alias: {
 			debug: 'debug/src/browser',
@@ -29,12 +33,12 @@ export default defineConfig({
 		allowedHosts: true,
 		// In local dev, proxy /api/* to the vibesdk-api wrangler dev server.
 		// vibesdk-api runs on port 8787 by default.
-		proxy: {
-			'/api': {
-				target: 'http://localhost:8787',
-				changeOrigin: true,
-			},
-		},
+		// proxy: {
+		// 	'/api': {
+		// 		target: 'http://localhost:8787',
+		// 		changeOrigin: true,
+		// 	},
+		// },
 	},
 	cacheDir: 'node_modules/.vite',
 });

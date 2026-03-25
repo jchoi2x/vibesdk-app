@@ -11,5 +11,6 @@ interface Env {
  * calls with no external HTTP hop.
  */
 export const onRequest = (context: { request: Request; env: Env }): Promise<Response> => {
+	console.log('onRequest', context.request.url);
 	return context.env.VIBESDK_API.fetch(context.request);
 };

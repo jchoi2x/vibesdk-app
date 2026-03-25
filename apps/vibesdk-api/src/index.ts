@@ -1,6 +1,7 @@
 import { createLogger } from '@/logger';
 import { isDispatcherAvailable } from '@/utils/dispatcherUtils';
 import { createApp } from '@/app';
+import { env } from 'cloudflare:workers';
 // import * as Sentry from '@sentry/cloudflare';
 // import { sentryOptions } from '@/observability/sentry';
 import { DORateLimitStore as BaseDORateLimitStore } from '@/services/rate-limit/DORateLimitStore';
@@ -25,7 +26,7 @@ const logger = createLogger('App');
 
 function setOriginControl(env: Env, request: Request, currentHeaders: Headers): Headers {
     const origin = request.headers.get('Origin');
-    
+
     if (origin && isOriginAllowed(env, origin)) {
         currentHeaders.set('Access-Control-Allow-Origin', origin);
     }
@@ -79,10 +80,10 @@ async function handleUserAppRequest(request: Request, env: Env): Promise<Respons
             logger.info(`Serving websocket response from sandbox for: ${hostname}`);
             return sandboxResponse;
         }
-		
+
 		// Add headers to identify this as a sandbox response
 		let headers = new Headers(sandboxResponse.headers);
-		
+
         if (sandboxResponse.status === 500) {
             headers.set('X-Preview-Type', 'sandbox-error');
         } else {
@@ -91,7 +92,7 @@ async function handleUserAppRequest(request: Request, env: Env): Promise<Respons
         headers = setOriginControl(env, request, headers);
         headers.append('Vary', 'Origin');
 		headers.set('Access-Control-Expose-Headers', 'X-Preview-Type');
-		
+
 		return new Response(sandboxResponse.body, {
 			status: sandboxResponse.status,
 			statusText: sandboxResponse.statusText,
@@ -138,6 +139,7 @@ async function handleUserAppRequest(request: Request, env: Env): Promise<Respons
 /**
  * Main Worker fetch handler with robust, secure routing.
  */
+const app = createApp(env);
 const worker = {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
         // logger.info(`Received request: ${request.method} ${request.url}`);
@@ -200,7 +202,6 @@ const worker = {
 
 			// Handle all API requests with the main Hono application.
 			logger.info(`Handling API request for: ${url}`);
-			const app = createApp(env);
 			return app.fetch(request, env, ctx);
 		}
 

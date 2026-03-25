@@ -1,4 +1,4 @@
-import { type BaseProjectState } from "worker/agents/core/state";
+import { type BaseProjectState } from "@/agents/core/state";
 
 /**
  * Interface for state management

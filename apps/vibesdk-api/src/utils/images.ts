@@ -3,7 +3,7 @@
 // Screenshot storage helpers
 // ===============================
 
-import { type ImageAttachment, type ProcessedImageAttachment, type SupportedImageMimeType } from "worker/types/image-attachment";
+import { type ImageAttachment, type ProcessedImageAttachment, type SupportedImageMimeType } from "@/types/image-attachment";
 import { getProtocolForHost } from "@/utils/urls";
 
 // ===============================
@@ -80,7 +80,7 @@ export function detectBlankScreenshot(
     };
 }
 
-    
+
 export function base64ToUint8Array(base64: string): Uint8Array {
     const binary = atob(base64);
     const bytes = new Uint8Array(binary.length);

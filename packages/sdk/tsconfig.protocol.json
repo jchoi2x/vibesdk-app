@@ -3,9 +3,13 @@
 	"compilerOptions": {
 		"noEmit": true,
 		"noUncheckedIndexedAccess": false,
-		"baseUrl": ".",
 		"paths": {
-			"worker/*": ["../../apps/vibesdk-api/worker/*"]
+			"*": [
+				"./*"
+			],
+			"@/*": [
+				"./src/*"
+			]
 		},
 		"types": []
 	},

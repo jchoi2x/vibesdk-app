@@ -18,12 +18,12 @@ import { type AgentInfrastructure } from "@/agents/core/AgentCore";
 import { type ProjectType } from '@/agents/core/types';
 import { type Connection } from 'agents';
 import { handleWebSocketMessage, handleWebSocketClose, broadcastToConnections, sendToConnection } from '@/agents/core/websocket';
-import { type WebSocketMessageData, type WebSocketMessageType } from "worker/api/websocketTypes";
-import { type PreviewType, type TemplateDetails } from "worker/services/sandbox/sandboxTypes";
+import { type WebSocketMessageData, type WebSocketMessageType } from "@/api/websocketTypes";
+import { type PreviewType, type TemplateDetails } from "@/services/sandbox/sandboxTypes";
 import { WebSocketMessageResponses } from "@/agents/constants";
-import { AppService, ModelConfigService } from "worker/database";
+import { AppService, ModelConfigService } from "@/database";
 import { type ConversationMessage, type ConversationState } from "@/agents/inferutils/common";
-import { type ImageAttachment } from "worker/types/image-attachment";
+import { type ImageAttachment } from "@/types/image-attachment";
 import { RateLimitExceededError } from "@jchoi2x/types/errors";
 import { ProjectObjective } from "@/agents/core/objectives/base";
 import { type FileOutputType } from "@/agents/schemas";
@@ -45,23 +45,23 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
     private objective!: ProjectObjective<BaseProjectState>;
     private secretsClient: SecretsClient | null = null;
     protected static readonly PROJECT_NAME_PREFIX_MAX_LENGTH = 20;
-    
+
     /** Ticket manager for WebSocket authentication */
     private ticketManager = new WsTicketManager();
-    
+
     // Services
     readonly fileManager: FileManager;
     readonly deploymentManager: DeploymentManager;
     readonly git: GitVersionControl;
-    
+
     // Redeclare as public to satisfy AgentInfrastructure interface
     declare public readonly env: Env;
     declare public readonly sql: SqlExecutor;
-    
+
     // ==========================================
     // Initialization
     // ==========================================
-    
+
     initialState = {
         behaviorType: 'unknown' as BehaviorType,
         projectType: 'unknown' as ProjectType,
@@ -90,7 +90,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
 
     constructor(ctx: AgentContext, env: Env) {
         super(ctx, env);
-                
+
         void this.sql`CREATE TABLE IF NOT EXISTS full_conversations (id TEXT PRIMARY KEY, messages TEXT)`;
         void this.sql`CREATE TABLE IF NOT EXISTS compact_conversations (id TEXT PRIMARY KEY, messages TEXT)`;
 
@@ -99,7 +99,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
             () => this.state,
             (s) => this.setState(s)
         );
-        
+
         this.git = new GitVersionControl(this.sql.bind(this));
         this.fileManager = new FileManager(
             stateManager,
@@ -134,18 +134,18 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
 
         // Infrastructure setup
         await this.gitInit();
-        
+
         // Let behavior handle all state initialization (blueprint, projectName, etc.)
         await this.behavior.initialize({
             ...initArgs,
             sandboxSessionId // Pass generated session ID to behavior
         });
-        
+
         await this.saveToDatabase();
-        
+
         return this.state;
     }
-    
+
     async isInitialized() {
         return this.getAgentId() ? true : false
     }
@@ -173,7 +173,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
         } else {
             this.behavior = new AgenticCodingBehavior(this as AgentInfrastructure<AgenticState>, projectType);
         }
-        
+
         // Create objective based on project type
         this.objective = this.createObjective(projectType);
 
@@ -187,18 +187,18 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
 
         // Ensure state is migrated for any previous versions
         this.behavior.migrateStateIfNeeded();
-        
+
         // Check if this is a read-only operation
         const readOnlyMode = props?.readOnlyMode === true;
-        
+
         if (readOnlyMode) {
             this.logger().info(`Agent ${this.getAgentId()} starting in READ-ONLY mode - skipping expensive initialization`);
             return;
         }
-        
+
         // Just in case
         await this.gitInit();
-        
+
         await this.behavior.ensureTemplateDetails();
         this.logger().info(`Agent ${this.getAgentId()} session: ${this.state.sessionId} onStart processed successfully`);
 
@@ -208,7 +208,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
         this.behavior.setUserModelConfigs(userConfigsRecord);
         this.logger().info(`Agent ${this.getAgentId()} session: ${this.state.sessionId} onStart: User configs loaded successfully`, {userConfigsRecord});
     }
-    
+
     onConnect(connection: Connection, ctx: ConnectionContext) {
         this.logger().info(`Agent connected for agent ${this.getAgentId()}`, { connection, ctx });
         let previewUrl = '';
@@ -240,7 +240,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
         }
         return this._logger;
     }
-    
+
     // ==========================================
     // Utilities
     // ==========================================
@@ -255,7 +255,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
     getAgentId() {
         return this.state.metadata.agentId;
     }
-    
+
     getWebSockets(): WebSocket[] {
         return this.ctx.getWebSockets();
     }
@@ -304,7 +304,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
     getObjective(): ProjectObjective<BaseProjectState> {
         return this.objective;
     }
-    
+
     /**
      * Get the behavior (defines how code is generated)
      */
@@ -348,7 +348,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
     importTemplate(templateName: string): Promise<{ templateName: string; filesImported: number }> {
         return this.behavior.importTemplate(templateName);
     }
-    
+
     protected async saveToDatabase() {
         this.logger().info(`Saving agent ${this.getAgentId()} to database`);
         // Save the app to database (authenticated users only)
@@ -367,8 +367,8 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
                 createdAt: new Date(),
             updatedAt: new Date()
             });
-        this.logger().info(`App saved successfully to database for agent ${this.state.metadata.agentId}`, { 
-            agentId: this.state.metadata.agentId, 
+        this.logger().info(`App saved successfully to database for agent ${this.state.metadata.agentId}`, {
+            agentId: this.state.metadata.agentId,
             userId: this.state.metadata.userId,
             visibility: 'private'
         });
@@ -397,7 +397,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
                 this.logger().warn('Failed to parse full conversation history', _e);
             }
         }
-        
+
         // Load compact (running) history from sqlite with fallback to in-memory state for migration
         const compactRows = this.sql<{ messages: string, id: string }>`SELECT * FROM compact_conversations WHERE id = ${id}`;
         let runningHistory: ConversationMessage[] = [];
@@ -432,7 +432,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
         fullHistory = deduplicateMessages(fullHistory);
 
         this.logger().info(`Loaded conversation state ${id}, full_length: ${fullHistory.length}, compact_length: ${runningHistory.length}`, fullHistory);
-        
+
         return {
             id: id,
             runningHistory,
@@ -482,20 +482,20 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
         }
         this.setConversationState(conversationState);
     }
-    
+
     /**
      * Clear conversation history
      */
     public clearConversation(): void {
         try {
             this.logger().info('Clearing conversation history');
-            
+
             // Clear SQL tables for default conversation session
             void this.sql`DELETE FROM full_conversations WHERE id = ${DEFAULT_CONVERSATION_SESSION_ID}`;
             void this.sql`DELETE FROM compact_conversations WHERE id = ${DEFAULT_CONVERSATION_SESSION_ID}`;
-            
+
             this.logger().info('Conversation history cleared successfully');
-            
+
             this.broadcast(WebSocketMessageResponses.CONVERSATION_CLEARED, {
                 message: 'Conversation history cleared',
             });
@@ -511,7 +511,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
      */
     async handleUserInput(userMessage: string, images?: ImageAttachment[]): Promise<void> {
         try {
-            this.logger().info('Processing user input message', { 
+            this.logger().info('Processing user input message', {
                 messageLength: userMessage.length,
                 pendingInputsCount: this.state.pendingUserInputs.length,
                 hasImages: !!images && images.length > 0,
@@ -541,7 +541,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
     // ==========================================
     // WebSocket Management
     // ==========================================
-    
+
     /**
      * Handle WebSocket message - Agent owns WebSocket lifecycle
      * Delegates to centralized handler which can access both behavior and objective
@@ -549,20 +549,20 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
     async onMessage(connection: Connection, message: string): Promise<void> {
         handleWebSocketMessage(this, connection, message);
     }
-    
+
     /**
      * Handle WebSocket close - Agent owns WebSocket lifecycle
      */
     async onClose(connection: Connection): Promise<void> {
         handleWebSocketClose(this, connection);
     }
-    
+
     /**
      * Broadcast message to all connected WebSocket clients
      * Type-safe version using proper WebSocket message types
      */
     public broadcast<T extends WebSocketMessageType>(
-        type: T, 
+        type: T,
         data?: WebSocketMessageData<T>
     ): void {
         broadcastToConnections(this, type, data || {} as WebSocketMessageData<T>);
@@ -585,7 +585,7 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
             this.logger().info("Git initialized successfully");
             // Check if there is any commit
             const head = await this.git.getHead();
-            
+
             if (!head) {
                 this.logger().info("No commits found, creating initial commit");
                 // get all generated files and commit them
@@ -617,12 +617,12 @@ export class CodeGeneratorAgent extends Agent<Env, AgentState> implements AgentI
             const gitObjects = this.git.fs.exportGitObjects();
 
             await this.gitInit();
-            
+
             // Ensure template details are available
             await this.behavior.ensureTemplateDetails();
 
             const templateDetails = this.behavior.getTemplateDetails();
-            
+
             return {
                 gitObjects,
                 query: this.state.query || 'N/A',

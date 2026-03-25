@@ -6,7 +6,7 @@ import { type BaseProjectState } from "@/agents/core/state";
 import { type WebSocketMessageType } from "@/api/websocketTypes";
 import { type WebSocketMessageData } from "@/api/websocketTypes";
 import { type ConversationMessage, type ConversationState } from "@/agents/inferutils/common";
-import { type TemplateDetails } from "worker/services/sandbox/sandboxTypes";
+import { type TemplateDetails } from "@/services/sandbox/sandboxTypes";
 
 /**
  * Infrastructure interface for agent implementations.
@@ -19,7 +19,7 @@ export interface AgentInfrastructure<TState extends BaseProjectState> {
     setState(state: TState): void;
     getWebSockets(): WebSocket[];
     broadcast<T extends WebSocketMessageType>(
-        type: T, 
+        type: T,
         data?: WebSocketMessageData<T>
     ): void;
     getAgentId(): string;
@@ -30,7 +30,7 @@ export interface AgentInfrastructure<TState extends BaseProjectState> {
     getConversationState(): ConversationState;
     addConversationMessage(message: ConversationMessage): void;
     clearConversation(): void;
-    
+
     // Services
     readonly fileManager: FileManager;
     readonly deploymentManager: DeploymentManager;

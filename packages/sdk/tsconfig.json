@@ -9,9 +9,13 @@
 		"outDir": "dist",
 		"skipLibCheck": true,
 		"noUncheckedIndexedAccess": false,
-		"baseUrl": ".",
 		"paths": {
-			"worker/*": ["../../apps/vibesdk-api/worker/*"]
+			"*": [
+				"./*"
+			],
+			"@/*": [
+				"./src/*"
+			]
 		}
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts"]
