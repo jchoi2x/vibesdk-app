@@ -3,7 +3,7 @@ import { TemplateInfo } from '../../services/sandbox/sandboxTypes';
 import { createLogger } from '../../logger';
 import { executeInference } from '../inferutils/infer';
 import { InferenceContext } from '../inferutils/config.types';
-import { RateLimitExceededError, SecurityError } from 'shared/types/errors';
+import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { TemplateSelection, TemplateSelectionSchema, ProjectTypePredictionSchema } from '../../agents/schemas';
 import { generateSecureToken } from 'worker/utils/cryptoUtils';
 import type { ImageAttachment } from '../../types/image-attachment';

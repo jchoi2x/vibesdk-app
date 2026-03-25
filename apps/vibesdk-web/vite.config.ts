@@ -16,9 +16,8 @@ export default defineConfig({
 		alias: {
 			debug: 'debug/src/browser',
 			'@': path.resolve(__dirname, './src'),
-			// Cross-app aliases: types are imported from vibesdk-api's worker code.
-			// These match the tsconfig.json path aliases above.
-			'shared': path.resolve(__dirname, '../vibesdk-api/shared'),
+			// Cross-app type alias: imports from vibesdk-api's worker are type-only.
+			// Mirrors the tsconfig.json path alias above.
 			'worker': path.resolve(__dirname, '../vibesdk-api/worker'),
 		},
 	},

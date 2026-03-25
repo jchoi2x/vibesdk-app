@@ -5,7 +5,7 @@ import { extractTokenWithMetadata, extractRequestMetadata } from '../../utils/au
 import { captureSecurityEvent } from '../../observability/sentry';
 import { KVRateLimitStore } from './KVRateLimitStore';
 import { RateLimitResult } from './DORateLimitStore';
-import { RateLimitExceededError, SecurityError } from 'shared/types/errors';
+import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { isDev } from 'worker/utils/envs';
 import { AI_MODEL_CONFIG, AIModels } from 'worker/agents/inferutils/config.types';
 
@@ -88,7 +88,7 @@ export class RateLimitService {
         if (isDev(env)) {
             return { success: true };
         }
-        const rateLimitConfig = config[limitType];
+        const rateLimitConfig = config[limitType as keyof RateLimitSettings];
 
         switch (rateLimitConfig.store) {
             case RateLimitStore.RATE_LIMITER: {
@@ -111,7 +111,7 @@ export class RateLimitService {
         user: AuthUser | null,
         request: Request
     ): Promise<void> {
-        if (!config[RateLimitType.API_RATE_LIMIT].enabled) {
+        if (!config.apiRateLimit.enabled) {
             return;
         }
         const identifier = await this.getUniversalIdentifier(user, request);
@@ -151,7 +151,7 @@ export class RateLimitService {
         request: Request
     ) {
         
-        if (!config[RateLimitType.AUTH_RATE_LIMIT].enabled) {
+        if (!config.authRateLimit.enabled) {
             return;
         }
         const identifier = await this.getUniversalIdentifier(user, request);
@@ -190,7 +190,7 @@ export class RateLimitService {
 		user: AuthUser,
 		request: Request
 	): Promise<void> {
-		if (!config[RateLimitType.APP_CREATION].enabled) {
+		if (!config.appCreation.enabled) {
 			return;
 		}
 		const identifier = await this.getUserIdentifier(user);
@@ -249,7 +249,7 @@ export class RateLimitService {
         suffix: string = ""
 	): Promise<void> {
 		
-		if (!config[RateLimitType.LLM_CALLS].enabled) {
+		if (!config.llmCalls.enabled) {
 			return;
 		}
 

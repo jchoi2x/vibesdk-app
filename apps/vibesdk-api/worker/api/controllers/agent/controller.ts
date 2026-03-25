@@ -10,7 +10,7 @@ import {
     CodeGenArgs,
     MAX_AGENT_QUERY_LENGTH,
 } from './types';
-import { SecurityError, SecurityErrorType } from 'shared/types/errors';
+import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
 import { ApiResponse, ControllerResponse } from '../types';
 import { RouteContext } from '../../types/route-context';
 import { AppService, ModelConfigService } from '../../../database';

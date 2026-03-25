@@ -15,7 +15,7 @@ import { BaseOAuthProvider } from '../../services/oauth/base';
 import { 
     SecurityError, 
     SecurityErrorType 
-} from 'shared/types/errors';
+} from '@jchoi2x/types/errors';
 import { AuthResult, AuthUserSession, OAuthUserInfo } from '../../types/auth-types';
 import { generateId } from '../../utils/idGenerator';
 import {

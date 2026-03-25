@@ -1,7 +1,5 @@
-/// <reference types="@cloudflare/workers-types" />
-
 interface Env {
-	VIBESDK_API: Fetcher;
+	VIBESDK_API: { fetch(request: Request): Promise<Response> };
 }
 
 /**
@@ -12,6 +10,6 @@ interface Env {
  * This never leaves Cloudflare's network — service bindings are in-process
  * calls with no external HTTP hop.
  */
-export const onRequest: PagesFunction<Env> = (context) => {
+export const onRequest = (context: { request: Request; env: Env }): Promise<Response> => {
 	return context.env.VIBESDK_API.fetch(context.request);
 };

@@ -3,7 +3,7 @@
  */
 
 import { RateLimitError } from "../services/rate-limit/errors";
-import { SecurityError, SecurityErrorType } from 'shared/types/errors';
+import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
 /**
  * Standard response shape for all API endpoints
  */

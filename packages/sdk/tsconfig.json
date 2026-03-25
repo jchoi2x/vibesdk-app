@@ -11,8 +11,7 @@
 		"noUncheckedIndexedAccess": false,
 		"baseUrl": ".",
 		"paths": {
-			"worker/*": ["../../apps/vibesdk-api/worker/*"],
-			"shared/*": ["../../apps/vibesdk-api/shared/*"]
+			"worker/*": ["../../apps/vibesdk-api/worker/*"]
 		}
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts"]

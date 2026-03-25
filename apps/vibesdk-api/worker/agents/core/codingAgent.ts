@@ -24,7 +24,7 @@ import { WebSocketMessageResponses } from "../constants";
 import { AppService, ModelConfigService } from "worker/database";
 import { ConversationMessage, ConversationState } from "../inferutils/common";
 import { ImageAttachment } from "worker/types/image-attachment";
-import { RateLimitExceededError } from "shared/types/errors";
+import { RateLimitExceededError } from "@jchoi2x/types/errors";
 import { ProjectObjective } from "./objectives/base";
 import { FileOutputType } from "../schemas";
 import { SecretsClient, type UserSecretsStoreStub } from '../../services/secrets/SecretsClient';

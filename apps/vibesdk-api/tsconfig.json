@@ -21,12 +21,13 @@
 		"noUncheckedSideEffectImports": true,
 
 		"baseUrl": ".",
-		"types": ["@cloudflare/workers-types", "./worker-configuration.d.ts"],
+		// wrangler types (without --include-runtime false) generates worker-configuration.d.ts
+		// with all Cloudflare runtime types inlined — no need for @cloudflare/workers-types here.
+		"types": ["./worker-configuration.d.ts"],
 		"paths": {
-			"shared/*": ["./shared/*"],
 			"worker/*": ["./worker/*"]
 		}
 	},
-	"include": ["worker-configuration.d.ts", "shared", "worker"],
+	"include": ["worker-configuration.d.ts", "worker"],
 	"exclude": ["**/__tests__/**/*", "**/*.test.ts"]
 }

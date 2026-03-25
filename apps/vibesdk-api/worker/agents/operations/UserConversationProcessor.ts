@@ -8,7 +8,7 @@ import { ConversationMessage } from "../inferutils/common";
 import { StructuredLogger } from "../../logger";
 import { IdGenerator } from '../utils/idGenerator';
 // import { MAX_LLM_MESSAGES } from '../constants';
-import { RateLimitExceededError, SecurityError } from 'shared/types/errors';
+import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { buildTools } from "../tools/customTools";
 import { PROMPT_UTILS } from "../prompts";
 import { RuntimeError } from "worker/services/sandbox/sandboxTypes";

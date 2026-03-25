@@ -4,7 +4,7 @@
  */
 
 import { createLogger } from '../../logger';
-import { SecurityError, SecurityErrorType } from 'shared/types/errors';
+import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
 import { generateSecureToken } from '../../utils/cryptoUtils';
 import { parseCookies, createSecureCookie } from '../../utils/authUtils';
 import { getCSRFConfig } from '../../config/security';

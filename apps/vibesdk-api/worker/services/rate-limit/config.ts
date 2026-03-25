@@ -44,18 +44,14 @@ export type RateLimitConfig =
 	| DORateLimitConfig
 	| LLMCallsRateLimitConfig;
 
-export enum RateLimitType {
-	API_RATE_LIMIT = 'apiRateLimit',
-	AUTH_RATE_LIMIT = 'authRateLimit',
-	APP_CREATION = 'appCreation',
-	LLM_CALLS = 'llmCalls',
-}
+// RateLimitType lives in @jchoi2x/types/errors; re-export for internal consumers.
+export { RateLimitType } from '@jchoi2x/types/errors';
 
 export interface RateLimitSettings {
-	[RateLimitType.API_RATE_LIMIT]: RLRateLimitConfig;
-	[RateLimitType.AUTH_RATE_LIMIT]: RLRateLimitConfig;
-	[RateLimitType.APP_CREATION]: DORateLimitConfig | KVRateLimitConfig;
-	[RateLimitType.LLM_CALLS]: LLMCallsRateLimitConfig;
+	apiRateLimit: RLRateLimitConfig;
+	authRateLimit: RLRateLimitConfig;
+	appCreation: DORateLimitConfig | KVRateLimitConfig;
+	llmCalls: LLMCallsRateLimitConfig;
 }
 
 export const DEFAULT_RATE_LIMIT_SETTINGS: RateLimitSettings = {

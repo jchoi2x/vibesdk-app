@@ -7,7 +7,7 @@ import type { ReasoningEffort } from './config.types';
 import { AgentActionKey, AIModels, InferenceContext, ModelConfig } from './config.types';
 import { AGENT_CONFIG } from './config';
 import { createLogger } from '../../logger';
-import { RateLimitExceededError, SecurityError } from 'shared/types/errors';
+import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { ToolDefinition } from '../tools/types';
 import { validateAgentConstraints } from 'worker/api/controllers/modelConfig/constraintHelper';
 import { isValidAIModel } from './config.types';

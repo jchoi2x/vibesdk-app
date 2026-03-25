@@ -25,7 +25,7 @@ import { FastCodeFixerOperation } from '../../operations/PostPhaseCodeFixer';
 import { looksLikeCommand, validateAndCleanBootstrapCommands } from '../../utils/common';
 import { customizeTemplateFiles, generateBootstrapScript } from '../../utils/templateCustomizer';
 import { AppService } from '../../../database';
-import { RateLimitExceededError } from 'shared/types/errors';
+import { RateLimitExceededError } from '@jchoi2x/types/errors';
 import { ImageAttachment, type ProcessedImageAttachment } from '../../../types/image-attachment';
 import { OperationOptions } from '../../operations/common';
 import { ImageType, uploadImage, detectBlankScreenshot } from 'worker/utils/images';

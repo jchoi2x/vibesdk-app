@@ -1,6 +1,6 @@
 import { jwtVerify, SignJWT } from 'jose';
 import { TokenPayload } from '../types/auth-types';
-import { SecurityError, SecurityErrorType } from 'shared/types/errors';
+import { SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
 import { createLogger } from '../logger';
 import { SessionService } from 'worker/database/services/SessionService';
 
