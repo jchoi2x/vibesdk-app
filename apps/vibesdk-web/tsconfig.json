@@ -25,9 +25,7 @@
 
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"],
-			// Cross-app type imports from vibesdk-api. Vite aliases mirror these.
-			"worker/*": ["../vibesdk-api/worker/*"]
+			"@/*": ["./src/*"]
 		}
 	},
 	"include": ["src", "functions"]
