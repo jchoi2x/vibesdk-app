@@ -11,7 +11,7 @@
 		"dev:api": "nx run vibesdk-api:dev",
 		"dev:web": "nx run vibesdk-web:dev",
 		"build": "nx run-many -t build --projects=vibesdk-api,vibesdk-web",
-		"deploy": "nx run-many -t deploy --projects=vibesdk-api,vibesdk-web",
+		"deploy": "nx run vibesdk-web:deploy",
 		"test": "nx run-many -t test",
 		"lint": "eslint .",
 		"packages:build": "nx run-many -t build --projects=@jchoi2x/types,@jchoi2x/utils,@jchoi2x/logger,@jchoi2x/cf-crypto,@jchoi2x/cf-rate-limit,@jchoi2x/cf-middleware,@jchoi2x/cf-do"
