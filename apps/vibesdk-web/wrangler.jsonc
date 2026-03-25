@@ -4,7 +4,7 @@
 	"observability": {
 		"enabled": true
 	},
-	"main": "./dist/_worker.js/index.js",
+	"main": "./dist/_worker.js",
 	"assets": {
 		"directory": "dist",
 		"binding": "ASSETS"
