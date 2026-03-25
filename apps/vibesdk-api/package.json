@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "bun --env-file .prod.vars scripts/deploy.ts",
+    "build": "echo 'no applicable'",
     "typecheck": "tsc -b --incremental --noEmit",
     "lint": "eslint .",
     "test": "vitest run",
