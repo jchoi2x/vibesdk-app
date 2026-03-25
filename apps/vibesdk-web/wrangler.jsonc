@@ -17,18 +17,12 @@
   "compatibility_date": "2025-08-10",
   "compatibility_flags": ["nodejs_compat"],
   "upload_source_maps": true,
-  "services": [{ "binding": "VIBESDK_API", "service": "vibesdk-api" }],
-  "routes": [
+  "services": [
     {
-        "pattern": "vibesdk-web.megabyte.app",
-        "custom_domain": true
-    },
-    {
-        "pattern": "*vibesdk-web.megabyte.app/*",
-        "custom_domain": false,
-        "zone_id": "a70f14687a2194334e12062447e618f2"
+      "binding": "VIBESDK_API",
+      "service": "vibesdk-api"
     }
-],
-"workers_dev": false,
-"preview_urls": false,
+  ],
+  "workers_dev": false,
+  "preview_urls": false,
 }
