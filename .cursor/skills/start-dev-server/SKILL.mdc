@@ -1,0 +1,26 @@
+---
+name: start-dev-server
+description: Starts (or restarts) dev servers using bun. Use when the user asks to start the dev server, run the app locally, or restart local dev.
+---
+
+# Start Dev Servers (frontend + worker)
+
+Use this skill when you need to run the app locally in dev, which includes the frontend and the Cloudflare Worker.
+
+## Default commands
+
+- App: `bun run dev`
+
+## Instructions (restart semantics)
+
+1. Check if `bun run dev` are already running (port 5173 by default).
+2. If they are running, stop them first (kill their process by PID).
+3. Start dev server in a separate terminal:
+    - Run `bun run dev`
+4. Verify both are healthy:
+    - Prints that it is listening/ready for requests
+
+## Notes
+
+- Always avoid starting duplicate dev servers; prefer a clean restart when asked to “restart” or when ports are in use.
+- If a process doesn’t shut down cleanly, kill by PID and then start again.

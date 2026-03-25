@@ -1,0 +1,13 @@
+---
+name: cf-typegen
+description: Generates types for the Cloudflare Workers API
+---
+
+# Generate Cloudflare Workers API Types
+
+Use this skill when you need to generate types (`worker-configuration.d.ts`) for the Cloudflare Workers API.
+
+## Instructions
+
+1. Run `bun run cf-typegen`
+2. Confirm the types are generated in the root directory `worker-configuration.d.ts`

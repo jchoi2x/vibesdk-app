@@ -19,12 +19,10 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
-
-		"baseUrl": ".",
-		// wrangler types (without --include-runtime false) generates worker-configuration.d.ts
-		// with all Cloudflare runtime types inlined — no need for @cloudflare/workers-types here.
-		"types": ["./worker-configuration.d.ts"],
 		"paths": {
+			"*": [
+				"./*"
+			],
 			"@/*": ["./src/*"]
 		}
 	},
