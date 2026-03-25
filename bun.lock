@@ -147,10 +147,16 @@
     "apps/rate-limit": {
       "name": "rate-limit",
       "version": "0.1.0",
+      "dependencies": {
+        "@jchoi2x/cf-rate-limit": "workspace:*",
+      },
     },
     "apps/secrets-store": {
       "name": "secrets-store",
       "version": "0.1.0",
+      "dependencies": {
+        "@jchoi2x/cf-crypto": "workspace:*",
+      },
     },
     "apps/vibecode": {
       "name": "vibecode",

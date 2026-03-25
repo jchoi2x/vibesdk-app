@@ -84,7 +84,7 @@ export class RateLimitStore implements DurableObject {
 		const all = await this.state.storage.list<WindowState>({
 			prefix: 'window:',
 		});
-		const deletes: Promise<void>[] = [];
+		const deletes: Promise<boolean>[] = [];
 
 		for (const [k, v] of all) {
 			// If no timestamps remain after filtering, delete the entry
