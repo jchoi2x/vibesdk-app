@@ -4,6 +4,9 @@
   "main": "src/index.ts",
   "compatibility_date": "2025-08-10",
   "compatibility_flags": ["nodejs_compat"],
+  "dev": {
+    "port": 8082
+  },
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1,
