@@ -13,9 +13,7 @@
   },
   "include": [
     "./worker-configuration.d.ts",
-    "./shared",
-    "./worker",
-    "./worker/types"
+    "./src/worker/**/*.ts"
   ],
   "exclude": ["**/__tests__/**/*", "**/*.test.ts"]
 }

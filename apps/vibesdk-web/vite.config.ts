@@ -24,7 +24,7 @@ export default defineConfig({
   resolve: {
     alias: {
       debug: 'debug/src/browser',
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './src/react-app'),
     },
   },
   define: {

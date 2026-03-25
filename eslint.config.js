@@ -1,9 +1,13 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
+
+const tsconfigRootDir = path.dirname(fileURLToPath(import.meta.url));
 
 export default tseslint.config(
   {
@@ -29,6 +33,9 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.browser,
+      parserOptions: {
+        tsconfigRootDir,
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -58,7 +65,7 @@ export default tseslint.config(
   // Disable react-refresh/only-export-components for UI components
   // as shadcn/ui components commonly export both components and utilities
   {
-    files: ['apps/vibesdk-web/src/components/ui/**/*.{ts,tsx}'],
+    files: ['apps/vibesdk-web/src/react-app/components/ui/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
@@ -66,8 +73,8 @@ export default tseslint.config(
   // Contexts and feature modules intentionally export hooks/objects
   {
     files: [
-      'apps/vibesdk-web/src/contexts/**/*.{ts,tsx}',
-      'apps/vibesdk-web/src/features/**/*.{ts,tsx}',
+      'apps/vibesdk-web/src/react-app/contexts/**/*.{ts,tsx}',
+      'apps/vibesdk-web/src/react-app/features/**/*.{ts,tsx}',
     ],
     rules: {
       'react-refresh/only-export-components': 'off',
@@ -75,7 +82,7 @@ export default tseslint.config(
   },
   // Auth modal provider exports a hook + provider
   {
-    files: ['apps/vibesdk-web/src/components/auth/**/*.{ts,tsx}'],
+    files: ['apps/vibesdk-web/src/react-app/components/auth/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },

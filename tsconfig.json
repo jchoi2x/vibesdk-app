@@ -8,7 +8,12 @@
       "path": "./apps/rate-limit/tsconfig.json"
     },
     { "path": "./apps/vibesdk-api/tsconfig.json" },
-    { "path": "./apps/vibesdk-web/tsconfig.json" }
+    {
+      "path": "./apps/vibesdk-web/tsconfig.json"
+    },
+    {
+      "path": "./apps/vite-react-template/tsconfig.json"
+    },
   ],
   "compilerOptions": {
     "composite": true,

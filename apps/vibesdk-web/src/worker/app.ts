@@ -6,7 +6,7 @@ app.use('/api/*', async (c) => {
   return c.env.VIBESDK_API.fetch(c.req.raw);
 });
 
-app.use('/', (c) => {
+app.use('*', (c) => {
   return c.env.ASSETS.fetch(c.req.raw);
 });
 

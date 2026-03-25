@@ -3,7 +3,7 @@
   "workspaces": {
     ".": {
       "entry": [
-        "apps/vibesdk-web/src/main.tsx",
+        "apps/vibesdk-web/src/react-app/main.tsx",
         "apps/vibesdk-api/src/index.ts",
         "apps/vibesdk-api/container/**/*.ts",
         "apps/vibesdk-api/debug-tools/**/*.{ts,py}",

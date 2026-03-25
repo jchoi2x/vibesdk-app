@@ -24,9 +24,9 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/react-app/*"],
       "*": ["./*"]
     }
   },
-  "include": ["src"]
+  "include": ["src/react-app"]
 }
