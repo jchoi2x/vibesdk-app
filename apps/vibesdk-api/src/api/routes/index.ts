@@ -12,61 +12,61 @@ import { setupScreenshotRoutes } from '@/api/routes/imagesRoutes';
 import { setupSentryRoutes } from '@/api/routes/sentryRoutes';
 import { setupCapabilitiesRoutes } from '@/api/routes/capabilitiesRoutes';
 import { setupTicketRoutes } from '@/api/routes/ticketRoutes';
-import { type Hono } from "hono";
-import { type AppEnv } from "@/types/appenv";
+import { type Hono } from 'hono';
+import { type AppEnv } from '@/types/appenv';
 import { setupStatusRoutes } from '@/api/routes/statusRoutes';
 
 export function setupRoutes(app: Hono<AppEnv>): void {
-    // Health check route
-    app.get('/api/health', (c) => {
-        return c.json({ status: 'ok' });
-    }); 
-    
-    // Sentry tunnel routes (public - no auth required)
-    setupSentryRoutes(app);
+  // Health check route
+  app.get('/api/health', (c) => {
+    return c.json({ status: 'ok' });
+  });
 
-    // Platform status routes (public)
-    setupStatusRoutes(app);
+  // Sentry tunnel routes (public - no auth required)
+  setupSentryRoutes(app);
 
-    // Platform capabilities routes (public)
-    setupCapabilitiesRoutes(app);
+  // Platform status routes (public)
+  setupStatusRoutes(app);
 
-    // Authentication and user management routes
-    setupAuthRoutes(app);
-    
-    // WebSocket ticket routes
-    setupTicketRoutes(app);
-    
-    // Codegen routes
-    setupCodegenRoutes(app);
-    
-    // User dashboard and profile routes
-    setupUserRoutes(app);
-    
-    // App management routes
-    setupAppRoutes(app);
-    
-    // Stats routes
-    setupStatsRoutes(app);
-    
-    // AI Gateway Analytics routes
-    setupAnalyticsRoutes(app);
-    
-    // // Secrets management routes (legacy D1-based)
-    // setupSecretsRoutes(app);
+  // Platform capabilities routes (public)
+  setupCapabilitiesRoutes(app);
 
-    // // User secrets vault routes
-    // setupUserSecretsRoutes(app);
-    
-    // Model configuration and provider keys routes
-    setupModelConfigRoutes(app);
-    
-    // Model provider routes
-    setupModelProviderRoutes(app);
+  // Authentication and user management routes
+  setupAuthRoutes(app);
 
-    // GitHub Exporter routes
-    setupGitHubExporterRoutes(app);
+  // WebSocket ticket routes
+  setupTicketRoutes(app);
 
-    // Screenshot serving routes (public)
-    setupScreenshotRoutes(app);
+  // Codegen routes
+  setupCodegenRoutes(app);
+
+  // User dashboard and profile routes
+  setupUserRoutes(app);
+
+  // App management routes
+  setupAppRoutes(app);
+
+  // Stats routes
+  setupStatsRoutes(app);
+
+  // AI Gateway Analytics routes
+  setupAnalyticsRoutes(app);
+
+  // // Secrets management routes (legacy D1-based)
+  // setupSecretsRoutes(app);
+
+  // // User secrets vault routes
+  // setupUserSecretsRoutes(app);
+
+  // Model configuration and provider keys routes
+  setupModelConfigRoutes(app);
+
+  // Model provider routes
+  setupModelProviderRoutes(app);
+
+  // GitHub Exporter routes
+  setupGitHubExporterRoutes(app);
+
+  // Screenshot serving routes (public)
+  setupScreenshotRoutes(app);
 }

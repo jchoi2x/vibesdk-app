@@ -1,33 +1,35 @@
 {
-	"name": "@jchoi2x/cf-middleware",
-	"version": "0.0.1",
-	"type": "module",
-	"exports": {
-		".": {
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
-		}
-	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"files": ["dist"],
-	"license": "MIT",
-	"publishConfig": {
-		"access": "public",
-		"registry": "https://registry.npmjs.org/"
-	},
-	"peerDependencies": {
-		"@cloudflare/workers-types": ">=4.0.0"
-	},
-	"peerDependenciesMeta": {
-		"@cloudflare/workers-types": {
-			"optional": true
-		}
-	},
-	"scripts": {
-		"build": "tsup src/index.ts --format esm --dts --clean --out-dir dist",
-		"dev": "tsup src/index.ts --format esm --dts --watch --out-dir dist",
-		"typecheck": "tsc --noEmit",
-		"test": "vitest run"
-	}
+  "name": "@jchoi2x/cf-middleware",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "@cloudflare/workers-types": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@cloudflare/workers-types": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --out-dir dist",
+    "dev": "tsup src/index.ts --format esm --dts --watch --out-dir dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
 }

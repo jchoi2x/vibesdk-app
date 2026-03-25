@@ -1,15 +1,19 @@
 {
-	"name": "rate-limit",
-	"private": true,
-	"version": "0.1.0",
-	"type": "module",
-	"dependencies": {
-		"@jchoi2x/cf-rate-limit": "workspace:*"
-	},
-	"scripts": {
-		"dev": "wrangler dev",
-		"deploy": "wrangler deploy",
-		"typecheck": "tsc --noEmit",
-		"cf-typegen": "wrangler types --include-runtime false"
-	}
+  "name": "rate-limit",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@jchoi2x/cf-rate-limit": "workspace:*"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "cf-typegen": "wrangler types --include-runtime false"
+  }
 }

@@ -1,28 +1,29 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import importPlugin from 'eslint-plugin-import'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
+import importPlugin from 'eslint-plugin-import';
 
 export default tseslint.config(
-	{
-		ignores: [
-			'dist',
-			'wrangler-configuration.d.ts',
-			'test-diff-formatters/**',
-			'cf-git/**',
-			'**/*.test.ts',
-			'**/*.test.tsx',
-			'**/*.spec.ts',
-			'**/*.spec.tsx',
-		],
-	},
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended
+    ignores: [
+      'dist',
+      'wrangler-configuration.d.ts',
+      '**/cloudflare-env.d.ts',
+      'test-diff-formatters/**',
+      'cf-git/**',
+      '**/.wrangler/**',
+      '.nx/**',
+      'apps/vibesdk-api/templates/build/**',
+      '**/*.test.ts',
+      '**/*.test.tsx',
+      '**/*.spec.ts',
+      '**/*.spec.tsx',
     ],
+  },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['apps/**/*.{ts,tsx}', 'packages/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,
@@ -63,7 +64,10 @@ export default tseslint.config(
   },
   // Contexts and feature modules intentionally export hooks/objects
   {
-    files: ['apps/vibesdk-web/src/contexts/**/*.{ts,tsx}', 'apps/vibesdk-web/src/features/**/*.{ts,tsx}'],
+    files: [
+      'apps/vibesdk-web/src/contexts/**/*.{ts,tsx}',
+      'apps/vibesdk-web/src/features/**/*.{ts,tsx}',
+    ],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
@@ -75,4 +79,4 @@ export default tseslint.config(
       'react-refresh/only-export-components': 'off',
     },
   },
-)
+);

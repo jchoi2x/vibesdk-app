@@ -1,11 +1,21 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '@/contexts/auth-context';
 import { apiClient } from '@/lib/api-client';
-import type { UserAnalyticsResponseData, AgentAnalyticsResponseData } from '@/api-types';
+import type {
+  UserAnalyticsResponseData,
+  AgentAnalyticsResponseData,
+} from '@/api-types';
 
-export function useUserAnalytics(userId?: string, days?: number, autoRefresh = false, refreshInterval = 30000) {
+export function useUserAnalytics(
+  userId?: string,
+  days?: number,
+  autoRefresh = false,
+  refreshInterval = 30000,
+) {
   const { isAuthenticated, user } = useAuth();
-  const [analytics, setAnalytics] = useState<UserAnalyticsResponseData | null>(null);
+  const [analytics, setAnalytics] = useState<UserAnalyticsResponseData | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -24,7 +34,9 @@ export function useUserAnalytics(userId?: string, days?: number, autoRefresh = f
       setAnalytics(response.data || null);
     } catch (err) {
       console.error('Error fetching user analytics:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch analytics');
+      setError(
+        err instanceof Error ? err.message : 'Failed to fetch analytics',
+      );
     } finally {
       setLoading(false);
     }
@@ -44,7 +56,13 @@ export function useUserAnalytics(userId?: string, days?: number, autoRefresh = f
         intervalRef.current = null;
       }
     };
-  }, [fetchAnalytics, autoRefresh, refreshInterval, isAuthenticated, effectiveUserId]);
+  }, [
+    fetchAnalytics,
+    autoRefresh,
+    refreshInterval,
+    isAuthenticated,
+    effectiveUserId,
+  ]);
 
   const refresh = useCallback(() => {
     setLoading(true);
@@ -54,9 +72,16 @@ export function useUserAnalytics(userId?: string, days?: number, autoRefresh = f
   return { analytics, loading, error, refresh };
 }
 
-export function useAgentAnalytics(agentId: string, days?: number, autoRefresh = false, refreshInterval = 30000) {
+export function useAgentAnalytics(
+  agentId: string,
+  days?: number,
+  autoRefresh = false,
+  refreshInterval = 30000,
+) {
   const { isAuthenticated } = useAuth();
-  const [analytics, setAnalytics] = useState<AgentAnalyticsResponseData | null>(null);
+  const [analytics, setAnalytics] = useState<AgentAnalyticsResponseData | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -73,7 +98,9 @@ export function useAgentAnalytics(agentId: string, days?: number, autoRefresh = 
       setAnalytics(response.data || null);
     } catch (err) {
       console.error('Error fetching agent analytics:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch analytics');
+      setError(
+        err instanceof Error ? err.message : 'Failed to fetch analytics',
+      );
     } finally {
       setLoading(false);
     }

@@ -6,9 +6,11 @@ import { type BaseProjectState } from '@/agents/core/state';
 /**
  * Common options for all agent services
  */
-export interface ServiceOptions<TState extends BaseProjectState = BaseProjectState> {
-    env: Env,
-    stateManager: IStateManager<TState>;
-    fileManager: IFileManager;
-    getLogger: () => StructuredLogger;
+export interface ServiceOptions<
+  TState extends BaseProjectState = BaseProjectState,
+> {
+  env: Env;
+  stateManager: IStateManager<TState>;
+  fileManager: IFileManager;
+  getLogger: () => StructuredLogger;
 }

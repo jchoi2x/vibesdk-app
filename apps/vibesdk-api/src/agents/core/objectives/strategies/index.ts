@@ -3,14 +3,17 @@ import type { AdditionalExportStrategy } from '@/agents/core/objectives/strategi
 import { PresentationExportStrategy } from '@/agents/core/objectives/strategies/presentation';
 
 export function getAdditionalExportStrategy(
-	projectType: ProjectType,
+  projectType: ProjectType,
 ): AdditionalExportStrategy | null {
-	switch (projectType) {
-		case 'presentation':
-			return new PresentationExportStrategy();
-		default:
-			return null;
-	}
+  switch (projectType) {
+    case 'presentation':
+      return new PresentationExportStrategy();
+    default:
+      return null;
+  }
 }
 
-export type { AdditionalExportStrategy, ExportContext } from '@/agents/core/objectives/strategies/types';
+export type {
+  AdditionalExportStrategy,
+  ExportContext,
+} from '@/agents/core/objectives/strategies/types';

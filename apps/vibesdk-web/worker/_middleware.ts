@@ -1,5 +1,5 @@
 interface Env {
-	VIBESDK_API: { fetch(request: Request): Promise<Response> };
+  VIBESDK_API: { fetch(request: Request): Promise<Response> };
 }
 
 /**
@@ -10,7 +10,10 @@ interface Env {
  * This never leaves Cloudflare's network — service bindings are in-process
  * calls with no external HTTP hop.
  */
-export const onRequest = (context: { request: Request; env: Env }): Promise<Response> => {
-	console.log('onRequest', context.request.url);
-	return context.env.VIBESDK_API.fetch(context.request);
+export const onRequest = (context: {
+  request: Request;
+  env: Env;
+}): Promise<Response> => {
+  console.log('onRequest', context.request.url);
+  return context.env.VIBESDK_API.fetch(context.request);
 };

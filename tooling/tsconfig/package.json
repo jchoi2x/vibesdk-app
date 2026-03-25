@@ -1,7 +1,9 @@
 {
-	"name": "@jchoi2x/tsconfig",
-	"version": "0.0.1",
-	"private": true,
-	"files": ["*.json"],
-	"license": "MIT"
+  "name": "@jchoi2x/tsconfig",
+  "version": "0.0.1",
+  "private": true,
+  "files": [
+    "*.json"
+  ],
+  "license": "MIT"
 }

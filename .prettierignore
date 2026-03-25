@@ -1,0 +1,8 @@
+.nx/
+**/dist/
+**/build/
+**/.wrangler/
+**/wrangler-configuration.d.ts
+coverage/
+node_modules/
+

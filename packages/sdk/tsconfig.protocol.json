@@ -1,17 +1,13 @@
 {
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"noEmit": true,
-		"noUncheckedIndexedAccess": false,
-		"paths": {
-			"*": [
-				"./*"
-			],
-			"@/*": [
-				"./src/*"
-			]
-		},
-		"types": []
-	},
-	"files": ["./src/index.ts"]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "noUncheckedIndexedAccess": false,
+    "paths": {
+      "*": ["./*"],
+      "@/*": ["./src/*"]
+    },
+    "types": []
+  },
+  "files": ["./src/index.ts"]
 }

@@ -2,7 +2,10 @@
  * Analytics utilities for consistent data handling and display
  */
 
-import type { UserAnalyticsResponseData, AgentAnalyticsResponseData } from '@/api-types';
+import type {
+  UserAnalyticsResponseData,
+  AgentAnalyticsResponseData,
+} from '@/api-types';
 
 /**
  * Standardized analytics display props interface
@@ -20,14 +23,16 @@ export interface AnalyticsDisplayProps {
  * Extract standardized analytics props from user analytics data
  * Centralizes property mapping and ensures consistency
  */
-export function extractUserAnalyticsProps(analytics: UserAnalyticsResponseData | null): AnalyticsDisplayProps {
+export function extractUserAnalyticsProps(
+  analytics: UserAnalyticsResponseData | null,
+): AnalyticsDisplayProps {
   if (!analytics) {
     return {
       cost: 0,
       tokensIn: 0,
       tokensOut: 0,
       totalRequests: 0,
-      lastUpdated: undefined
+      lastUpdated: undefined,
     };
   }
 
@@ -36,7 +41,7 @@ export function extractUserAnalyticsProps(analytics: UserAnalyticsResponseData |
     tokensIn: analytics.tokensIn,
     tokensOut: analytics.tokensOut,
     totalRequests: analytics.totalRequests,
-    lastUpdated: analytics.lastRequestAt || undefined
+    lastUpdated: analytics.lastRequestAt || undefined,
   };
 }
 
@@ -44,14 +49,16 @@ export function extractUserAnalyticsProps(analytics: UserAnalyticsResponseData |
  * Extract standardized analytics props from agent analytics data
  * Centralizes property mapping and ensures consistency
  */
-export function extractAgentAnalyticsProps(analytics: AgentAnalyticsResponseData | null): AnalyticsDisplayProps {
+export function extractAgentAnalyticsProps(
+  analytics: AgentAnalyticsResponseData | null,
+): AnalyticsDisplayProps {
   if (!analytics) {
     return {
       cost: 0,
       tokensIn: 0,
       tokensOut: 0,
       totalRequests: 0,
-      lastUpdated: undefined
+      lastUpdated: undefined,
     };
   }
 
@@ -60,7 +67,7 @@ export function extractAgentAnalyticsProps(analytics: AgentAnalyticsResponseData
     tokensIn: analytics.tokensIn,
     tokensOut: analytics.tokensOut,
     totalRequests: analytics.totalRequests,
-    lastUpdated: analytics.lastRequestAt || undefined
+    lastUpdated: analytics.lastRequestAt || undefined,
   };
 }
 
@@ -87,7 +94,9 @@ export function formatNumber(num?: number): string {
 /**
  * Get appropriate badge variant based on cost amount
  */
-export function getCostBadgeVariant(cost?: number): 'default' | 'secondary' | 'destructive' {
+export function getCostBadgeVariant(
+  cost?: number,
+): 'default' | 'secondary' | 'destructive' {
   const safeCost = typeof cost === 'number' && !isNaN(cost) ? cost : 0;
   if (safeCost === 0) return 'secondary';
   if (safeCost > 1) return 'destructive';

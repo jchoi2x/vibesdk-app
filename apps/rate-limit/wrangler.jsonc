@@ -1,25 +1,25 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "rate-limit",
-	"main": "src/worker.ts",
-	"compatibility_date": "2025-08-10",
-	"compatibility_flags": ["nodejs_compat"],
-	"observability": {
-		"enabled": true,
-		"head_sampling_rate": 1
-	},
-	"durable_objects": {
-		"bindings": [
-			{
-				"name": "RATE_LIMIT_STORE",
-				"class_name": "RateLimitStore"
-			}
-		]
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_classes": ["RateLimitStore"]
-		}
-	]
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rate-limit",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-08-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "RATE_LIMIT_STORE",
+        "class_name": "RateLimitStore",
+      },
+    ],
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_classes": ["RateLimitStore"],
+    },
+  ],
 }

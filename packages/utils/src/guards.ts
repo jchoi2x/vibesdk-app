@@ -1,7 +1,7 @@
 export function isNonNull<T>(value: T | null | undefined): value is T {
-	return value !== null && value !== undefined;
+  return value !== null && value !== undefined;
 }
 
 export function isDefined<T>(value: T | undefined): value is T {
-	return value !== undefined;
+  return value !== undefined;
 }

@@ -1,29 +1,29 @@
 {
-	"name": "vibesdk-api",
-	"private": true,
-	"version": "1.5.0",
-	"type": "module",
-	"dependencies": {
-		"@jchoi2x/types": "workspace:*"
-	},
-	"scripts": {
-		"dev": "wrangler dev",
-		"deploy": "bun --env-file .prod.vars scripts/deploy.ts",
-		"typecheck": "tsc -b --incremental --noEmit",
-		"lint": "eslint .",
-		"test": "vitest run",
-		"test:watch": "vitest",
-		"setup": "tsx scripts/setup.ts",
-		"test:coverage": "vitest run --coverage",
-		"cf-typegen": "wrangler types",
-		"db:generate": "drizzle-kit generate --config=drizzle.config.local.ts",
-		"db:generate:remote": "drizzle-kit generate --config=drizzle.config.remote.ts",
-		"db:migrate:local": "wrangler d1 migrations apply vibesdk-db --local",
-		"db:migrate:remote": "CI=true wrangler d1 migrations apply vibesdk-db --remote",
-		"db:studio": "drizzle-kit studio --config=drizzle.config.local.ts",
-		"db:studio:remote": "drizzle-kit studio --config=drizzle.config.remote.ts",
-		"db:drop": "drizzle-kit drop --config=drizzle.config.local.ts",
-		"db:check": "drizzle-kit check --config=drizzle.config.local.ts",
-		"db:up": "drizzle-kit up --config=drizzle.config.local.ts"
-	}
+  "name": "vibesdk-api",
+  "private": true,
+  "version": "1.5.0",
+  "type": "module",
+  "dependencies": {
+    "@jchoi2x/types": "workspace:*"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "bun --env-file .prod.vars scripts/deploy.ts",
+    "typecheck": "tsc -b --incremental --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "setup": "tsx scripts/setup.ts",
+    "test:coverage": "vitest run --coverage",
+    "cf-typegen": "wrangler types",
+    "db:generate": "drizzle-kit generate --config=drizzle.config.local.ts",
+    "db:generate:remote": "drizzle-kit generate --config=drizzle.config.remote.ts",
+    "db:migrate:local": "wrangler d1 migrations apply vibesdk-db --local",
+    "db:migrate:remote": "CI=true wrangler d1 migrations apply vibesdk-db --remote",
+    "db:studio": "drizzle-kit studio --config=drizzle.config.local.ts",
+    "db:studio:remote": "drizzle-kit studio --config=drizzle.config.remote.ts",
+    "db:drop": "drizzle-kit drop --config=drizzle.config.local.ts",
+    "db:check": "drizzle-kit check --config=drizzle.config.local.ts",
+    "db:up": "drizzle-kit up --config=drizzle.config.local.ts"
+  }
 }

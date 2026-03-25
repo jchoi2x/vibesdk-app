@@ -9,7 +9,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
 interface ModelOption {
@@ -55,8 +59,8 @@ export function ModelSelector({
   // Filter models based on search
   const filteredModels = useMemo(() => {
     if (!search) return availableModels;
-    return availableModels.filter(model => 
-      model.label.toLowerCase().includes(search.toLowerCase())
+    return availableModels.filter((model) =>
+      model.label.toLowerCase().includes(search.toLowerCase()),
     );
   }, [availableModels, search]);
 
@@ -66,7 +70,9 @@ export function ModelSelector({
       return 'Use default';
     }
     if (value && value !== 'default') {
-      const selectedModel = availableModels.find((model) => model.value === value);
+      const selectedModel = availableModels.find(
+        (model) => model.value === value,
+      );
       return selectedModel?.label || value;
     }
     return '';
@@ -111,11 +117,16 @@ export function ModelSelector({
             className="w-full justify-between"
             disabled={disabled}
           >
-            <span className="truncate">{getSelectedDisplay() || placeholder}</span>
+            <span className="truncate">
+              {getSelectedDisplay() || placeholder}
+            </span>
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-full p-0" style={{ width: 'var(--radix-popover-trigger-width)' }}>
+        <PopoverContent
+          className="w-full p-0"
+          style={{ width: 'var(--radix-popover-trigger-width)' }}
+        >
           {/* Search Input */}
           <div className="flex items-center border-b border-border-primary px-3 py-2">
             <Search className="mr-2 h-4 w-4 shrink-0 text-text-tertiary" />
@@ -126,9 +137,9 @@ export function ModelSelector({
               className="h-8 border-0 bg-transparent p-0 placeholder:text-text-tertiary focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </div>
-          
+
           {/* Scrollable List */}
-          <div 
+          <div
             ref={listRef}
             className="max-h-[300px] overflow-y-auto p-1 scroll-smooth"
             onWheel={(e) => {
@@ -142,7 +153,7 @@ export function ModelSelector({
                 No models found.
               </div>
             )}
-            
+
             {/* Default option if requested */}
             {includeDefaultOption && (
               <div
@@ -153,22 +164,22 @@ export function ModelSelector({
                   setSearch('');
                 }}
                 className={cn(
-                  "relative flex cursor-pointer select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-text-secondary focus:bg-accent focus:text-text-secondary",
-                  value === 'default' && "bg-accent text-text-secondary"
+                  'relative flex cursor-pointer select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-text-secondary focus:bg-accent focus:text-text-secondary',
+                  value === 'default' && 'bg-accent text-text-secondary',
                 )}
               >
                 <div className="flex items-center gap-2">
                   <Check
                     className={cn(
-                      "h-4 w-4 text-text-primary",
-                      value === 'default' ? "opacity-100" : "opacity-0"
+                      'h-4 w-4 text-text-primary',
+                      value === 'default' ? 'opacity-100' : 'opacity-0',
                     )}
                   />
                   <span className="font-medium">Use default</span>
                 </div>
               </div>
             )}
-            
+
             {/* Available models */}
             {filteredModels.map((model) => (
               <div
@@ -179,15 +190,15 @@ export function ModelSelector({
                   setSearch('');
                 }}
                 className={cn(
-                  "relative flex cursor-pointer select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-text-secondary focus:bg-accent focus:text-text-secondary",
-                  value === model.value && "bg-accent text-text-secondary"
+                  'relative flex cursor-pointer select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-text-secondary focus:bg-accent focus:text-text-secondary',
+                  value === model.value && 'bg-accent text-text-secondary',
                 )}
               >
                 <div className="flex items-center gap-2 min-w-0 flex-1">
                   <Check
                     className={cn(
-                      "h-4 w-4 text-text-primary shrink-0",
-                      value === model.value ? "opacity-100" : "opacity-0"
+                      'h-4 w-4 text-text-primary shrink-0',
+                      value === model.value ? 'opacity-100' : 'opacity-0',
                     )}
                   />
                   <span className="truncate">{model.label}</span>
@@ -200,7 +211,7 @@ export function ModelSelector({
           </div>
         </PopoverContent>
       </Popover>
-      
+
       {/* System default display */}
       {systemDefault && (
         <p className="text-xs text-text-tertiary truncate">

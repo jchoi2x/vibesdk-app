@@ -133,6 +133,7 @@
         "jest": "^29.7.0",
         "knip": "^5.73.4",
         "nx": "^20.0.0",
+        "prettier": "^3.6.2",
         "prettier-plugin-tailwindcss": "^0.6.14",
         "tsup": "^8.0.0",
         "tsx": "^4.21.0",

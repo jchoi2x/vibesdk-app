@@ -5,6 +5,9 @@ import {
 	generateSalt,
 	timingSafeEqual,
 } from '@jchoi2x/cf-crypto';
+import { DurableObject } from 'cloudflare:workers';
+import { Hono } from 'hono';
+import { logger } from 'hono/logger';
 
 interface SecretRecord {
 	encryptedValue: number[];
@@ -14,47 +17,55 @@ interface SecretRecord {
 	expiresAt?: number;
 }
 
-export class SecretsStore implements DurableObject {
-	private readonly state: DurableObjectState;
+type TSetSecretPayload = {
+	key: string;
+	value: string;
+	masterKey: string;
+	expiresAt?: number;
+}
 
-	constructor(state: DurableObjectState, _env: Env) {
+
+export class SecretsStore extends DurableObject<Env> {
+	app = new Hono<{Bindings: Env }>();
+
+
+	constructor(private readonly state: DurableObjectState, _env: Env) {
+		super(state, _env);
+
 		this.state = state;
+		this.configureRoutes();
 	}
 
-	async fetch(request: Request): Promise<Response> {
-		const url = new URL(request.url);
-		const method = request.method;
+	private configureRoutes(): void {
+		this.app.use(logger())
 
-		try {
-			if (method === 'PUT' && url.pathname.endsWith('/set')) {
-				return this.handleSet(request);
-			}
-			if (method === 'GET' && url.pathname.endsWith('/get')) {
-				return this.handleGet(request);
-			}
-			if (method === 'DELETE' && url.pathname.endsWith('/delete')) {
-				return this.handleDelete(request);
-			}
-			if (method === 'GET' && url.pathname.endsWith('/list')) {
-				return this.handleList();
-			}
+		this.app.put('/secrets/set', async (c) => {
+			return this.handleSet(c.req.raw);
+		});
+		this.app.get('/secrets/get', async (c) => {
+			return this.handleGet(c.req.raw);
+		});
+		this.app.delete('/secrets/delete', async (c) => {
+			return this.handleDelete(c.req.raw);
+		});
+		this.app.get('/secrets/list', async (c) => {
+			return this.handleList();
+		});
+		this.app.onError((err, c) => {
+			const message = err instanceof Error ? err.message : 'Unknown error';
+			return c.json({ error: message }, { status: 500 });
+		});
+
+		this.app.notFound((c) => {
 			return new Response('Not found', { status: 404 });
-		} catch (e) {
-			const message = e instanceof Error ? e.message : 'Unknown error';
-			return new Response(JSON.stringify({ error: message }), {
-				status: 500,
-				headers: { 'Content-Type': 'application/json' },
-			});
-		}
+		});
 	}
+
+	fetch = async (request: Request): Promise<Response> => this.app.fetch(request);
+
 
 	private async handleSet(request: Request): Promise<Response> {
-		const { key, value, masterKey, expiresAt } = await request.json<{
-			key: string;
-			value: string;
-			masterKey: string;
-			expiresAt?: number;
-		}>();
+		const { key, value, masterKey, expiresAt } = await request.json<TSetSecretPayload>();
 
 		const salt = generateSalt();
 		const cryptoKey = await deriveKey(masterKey, { salt });
@@ -76,6 +87,7 @@ export class SecretsStore implements DurableObject {
 			headers: { 'Content-Type': 'application/json' },
 		});
 	}
+
 
 	private async handleGet(request: Request): Promise<Response> {
 		const url = new URL(request.url);

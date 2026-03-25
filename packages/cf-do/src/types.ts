@@ -1,4 +1,4 @@
 export interface IStorageGetOptions {
-	allowConcurrency?: boolean;
-	allowUnconfirmed?: boolean;
+  allowConcurrency?: boolean;
+  allowUnconfirmed?: boolean;
 }

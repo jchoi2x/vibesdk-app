@@ -56,9 +56,7 @@ export function validateEmail(email: string): EmailValidationResult {
  * Validate password strength (client-side)
  * Provides immediate feedback to users
  */
-export function validatePassword(
-  password: string,
-): PasswordValidationResult {
+export function validatePassword(password: string): PasswordValidationResult {
   const errors: string[] = [];
   let score = 0;
 
@@ -66,7 +64,7 @@ export function validatePassword(
     return {
       valid: false,
       errors: ['Password is required'],
-      score: 0
+      score: 0,
     };
   }
 
@@ -93,26 +91,35 @@ export function validatePassword(
     valid: errors.length === 0,
     errors: errors.length > 0 ? errors : undefined,
     score: Math.min(4, Math.max(0, score)),
-    suggestions: suggestions.length > 0 ? suggestions : undefined
+    suggestions: suggestions.length > 0 ? suggestions : undefined,
   };
 }
 
 /**
  * Validate display name
  */
-export function validateDisplayName(displayName: string): { valid: boolean; error?: string } {
+export function validateDisplayName(displayName: string): {
+  valid: boolean;
+  error?: string;
+} {
   if (!displayName || typeof displayName !== 'string') {
     return { valid: false, error: 'Display name is required' };
   }
 
   const trimmed = displayName.trim();
-  
+
   if (trimmed.length < 2) {
-    return { valid: false, error: 'Display name must be at least 2 characters' };
+    return {
+      valid: false,
+      error: 'Display name must be at least 2 characters',
+    };
   }
 
   if (trimmed.length > 50) {
-    return { valid: false, error: 'Display name must be less than 50 characters' };
+    return {
+      valid: false,
+      error: 'Display name must be less than 50 characters',
+    };
   }
 
   return { valid: true };
@@ -127,7 +134,7 @@ export function getPasswordStrengthLabel(score: number): {
   percentage: number;
 } {
   const percentage = (score / 4) * 100;
-  
+
   if (score === 0) {
     return { label: 'Very Weak', color: 'red', percentage };
   } else if (score === 1) {
@@ -160,13 +167,16 @@ export function validateForm(fields: FormField[]): {
   firstError?: string;
 } {
   const errors: Record<string, string> = {};
-  
+
   for (const field of fields) {
-    if (field.required !== false && (!field.value || field.value.trim() === '')) {
+    if (
+      field.required !== false &&
+      (!field.value || field.value.trim() === '')
+    ) {
       errors[field.name] = `${field.name} is required`;
       continue;
     }
-    
+
     if (field.value && field.value.trim() !== '') {
       const result = field.validator(field.value);
       if (!result.valid && result.error) {
@@ -174,13 +184,13 @@ export function validateForm(fields: FormField[]): {
       }
     }
   }
-  
+
   const errorKeys = Object.keys(errors);
-  
+
   return {
     valid: errorKeys.length === 0,
     errors,
-    firstError: errorKeys.length > 0 ? errors[errorKeys[0]] : undefined
+    firstError: errorKeys.length > 0 ? errors[errorKeys[0]] : undefined,
   };
 }
 
@@ -189,11 +199,14 @@ export function validateForm(fields: FormField[]): {
  */
 export function createDebouncedValidator<T>(
   validator: (value: T) => { valid: boolean; error?: string },
-  delay: number = 500
+  delay: number = 500,
 ) {
   let timeoutId: NodeJS.Timeout;
-  
-  return (value: T, callback: (result: { valid: boolean; error?: string }) => void) => {
+
+  return (
+    value: T,
+    callback: (result: { valid: boolean; error?: string }) => void,
+  ) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
       const result = validator(value);

@@ -2,241 +2,265 @@ import { describe, expect, it, beforeEach, afterEach } from 'bun:test';
 import { BuildSession } from '../src/session';
 import { HttpClient } from '../src/http';
 import type { BuildStartEvent, Credentials } from '../src/types';
-import { startTestServer, waitForClients, waitForMessages, type TestServer } from './test-server';
+import {
+  startTestServer,
+  waitForClients,
+  waitForMessages,
+  type TestServer,
+} from './test-server';
 
 describe('BuildSession.connect', () => {
-	let server: TestServer;
+  let server: TestServer;
+
+  beforeEach(() => {
+    server = startTestServer();
+  });
+
+  afterEach(() => {
+    server.close();
+  });
+
+  function createSession(
+    overrides: Partial<BuildStartEvent> = {},
+    credentials?: Credentials,
+  ) {
+    const start: BuildStartEvent = {
+      agentId: 'test-agent-1',
+      websocketUrl: server.wsUrl,
+      behaviorType: 'phasic',
+      projectType: 'app',
+      ...overrides,
+    };
+
+    const httpClient = new HttpClient({
+      baseUrl: server.url,
+    });
+
+    return new BuildSession(start, {
+      httpClient,
+      ...(credentials ? { defaultCredentials: credentials } : {}),
+    });
+  }
+
+  it('sends session_init on open with credentials', async () => {
+    const creds: Credentials = { providers: { openai: { apiKey: 'sk-test' } } };
+    const session = createSession({}, creds);
+
+    await session.connect();
+    await waitForClients(server, 1);
+
+    // Wait for init messages to be sent
+    await waitForMessages(server, 2);
+
+    const received = server.received();
+    const types = received.map((r) => (r.data as { type: string }).type);
 
-	beforeEach(() => {
-		server = startTestServer();
-	});
+    expect(types[0]).toBe('session_init');
+    expect(types[1]).toBe('get_conversation_state');
 
-	afterEach(() => {
-		server.close();
-	});
+    session.close();
+  });
 
-	function createSession(overrides: Partial<BuildStartEvent> = {}, credentials?: Credentials) {
-		const start: BuildStartEvent = {
-			agentId: 'test-agent-1',
-			websocketUrl: server.wsUrl,
-			behaviorType: 'phasic',
-			projectType: 'app',
-			...overrides,
-		};
+  it('waitUntilReady resolves on generation_started (phasic)', async () => {
+    const session = createSession({ behaviorType: 'phasic' });
 
-		const httpClient = new HttpClient({
-			baseUrl: server.url,
-		});
+    await session.connect();
+    await waitForClients(server, 1);
 
-		return new BuildSession(start, {
-			httpClient,
-			...(credentials ? { defaultCredentials: credentials } : {}),
-		});
-	}
+    const ready = session.waitUntilReady({ timeoutMs: 5_000 });
 
-	it('sends session_init on open with credentials', async () => {
-		const creds: Credentials = { providers: { openai: { apiKey: 'sk-test' } } };
-		const session = createSession({}, creds);
+    // Server sends generation_started
+    server.broadcast({
+      type: 'generation_started',
+      message: 'start',
+      totalFiles: 1,
+    });
 
-		await session.connect();
-		await waitForClients(server, 1);
+    await ready;
+    session.close();
+  });
 
-		// Wait for init messages to be sent
-		await waitForMessages(server, 2);
+  it('waitUntilReady resolves on generation_started (agentic)', async () => {
+    const session = createSession({
+      behaviorType: 'agentic',
+      projectType: 'general',
+    });
 
-		const received = server.received();
-		const types = received.map((r) => (r.data as { type: string }).type);
+    await session.connect();
+    await waitForClients(server, 1);
 
-		expect(types[0]).toBe('session_init');
-		expect(types[1]).toBe('get_conversation_state');
+    const ready = session.waitUntilReady({ timeoutMs: 5_000 });
 
-		session.close();
-	});
+    server.broadcast({
+      type: 'generation_started',
+      message: 'start',
+      totalFiles: 1,
+    });
 
-	it('waitUntilReady resolves on generation_started (phasic)', async () => {
-		const session = createSession({ behaviorType: 'phasic' });
+    await ready;
+    session.close();
+  });
 
-		await session.connect();
-		await waitForClients(server, 1);
+  it('onMessageType triggers for specific message type', async () => {
+    const session = createSession();
 
-		const ready = session.waitUntilReady({ timeoutMs: 5_000 });
+    await session.connect();
+    await waitForClients(server, 1);
 
-		// Server sends generation_started
-		server.broadcast({ type: 'generation_started', message: 'start', totalFiles: 1 });
+    let called = 0;
+    session.onMessageType('file_generated', () => {
+      called += 1;
+    });
 
-		await ready;
-		session.close();
-	});
+    server.broadcast({
+      type: 'file_generated',
+      path: 'index.html',
+      content: '<html></html>',
+    });
 
-	it('waitUntilReady resolves on generation_started (agentic)', async () => {
-		const session = createSession({ behaviorType: 'agentic', projectType: 'general' });
+    await new Promise((r) => setTimeout(r, 100));
 
-		await session.connect();
-		await waitForClients(server, 1);
+    expect(called).toBe(1);
+    session.close();
+  });
 
-		const ready = session.waitUntilReady({ timeoutMs: 5_000 });
+  it('waitForMessageType resolves with matching message', async () => {
+    const session = createSession();
 
-		server.broadcast({ type: 'generation_started', message: 'start', totalFiles: 1 });
+    await session.connect();
+    await waitForClients(server, 1);
 
-		await ready;
-		session.close();
-	});
+    const p = session.waitForMessageType('deployment_completed', 5_000);
 
-	it('onMessageType triggers for specific message type', async () => {
-		const session = createSession();
+    server.broadcast({
+      type: 'deployment_completed',
+      previewURL: 'https://preview.example.com',
+      tunnelURL: 'https://tunnel.example.com',
+      instanceId: 'i1',
+      message: 'done',
+    });
 
-		await session.connect();
-		await waitForClients(server, 1);
+    const msg = await p;
+    expect(msg.type).toBe('deployment_completed');
 
-		let called = 0;
-		session.onMessageType('file_generated', () => {
-			called += 1;
-		});
+    session.close();
+  });
 
-		server.broadcast({ type: 'file_generated', path: 'index.html', content: '<html></html>' });
+  it('startGeneration sends generate_all message', async () => {
+    const session = createSession();
 
-		await new Promise((r) => setTimeout(r, 100));
+    await session.connect();
+    await waitForClients(server, 1);
 
-		expect(called).toBe(1);
-		session.close();
-	});
+    // Clear init messages
+    server.clearReceived();
 
-	it('waitForMessageType resolves with matching message', async () => {
-		const session = createSession();
+    session.startGeneration();
 
-		await session.connect();
-		await waitForClients(server, 1);
+    await waitForMessages(server, 1);
 
-		const p = session.waitForMessageType('deployment_completed', 5_000);
+    const received = server.received();
+    const types = received.map((r) => (r.data as { type: string }).type);
 
-		server.broadcast({
-			type: 'deployment_completed',
-			previewURL: 'https://preview.example.com',
-			tunnelURL: 'https://tunnel.example.com',
-			instanceId: 'i1',
-			message: 'done',
-		});
+    expect(types).toContain('generate_all');
 
-		const msg = await p;
-		expect(msg.type).toBe('deployment_completed');
+    session.close();
+  });
 
-		session.close();
-	});
+  it('wait.deployable resolves on phase_validated for phasic', async () => {
+    const session = createSession({ behaviorType: 'phasic' });
 
-	it('startGeneration sends generate_all message', async () => {
-		const session = createSession();
+    await session.connect();
+    await waitForClients(server, 1);
 
-		await session.connect();
-		await waitForClients(server, 1);
+    const p = session.wait.deployable({ timeoutMs: 5_000 });
 
-		// Clear init messages
-		server.clearReceived();
+    server.broadcast({
+      type: 'phase_validated',
+      message: 'ok',
+      phase: { name: 'Phase 1', description: 'd', files: [] },
+    });
 
-		session.startGeneration();
+    const result = await p;
+    expect(result.reason).toBe('phase_validated');
 
-		await waitForMessages(server, 1);
+    session.close();
+  });
 
-		const received = server.received();
-		const types = received.map((r) => (r.data as { type: string }).type);
+  it('wait.deployable resolves on generation_complete for agentic', async () => {
+    const session = createSession({ behaviorType: 'agentic' });
 
-		expect(types).toContain('generate_all');
+    await session.connect();
+    await waitForClients(server, 1);
 
-		session.close();
-	});
+    const p = session.wait.deployable({ timeoutMs: 5_000 });
 
-	it('wait.deployable resolves on phase_validated for phasic', async () => {
-		const session = createSession({ behaviorType: 'phasic' });
+    server.broadcast({
+      type: 'generation_complete',
+      message: 'done',
+    });
 
-		await session.connect();
-		await waitForClients(server, 1);
+    const result = await p;
+    expect(result.reason).toBe('generation_complete');
 
-		const p = session.wait.deployable({ timeoutMs: 5_000 });
+    session.close();
+  });
 
-		server.broadcast({
-			type: 'phase_validated',
-			message: 'ok',
-			phase: { name: 'Phase 1', description: 'd', files: [] },
-		});
+  it('reconnects on close and re-sends init messages', async () => {
+    const creds: Credentials = { providers: { openai: { apiKey: 'sk-test' } } };
+    const session = createSession({}, creds);
 
-		const result = await p;
-		expect(result.reason).toBe('phase_validated');
+    await session.connect({ retry: { initialDelayMs: 50, maxDelayMs: 50 } });
+    await waitForClients(server, 1);
 
-		session.close();
-	});
+    // Get the client before clearing
+    const clientsBefore = server.clients();
+    expect(clientsBefore.length).toBe(1);
+    const client = clientsBefore[0];
 
-	it('wait.deployable resolves on generation_complete for agentic', async () => {
-		const session = createSession({ behaviorType: 'agentic' });
+    server.clearReceived();
 
-		await session.connect();
-		await waitForClients(server, 1);
+    // Close the connection - this should trigger reconnect
+    client.close(1006, 'test disconnect');
 
-		const p = session.wait.deployable({ timeoutMs: 5_000 });
+    // Wait for reconnection
+    await waitForClients(server, 1);
+    await waitForMessages(server, 2);
 
-		server.broadcast({
-			type: 'generation_complete',
-			message: 'done',
-		});
+    // Should have received init messages again on reconnect
+    const received = server.received();
+    const types = received.map((r) => (r.data as { type: string }).type);
 
-		const result = await p;
-		expect(result.reason).toBe('generation_complete');
+    expect(types).toContain('session_init');
+    expect(types).toContain('get_conversation_state');
 
-		session.close();
-	});
+    session.close();
+  });
 
-	it('reconnects on close and re-sends init messages', async () => {
-		const creds: Credentials = { providers: { openai: { apiKey: 'sk-test' } } };
-		const session = createSession({}, creds);
+  it('handles server-sent file updates', async () => {
+    const session = createSession();
 
-		await session.connect({ retry: { initialDelayMs: 50, maxDelayMs: 50 } });
-		await waitForClients(server, 1);
+    await session.connect();
+    await waitForClients(server, 1);
 
-		// Get the client before clearing
-		const clientsBefore = server.clients();
-		expect(clientsBefore.length).toBe(1);
-		const client = clientsBefore[0];
+    server.broadcast({
+      type: 'file_generated',
+      file: {
+        filePath: 'src/app.tsx',
+        fileContents:
+          'export default function App() { return <div>Hello</div>; }',
+        filePurpose: 'Main app component',
+      },
+    });
 
-		server.clearReceived();
+    await new Promise((r) => setTimeout(r, 100));
 
-		// Close the connection - this should trigger reconnect
-		client.close(1006, 'test disconnect');
+    const paths = session.files.listPaths();
+    expect(paths).toContain('src/app.tsx');
 
-		// Wait for reconnection
-		await waitForClients(server, 1);
-		await waitForMessages(server, 2);
+    const content = session.files.read('src/app.tsx');
+    expect(content).toContain('Hello');
 
-		// Should have received init messages again on reconnect
-		const received = server.received();
-		const types = received.map((r) => (r.data as { type: string }).type);
-
-		expect(types).toContain('session_init');
-		expect(types).toContain('get_conversation_state');
-
-		session.close();
-	});
-
-	it('handles server-sent file updates', async () => {
-		const session = createSession();
-
-		await session.connect();
-		await waitForClients(server, 1);
-
-		server.broadcast({
-			type: 'file_generated',
-			file: {
-				filePath: 'src/app.tsx',
-				fileContents: 'export default function App() { return <div>Hello</div>; }',
-				filePurpose: 'Main app component',
-			},
-		});
-
-		await new Promise((r) => setTimeout(r, 100));
-
-		const paths = session.files.listPaths();
-		expect(paths).toContain('src/app.tsx');
-
-		const content = session.files.read('src/app.tsx');
-		expect(content).toContain('Hello');
-
-		session.close();
-	});
+    session.close();
+  });
 });

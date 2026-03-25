@@ -6,30 +6,30 @@
 import type { SecurityErrorType, RateLimitError } from '../errors';
 
 export interface BaseErrorResponse {
-    message: string;
-    name: string;
-    type?: SecurityErrorType;
+  message: string;
+  name: string;
+  type?: SecurityErrorType;
 }
 
 export interface RateLimitErrorResponse extends BaseErrorResponse {
-    details: RateLimitError;
+  details: RateLimitError;
 }
 
 export interface BaseApiResponse<T = unknown> {
-    success: boolean;
-    data?: T;
-    error?: BaseErrorResponse | RateLimitErrorResponse;
-    message?: string;
+  success: boolean;
+  data?: T;
+  error?: BaseErrorResponse | RateLimitErrorResponse;
+  message?: string;
 }
 
 export type ControllerResponse<T> = Response & {
-    __typedData: T;
+  __typedData: T;
 };
 
 export type ApiResponse<T = unknown> = BaseApiResponse<T>;
 
 export interface PlatformStatusData {
-    globalUserMessage: string;
-    changeLogs: string;
-    hasActiveMessage: boolean;
+  globalUserMessage: string;
+  changeLogs: string;
+  hasActiveMessage: boolean;
 }

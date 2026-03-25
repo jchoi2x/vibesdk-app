@@ -1,23 +1,30 @@
-import { type TemplateDetails } from "@/services/sandbox/sandboxTypes";
-import { type SetupCommandsType, type Blueprint } from "@/agents/schemas";
+import { type TemplateDetails } from '@/services/sandbox/sandboxTypes';
+import { type SetupCommandsType, type Blueprint } from '@/agents/schemas';
 import { createObjectLogger, type StructuredLogger } from '@/logger';
 import { generalSystemPromptBuilder, PROMPT_UTILS } from '@/agents/prompts';
-import { createAssistantMessage, createSystemMessage, createUserMessage } from "@/agents/inferutils/common";
-import { executeInference, } from "@/agents/inferutils/infer";
-import Assistant from "@/agents/assistants/assistant";
-import { AIModels, type InferenceContext } from "@/agents/inferutils/config.types";
-import { extractCommands } from "@/agents/utils/common";
+import {
+  createAssistantMessage,
+  createSystemMessage,
+  createUserMessage,
+} from '@/agents/inferutils/common';
+import { executeInference } from '@/agents/inferutils/infer';
+import Assistant from '@/agents/assistants/assistant';
+import {
+  AIModels,
+  type InferenceContext,
+} from '@/agents/inferutils/config.types';
+import { extractCommands } from '@/agents/utils/common';
 
 interface GenerateSetupCommandsArgs {
-    env: Env;
-    agentId: string;
-    query: string;
-    blueprint: Blueprint;
-    template: TemplateDetails;
-    inferenceContext: InferenceContext;
+  env: Env;
+  agentId: string;
+  query: string;
+  blueprint: Blueprint;
+  template: TemplateDetails;
+  inferenceContext: InferenceContext;
 }
 
-const SYSTEM_PROMPT = `You are an Expert DevOps Engineer at Cloudflare specializing in project setup and dependency management. Your task is to analyze project requirements and generate precise installation commands for missing dependencies.`
+const SYSTEM_PROMPT = `You are an Expert DevOps Engineer at Cloudflare specializing in project setup and dependency management. Your task is to analyze project requirements and generate precise installation commands for missing dependencies.`;
 
 const SETUP_USER_PROMPT = `## TASK
 Analyze the blueprint and generate exact \`bun add\` commands for missing dependencies. Only suggest packages that are NOT already in the starting template.
@@ -86,63 +93,77 @@ You need to make sure **ALL THESE** are installed at the least:
 </INPUT DATA>`;
 
 export class ProjectSetupAssistant extends Assistant<Env> {
-    private query: string;
-    private logger: StructuredLogger;
-    
-    constructor({
-        env,
-        inferenceContext,
-        query,
-        blueprint,
-        template,
-    }: GenerateSetupCommandsArgs) {
-        const systemPrompt = createSystemMessage(SYSTEM_PROMPT);
-        super(env, inferenceContext, systemPrompt);
-        this.save([createUserMessage(generalSystemPromptBuilder(SETUP_USER_PROMPT, {
-            query,
-            blueprint,
-            templateDetails: template,
-            dependencies: template.deps,
-        }))]);
-        this.query = query;
-        this.logger = createObjectLogger(this, 'ProjectSetupAssistant')
-    }
+  private query: string;
+  private logger: StructuredLogger;
 
-    async generateSetupCommands(error?: string): Promise<SetupCommandsType> {
-        this.logger.info("Generating setup commands", { query: this.query, queryLength: this.query.length });
-    
-        try {
-            let userPrompt = createUserMessage(`Now please suggest required setup commands for the project, inside markdown code fence`);
-            if (error) {
-                this.logger.info(`Regenerating setup commands after error: ${error}`);
-                userPrompt = createUserMessage(`Some of the previous commands you generated might not have worked. Please review these and generate new commands if required, maybe try a different version or correct the name?
+  constructor({
+    env,
+    inferenceContext,
+    query,
+    blueprint,
+    template,
+  }: GenerateSetupCommandsArgs) {
+    const systemPrompt = createSystemMessage(SYSTEM_PROMPT);
+    super(env, inferenceContext, systemPrompt);
+    this.save([
+      createUserMessage(
+        generalSystemPromptBuilder(SETUP_USER_PROMPT, {
+          query,
+          blueprint,
+          templateDetails: template,
+          dependencies: template.deps,
+        }),
+      ),
+    ]);
+    this.query = query;
+    this.logger = createObjectLogger(this, 'ProjectSetupAssistant');
+  }
+
+  async generateSetupCommands(error?: string): Promise<SetupCommandsType> {
+    this.logger.info('Generating setup commands', {
+      query: this.query,
+      queryLength: this.query.length,
+    });
+
+    try {
+      let userPrompt = createUserMessage(
+        `Now please suggest required setup commands for the project, inside markdown code fence`,
+      );
+      if (error) {
+        this.logger.info(`Regenerating setup commands after error: ${error}`);
+        userPrompt =
+          createUserMessage(`Some of the previous commands you generated might not have worked. Please review these and generate new commands if required, maybe try a different version or correct the name?
 If the package simply doesn't exist, please don't suggest it. 
                     
 ${error}`);
-                this.logger.info(`Regenerating setup commands with new prompt: ${userPrompt.content}`);
-            }
-            const messages = this.save([userPrompt]);
+        this.logger.info(
+          `Regenerating setup commands with new prompt: ${userPrompt.content}`,
+        );
+      }
+      const messages = this.save([userPrompt]);
 
-            const results = await executeInference({
-                env: this.env,
-                messages,
-                agentActionName: "projectSetup",
-                context: this.inferenceContext,
-                modelName: error? AIModels.GEMINI_2_5_FLASH : undefined,
-            });
+      const results = await executeInference({
+        env: this.env,
+        messages,
+        agentActionName: 'projectSetup',
+        context: this.inferenceContext,
+        modelName: error ? AIModels.GEMINI_2_5_FLASH : undefined,
+      });
 
-            if (!results || !results.string) {
-                this.logger.error('Project setup returned no result after all retries');
-                throw new Error('Failed to generate setup commands: inference returned null');
-            }
+      if (!results || !results.string) {
+        this.logger.error('Project setup returned no result after all retries');
+        throw new Error(
+          'Failed to generate setup commands: inference returned null',
+        );
+      }
 
-            this.logger.info(`Generated setup commands: ${results.string}`);
+      this.logger.info(`Generated setup commands: ${results.string}`);
 
-            this.save([createAssistantMessage(results.string)]);
-            return { commands: extractCommands(results.string) };
-        } catch (error) {
-            this.logger.error("Error generating setup commands:", error);
-            throw error;
-        }
+      this.save([createAssistantMessage(results.string)]);
+      return { commands: extractCommands(results.string) };
+    } catch (error) {
+      this.logger.error('Error generating setup commands:', error);
+      throw error;
     }
+  }
 }
