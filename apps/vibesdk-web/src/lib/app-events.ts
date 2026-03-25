@@ -3,7 +3,7 @@
  * Allows different parts of the app to communicate about app state changes
  */
 
-import { AppWithFavoriteStatus } from "@/api-types";
+import { type AppWithFavoriteStatus } from "@/api-types";
 
 // Define specific event data types
 export interface AppDeletedEvent {

@@ -1,6 +1,8 @@
 // Self-contained sandbox/agent types — no Zod or cross-app imports.
 // These are explicit TypeScript interfaces mirroring the Zod-inferred shapes.
 
+import type { ImageAttachment } from './images';
+
 export interface FileTreeNode {
 	path: string;
 	type: 'file' | 'directory';
@@ -78,7 +80,7 @@ export interface AgentConnectionData {
 	agentId: string;
 }
 
-export interface AgentPreviewResponse extends PreviewType {}
+export type AgentPreviewResponse = PreviewType;
 
 export interface CodeGenArgs {
 	query: string;
@@ -87,7 +89,7 @@ export interface CodeGenArgs {
 	selectedTemplate?: string;
 	behaviorType?: 'phasic' | 'agentic';
 	projectType?: 'app' | 'workflow' | 'presentation' | 'general';
-	images?: import('./images').ImageAttachment[];
+	images?: ImageAttachment[];
 	credentials?: {
 		providers?: Record<string, { apiKey: string }>;
 		aiGateway?: { baseUrl: string; token: string };

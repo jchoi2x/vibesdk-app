@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { setSentryUser, clearSentryUser } from '@/utils/sentry';
-import { AuthUser } from '@/api-types';
+import { type AuthUser } from '@/api-types';
 
 /**
  * Hook to automatically sync user context with Sentry
