@@ -1,14 +1,11 @@
 /**
- * Centralized API types - imports and re-exports types from worker
- * This file serves as the single source of truth for frontend-worker API communication
+ * Centralized API types - re-exports shared types from @jchoi2x/types/vibesdk.
+ * This file serves as the single source of truth for frontend-worker API communication.
  */
-import { SessionResponse } from 'worker/utils/authUtils';
-import { AuthUser } from './api-types';
-
-export type { SecretTemplate } from 'worker/types/secretsTemplates';
+import type { SessionResponse, AuthUser } from '@jchoi2x/types/vibesdk';
 
 // Base API Response Types
-export type { ControllerResponse, ApiResponse } from 'worker/api/controllers/types';
+export type { ControllerResponse, ApiResponse, RateLimitErrorResponse } from '@jchoi2x/types/vibesdk';
 
 // Database Types
 export type {
@@ -19,49 +16,45 @@ export type {
   AppSortOption,
   SortOrder,
   AppQueryOptions,
-  PublicAppQueryOptions
-} from 'worker/database/types';
+  PublicAppQueryOptions,
+  FavoriteToggleResult,
+  UserStats,
+  UserActivity,
+} from '@jchoi2x/types/vibesdk';
 
 // App-related API Types
-export type { 
+export type {
   AppsListData,
-  PublicAppsData, 
+  PublicAppsData,
   SingleAppData,
   FavoriteToggleData,
   CreateAppData,
   UpdateAppVisibilityData,
   AppDeleteData,
-  AppWithUserAndStats
-} from 'worker/api/controllers/apps/types';
-
-export type {
+  AppWithUserAndStats,
   AppDetailsData,
   AppStarToggleData,
   GeneratedCodeFile,
-  GitCloneTokenData
-} from 'worker/api/controllers/appView/types';
-
-// User-related API Types
-export type {
+  GitCloneTokenData,
   UserAppsData,
   ProfileUpdateData,
-} from 'worker/api/controllers/user/types';
+} from '@jchoi2x/types/vibesdk';
 
 // Stats API Types
 export type {
   UserStatsData,
-  UserActivityData
-} from 'worker/api/controllers/stats/types';
+  UserActivityData,
+} from '@jchoi2x/types/vibesdk';
 
 // Analytics API Types
 export type {
   UserAnalyticsResponseData,
   AgentAnalyticsResponseData,
-} from 'worker/api/controllers/analytics/types';
+} from '@jchoi2x/types/vibesdk';
 
-export type { PlatformStatusData } from 'worker/api/controllers/status/types';
+export type { PlatformStatusData } from '@jchoi2x/types/vibesdk';
 
-export type { CapabilitiesData } from 'worker/api/controllers/capabilities/types';
+export type { CapabilitiesData } from '@jchoi2x/types/vibesdk';
 
 export type {
   ViewMode,
@@ -70,12 +63,12 @@ export type {
   ViewDefinition,
   PlatformCapabilities,
   PlatformCapabilitiesConfig,
-} from 'worker/agents/core/features/types';
+} from '@jchoi2x/types/vibesdk';
 
 export {
   DEFAULT_FEATURE_DEFINITIONS,
   getBehaviorTypeForProject,
-} from 'worker/agents/core/features';
+} from '@jchoi2x/types/vibesdk';
 
 // Model Config API Types
 export type {
@@ -88,8 +81,10 @@ export type {
   ModelConfigDeleteData,
   ByokProvidersData,
   UserProviderStatus,
-  ModelsByProvider
-} from 'worker/api/controllers/modelConfig/types';
+  ModelsByProvider,
+  UserModelConfigWithMetadata,
+  ModelTestResult,
+} from '@jchoi2x/types/vibesdk';
 
 // Model Provider API Types
 export type {
@@ -101,8 +96,8 @@ export type {
   ModelProviderTestData,
   CreateProviderRequest,
   UpdateProviderRequest,
-  TestProviderRequest
-} from 'worker/api/controllers/modelProviders/types';
+  TestProviderRequest,
+} from '@jchoi2x/types/vibesdk';
 
 // Frontend model config update interface that matches backend schema
 export interface ModelConfigUpdate {
@@ -115,28 +110,28 @@ export interface ModelConfigUpdate {
 }
 
 // Secrets API Types
-export type { SecretTemplatesData } from 'worker/api/controllers/secrets/types';
+export type { SecretTemplatesData, SecretTemplate } from '@jchoi2x/types/vibesdk';
 
 // Vault API Types
 export type {
-	VaultConfig,
-	VaultConfigResponse,
-	VaultStatusResponse,
-	SetupVaultRequest,
-	KdfAlgorithm,
-	Argon2Params,
-	SecretMetadata,
-} from 'worker/services/secrets/vault-types';
+  VaultConfig,
+  VaultConfigResponse,
+  VaultStatusResponse,
+  SetupVaultRequest,
+  KdfAlgorithm,
+  Argon2Params,
+  SecretMetadata,
+} from '@jchoi2x/types/vibesdk';
 
 // Agent/CodeGen API Types
 export type {
   AgentConnectionData,
-} from 'worker/api/controllers/agent/types';
+} from '@jchoi2x/types/vibesdk';
 
 // Template Types
 export type {
   TemplateDetails,
-} from 'worker/services/sandbox/sandboxTypes';
+} from '@jchoi2x/types/vibesdk';
 
 // WebSocket Types
 export type {
@@ -145,24 +140,16 @@ export type {
   CodeFixEdits,
   ModelConfigsInfoMessage,
   AgentDisplayConfig,
-  ModelConfigsInfo
-} from 'worker/api/websocketTypes';
+  ModelConfigsInfo,
+} from '@jchoi2x/types/vibesdk';
 
 // Database/Schema Types commonly used in frontend
-export type { 
+export type {
   App,
   User,
   UserModelConfig,
-  UserModelProvider
-} from 'worker/database/schema';
-
-export type {
-  FavoriteToggleResult,
-  UserStats,
-  UserActivity,
-  UserModelConfigWithMetadata,
-  ModelTestResult
-} from 'worker/database/types';
+  UserModelProvider,
+} from '@jchoi2x/types/vibesdk';
 
 // Agent/Generator Types
 export type {
@@ -171,55 +158,54 @@ export type {
   CodeReviewOutputType,
   FileConceptType,
   FileOutputType as GeneratedFile,
-} from 'worker/agents/schemas';
+} from '@jchoi2x/types/vibesdk';
 
 export type {
   AgentState,
-  PhasicState
-} from 'worker/agents/core/state';
+  PhasicState,
+} from '@jchoi2x/types/vibesdk';
 
 export type {
   BehaviorType,
-  ProjectType
-} from 'worker/agents/core/types';
+  ProjectType,
+} from '@jchoi2x/types/vibesdk';
 
 export type {
   ConversationMessage,
-} from 'worker/agents/inferutils/common';
+} from '@jchoi2x/types/vibesdk';
 
-export type { 
+export type {
   RuntimeError,
-  StaticAnalysisResponse 
-} from 'worker/services/sandbox/sandboxTypes';
+  StaticAnalysisResponse,
+} from '@jchoi2x/types/vibesdk';
 
 // Config/Inference Types
-export type { 
+export type {
   AgentActionKey,
   AgentConfig,
   ModelConfig,
   ReasoningEffortType as ReasoningEffort,
-  ProviderOverrideType as ProviderOverride
-} from 'worker/agents/inferutils/config.types';
+  ProviderOverrideType as ProviderOverride,
+  AIModels,
+} from '@jchoi2x/types/vibesdk';
 
-export type { RateLimitError } from "worker/services/rate-limit/errors";
-export type { AgentPreviewResponse, CodeGenArgs } from 'worker/api/controllers/agent/types';
-export { MAX_AGENT_QUERY_LENGTH } from 'worker/api/controllers/agent/types';
-export type { RateLimitErrorResponse } from 'worker/api/responses';
+export type { RateLimitError } from '@jchoi2x/types/errors';
+export type { AgentPreviewResponse, CodeGenArgs } from '@jchoi2x/types/vibesdk';
+export { MAX_AGENT_QUERY_LENGTH } from '@jchoi2x/types/vibesdk';
 export { RateLimitExceededError, SecurityError, SecurityErrorType } from '@jchoi2x/types/errors';
 
-export type { AIModels } from 'worker/agents/inferutils/config.types';
 // Model selection types
 export type ModelSelectionMode = 'platform' | 'byok' | 'custom';
 
 // Match chat FileType interface
 export interface FileType {
-	filePath: string;
-	fileContents: string;
-	explanation?: string;
-	isGenerating?: boolean;
-	needsFixing?: boolean;
-	hasErrors?: boolean;
-	language?: string;
+  filePath: string;
+  fileContents: string;
+  explanation?: string;
+  isGenerating?: boolean;
+  needsFixing?: boolean;
+  hasErrors?: boolean;
+  language?: string;
 }
 
 // Streaming response wrapper types for agent session creation
@@ -231,26 +217,27 @@ export interface StreamingResponse {
 export type AgentStreamingResponse = StreamingResponse;
 
 export {
-	type ImageAttachment, 
-	isSupportedImageType, 
-	MAX_IMAGE_SIZE_BYTES,
-	MAX_IMAGES_PER_MESSAGE,
-	SUPPORTED_IMAGE_MIME_TYPES
-} from 'worker/types/image-attachment';
+  type ImageAttachment,
+  isSupportedImageType,
+  MAX_IMAGE_SIZE_BYTES,
+  MAX_IMAGES_PER_MESSAGE,
+  SUPPORTED_IMAGE_MIME_TYPES,
+} from '@jchoi2x/types/vibesdk';
 
-// Auth types imported from worker
-export type { 
-  AuthSession, 
-  ApiKeyInfo, 
-  AuthResult, 
+// Auth types
+export type {
+  AuthSession,
+  ApiKeyInfo,
+  AuthResult,
   AuthUser,
-  OAuthProvider 
-} from 'worker/types/auth-types';
-export type { 
-  SessionResponse 
-} from 'worker/utils/authUtils';
+  OAuthProvider,
+  SessionResponse,
+  AuthProvidersResponseData,
+  ActiveSessionsData,
+  ApiKeysData,
+} from '@jchoi2x/types/vibesdk';
 
-// Auth API Response Types (using existing worker types)
+// Auth API Response Types
 export type LoginResponseData = SessionResponse;
 
 export type RegisterResponseData = SessionResponse & {
@@ -262,49 +249,13 @@ export type ProfileResponseData = {
   sessionId: string;
 };
 
-export interface AuthProvidersResponseData {
-  providers: {
-    google: boolean;
-    github: boolean;
-    email: boolean;
-  };
-  hasOAuth: boolean;
-  requiresEmailAuth: boolean;
-  csrfToken?: string;
-  csrfExpiresIn?: number;
-}
-
 export interface CsrfTokenResponseData {
   token: string;
   headerName: string;
   expiresIn?: number;
 }
 
-// Active Sessions Response - matches getUserSessions + isCurrent from controller
-export interface ActiveSessionsData {
-  sessions: Array<{
-    id: string;
-    userAgent: string | null;
-    ipAddress: string | null;
-    lastActivity: Date;
-    createdAt: Date;
-    isCurrent: boolean;
-  }>;
-}
-
-// API Keys Response - matches controller response format
-export interface ApiKeysData {
-  keys: Array<{
-    id: string;
-    name: string;
-    keyPreview: string;
-    createdAt: Date | null;
-    lastUsed: Date | null;
-    isActive: boolean;
-  }>;
-}
-
 export type {
-    GitHubExportOptions,
-    GitHubExportResult,
-} from 'worker/services/github/types';
+  GitHubExportOptions,
+  GitHubExportResult,
+} from '@jchoi2x/types/vibesdk';
