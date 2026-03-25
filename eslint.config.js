@@ -9,6 +9,7 @@ export default tseslint.config(
   {
     ignores: [
       'dist',
+      '**/dist',
       'wrangler-configuration.d.ts',
       '**/cloudflare-env.d.ts',
       'test-diff-formatters/**',
