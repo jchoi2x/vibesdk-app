@@ -503,6 +503,93 @@ Cloudflare VibeSDK implements enterprise-grade security:
 
 ---
 
+---
+
+## npm Packages
+
+This repo publishes a set of reusable Cloudflare Worker libraries under the `@jchoi2x/` npm scope. All packages live in `packages/` and are orchestrated with Nx.
+
+### Package list
+
+| Package | Description |
+|---|---|
+| `@jchoi2x/types` | `Result<T,E>`, `ApiResponse`, `Paginated`, `Brand`, and shared utility types |
+| `@jchoi2x/utils` | `sleep`, `retry`, `pick`, `omit`, `chunk`, `groupBy`, `deepMerge`, and more |
+| `@jchoi2x/logger` | `Logger` interface, `createConsoleLogger`, `createNoopLogger`, `createLogger` |
+| `@jchoi2x/cf-crypto` | AES-GCM encrypt/decrypt, PBKDF2 key derivation, `timingSafeEqual` |
+| `@jchoi2x/cf-rate-limit` | `RateLimiter` interface, in-memory and KV-backed sliding window implementations |
+| `@jchoi2x/cf-middleware` | `compose`, `cors`, `requestId`, `securityHeaders` middleware primitives |
+| `@jchoi2x/cf-do` | `BaseDurableObject`, `callRPC`, `rpcResponse`, `getOrDefault` |
+
+### Building packages
+
+Build all packages (respects dependency order):
+
+```bash
+bun run packages:build
+# or directly via nx:
+bunx nx run-many -t build --projects=@jchoi2x/types,@jchoi2x/utils,@jchoi2x/logger,@jchoi2x/cf-crypto,@jchoi2x/cf-rate-limit,@jchoi2x/cf-middleware,@jchoi2x/cf-do
+```
+
+Build a single package:
+
+```bash
+bunx nx build @jchoi2x/types
+```
+
+Watch mode for active development:
+
+```bash
+cd packages/types
+bun run dev
+```
+
+### Updating a package version
+
+Bump the version in the package's `package.json` using the standard `npm version` command. Run this from the package directory:
+
+```bash
+cd packages/types
+npm version patch   # 0.0.1 → 0.0.2
+npm version minor   # 0.0.1 → 0.1.0
+npm version major   # 0.0.1 → 1.0.0
+```
+
+Or edit `packages/<name>/package.json` directly and set `"version"` to the desired value.
+
+### Publishing a specific package
+
+1. Make sure you are logged in to npm:
+
+   ```bash
+   npm login
+   ```
+
+2. Build the package:
+
+   ```bash
+   bunx nx build @jchoi2x/types
+   ```
+
+3. Publish:
+
+   ```bash
+   cd packages/types
+   npm publish
+   ```
+
+   All packages are configured with `"publishConfig": { "access": "public" }` so no extra flags are needed.
+
+To publish every package in dependency order:
+
+```bash
+bunx nx run-many -t publish
+```
+
+> The `publish` target in `nx.json` has `"dependsOn": ["build"]`, so the build step runs automatically.
+
+---
+
 ## 🤝 Contributing
 
 Want to contribute to Cloudflare VibeSDK? Here's how:
