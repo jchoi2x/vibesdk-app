@@ -318,6 +318,167 @@ Cloudflare VibeSDK generates apps in intelligent phases:
 
 ---
 
+## Platform Architecture
+
+### Monorepo Structure
+
+The repository is an Nx-managed Bun workspace organized into three top-level directories:
+
+```
+vibesdk-app/
+├── apps/
+│   ├── vibesdk-web/          # Cloudflare Pages React SPA
+│   │   ├── src/              # React application source
+│   │   ├── public/
+│   │   │   └── _routes.json  # Copied to build output; routes /api/* to middleware
+│   │   └── functions/
+│   │       └── _middleware.ts # Pages middleware: proxies /api/* → vibesdk-api
+│   ├── vibesdk-api/          # Cloudflare Worker: all backend logic
+│   │   ├── worker/           # Hono app, agents, database, services
+│   │   └── wrangler.jsonc
+│   ├── rate-limit/           # Standalone rate-limit Worker (service binding target)
+│   │   ├── src/worker.ts
+│   │   └── wrangler.jsonc
+│   └── secrets-store/        # Standalone secrets Worker (service binding target)
+│       ├── src/worker.ts
+│       └── wrangler.jsonc
+├── packages/                 # Published npm packages (@jchoi2x/*)
+│   ├── types/
+│   ├── utils/
+│   ├── logger/
+│   ├── cf-crypto/
+│   ├── cf-rate-limit/
+│   ├── cf-middleware/
+│   └── cf-do/
+└── tooling/                  # Shared build configs (tsup, eslint, tsconfig presets)
+```
+
+### Frontend / Backend Split (Pages + Worker)
+
+`vibesdk-web` is a Cloudflare Pages project. It serves the React SPA statically and uses a Pages Function to intercept API traffic without running a full Worker for every page request.
+
+**`_routes.json`** (copied to the Pages build output directory at build time):
+
+```json
+{
+  "version": 1,
+  "include": ["/api/*"],
+  "exclude": []
+}
+```
+
+This tells Cloudflare Pages to invoke the middleware function only for paths that begin with `/api/`. All other paths are served directly from the static asset store, keeping cold-start overhead and cost minimal.
+
+**`functions/_middleware.ts`** (the Pages Function):
+
+```typescript
+import type { PagesFunction } from "@cloudflare/workers-types";
+
+interface Env {
+  VIBESDK_API: Fetcher; // service binding declared in Pages project settings
+}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+  const url = new URL(context.request.url);
+  // Strip the /api prefix before forwarding to the API worker.
+  url.pathname = url.pathname.replace(/^\/api/, "") || "/";
+  return context.env.VIBESDK_API.fetch(
+    new Request(url.toString(), context.request)
+  );
+};
+```
+
+The service binding `VIBESDK_API` is configured in the Pages project settings (or `wrangler.jsonc` for local dev). Requests never leave Cloudflare's network — the binding is a direct in-process call between the Pages Function and the API Worker.
+
+### Service Binding Architecture
+
+Stateful infrastructure concerns are extracted into their own Workers and consumed by `vibesdk-api` over service bindings. This keeps each Worker's responsibility narrow and allows independent deployment, scaling, and testing.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  Cloudflare Pages (vibesdk-web)                                 │
+│  Static SPA assets + _middleware.ts (Pages Function)           │
+│                │  service binding: VIBESDK_API                  │
+└────────────────┼────────────────────────────────────────────────┘
+                 │
+┌────────────────▼────────────────────────────────────────────────┐
+│  vibesdk-api (Cloudflare Worker)                                │
+│  Hono router · Durable Objects · D1 · R2 · KV · Containers     │
+│                │                  │                             │
+│   service binding: RATE_LIMIT     │  service binding:           │
+│                │                  │  SECRETS_STORE              │
+└────────────────┼──────────────────┼─────────────────────────────┘
+                 │                  │
+   ┌─────────────▼──────┐  ┌────────▼───────────┐
+   │  rate-limit Worker │  │ secrets-store Worker│
+   │  RateLimitStore DO │  │ SecretsStore DO     │
+   │  (sliding window,  │  │ (XChaCha20-Poly1305 │
+   │   KV-backed)       │  │  encrypted, SQLite) │
+   └────────────────────┘  └────────────────────┘
+```
+
+**`vibesdk-api` `wrangler.jsonc` service binding declarations:**
+
+```jsonc
+{
+  "services": [
+    { "binding": "RATE_LIMIT",     "service": "rate-limit" },
+    { "binding": "SECRETS_STORE",  "service": "secrets-store" }
+  ]
+}
+```
+
+**Why separate Workers instead of co-located Durable Objects?**
+
+| Concern | Co-located DO | Separate Worker |
+|---|---|---|
+| Independent deployment | No — full redeploy required | Yes |
+| Reusable across projects | No | Yes — any Worker can bind to it |
+| Blast radius on failure | Whole app | Isolated to the service |
+| Local dev isolation | Hard | Each Worker runs its own `wrangler dev` |
+
+### npm Package Tiers
+
+Packages are split into two tiers based on runtime dependencies.
+
+#### Tier 1 — Pure TypeScript (runtime-agnostic)
+
+No dependency on Cloudflare Workers APIs or the `cloudflare:*` namespace. These run anywhere: Node.js, Bun, browsers, and Workers.
+
+| Package | What it provides |
+|---|---|
+| `@jchoi2x/types` | `Result<T,E>`, `ApiResponse<T>`, `Paginated<T>`, `Brand<T,K>`, utility types |
+| `@jchoi2x/utils` | `sleep`, `retry`, `pick`, `omit`, `chunk`, `groupBy`, `deepMerge` |
+| `@jchoi2x/logger` | `Logger` interface, `createConsoleLogger`, `createNoopLogger`, `createLogger` |
+
+Tier 1 packages depend only on each other and have zero external runtime dependencies.
+
+#### Tier 2 — Cloudflare-specific
+
+These target the Cloudflare Workers runtime. They may use `cloudflare:*` imports, `ExecutionContext`, `DurableObjectState`, `KVNamespace`, etc. They depend on Tier 1 packages.
+
+| Package | What it provides |
+|---|---|
+| `@jchoi2x/cf-crypto` | AES-GCM encrypt/decrypt, PBKDF2 key derivation, `timingSafeEqual` |
+| `@jchoi2x/cf-rate-limit` | `RateLimiter` interface, in-memory and KV-backed sliding-window implementations |
+| `@jchoi2x/cf-middleware` | `compose`, `cors`, `requestId`, `securityHeaders` middleware primitives |
+| `@jchoi2x/cf-do` | `BaseDurableObject`, `callRPC`, `rpcResponse`, `getOrDefault` helpers |
+
+Tier 2 packages are **not** imported into frontend bundles. They are only consumed by Workers (`apps/vibesdk-api`, `apps/rate-limit`, `apps/secrets-store`).
+
+### Package Naming Convention
+
+```
+@jchoi2x/<tier-prefix><name>
+```
+
+- No prefix → Tier 1 (platform-agnostic): `@jchoi2x/types`, `@jchoi2x/utils`, `@jchoi2x/logger`
+- `cf-` prefix → Tier 2 (Cloudflare Workers): `@jchoi2x/cf-crypto`, `@jchoi2x/cf-do`
+
+All packages use the `@jchoi2x/` npm scope and are published with `"access": "public"`.
+
+---
+
 ## After Deployment
 
 - The "Deploy to Cloudflare" button provisions the worker and also creates a GitHub repository in your account. Clone that repository to work locally.
