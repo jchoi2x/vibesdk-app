@@ -19,7 +19,9 @@
     "dev:secrets-store": "nx run secrets-store:dev",
     "dev:rate-limit": "nx run rate-limit:dev",
     "build": "nx run-many -t build --projects=vibesdk-api,vibesdk-web,secrets-store --parallel",
+    "build:web": "nx run vibesdk-web:build",
     "deploy": "nx run vibesdk-web:deploy",
+    "deploy:web": "nx run vibesdk-web:deploy",
     "test": "nx run-many -t test",
     "lint": "eslint .",
     "packages:build": "nx run-many -t build --projects=@jchoi2x/types,@jchoi2x/utils,@jchoi2x/logger,@jchoi2x/cf-crypto,@jchoi2x/cf-rate-limit,@jchoi2x/cf-middleware,@jchoi2x/cf-do"
