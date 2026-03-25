@@ -581,6 +581,17 @@ If you're deploying manually using `bun run deploy`, you **must** set these envi
 bun run dev
 ```
 
+`bun run dev` starts all app/worker development targets in parallel.
+
+You can also run individual dev targets:
+
+```bash
+bun run dev:api
+bun run dev:web
+bun run dev:secrets-store
+bun run dev:rate-limit
+```
+
 Visit `http://localhost:5173` to access VibSDK locally.
 
 **For Production Deployment (.prod.vars):**

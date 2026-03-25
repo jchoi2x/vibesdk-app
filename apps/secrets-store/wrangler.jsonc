@@ -3,6 +3,7 @@
   "name": "secrets-store",
   "main": "src/index.ts",
   "dev": {
+    "inspector_port": 9330,
     "port": 8081
   },
   "compatibility_date": "2025-08-10",
