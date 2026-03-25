@@ -1,5 +1,5 @@
 import type { FileType, TemplateDetails } from '@/api-types';
-import { WebSocket } from 'partysocket';
+import { type WebSocket } from 'partysocket';
 
 export interface SlideInfo {
 	index: number;

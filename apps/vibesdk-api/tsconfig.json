@@ -25,9 +25,9 @@
 		// with all Cloudflare runtime types inlined — no need for @cloudflare/workers-types here.
 		"types": ["./worker-configuration.d.ts"],
 		"paths": {
-			"worker/*": ["./worker/*"]
+			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["worker-configuration.d.ts", "worker"],
+	"include": ["worker-configuration.d.ts", "src"],
 	"exclude": ["**/__tests__/**/*", "**/*.test.ts"]
 }

@@ -6,7 +6,7 @@
 import { useCallback } from 'react';
 import { useAuth } from '../contexts/auth-context';
 import { useAuthModal } from '../components/auth/AuthModalProvider';
-import { AuthUser } from '@/api-types';
+import { type AuthUser } from '@/api-types';
 
 export interface AuthGuardOptions {
   requireFullAuth?: boolean; // If true, anonymous users are not allowed

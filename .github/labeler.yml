@@ -2,7 +2,7 @@
 
 'worker':
   - changed-files:
-    - any-glob-to-any-file: 'worker/**/*'
+    - any-glob-to-any-file: 'apps/vibesdk-api/src/**/*'
 
 'frontend':
   - changed-files:
@@ -11,12 +11,12 @@
 'database':
   - changed-files:
     - any-glob-to-any-file: 
-      - 'worker/database/**/*'
+      - 'apps/vibesdk-api/src/database/**/*'
       - 'migrations/**/*'
 
 'agent':
   - changed-files:
-    - any-glob-to-any-file: 'worker/agents/**/*'
+    - any-glob-to-any-file: 'apps/vibesdk-api/src/agents/**/*'
 
 'ci/cd':
   - changed-files:

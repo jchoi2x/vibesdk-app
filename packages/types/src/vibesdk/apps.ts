@@ -1,4 +1,4 @@
-import type { App, EnhancedAppData, AppWithFavoriteStatus, PaginationInfo, FavoriteToggleResult, UserStats, UserActivity } from './database';
+import type { App, EnhancedAppData, AppWithFavoriteStatus, PaginationInfo, FavoriteToggleResult, UserStats, UserActivity, UserModelProvider } from './database';
 
 export type AppWithUserAndStats = EnhancedAppData & {
 	updatedAtFormatted: string;
@@ -122,19 +122,19 @@ export interface AgentAnalyticsResponseData {
 }
 
 export interface ModelProvidersListData {
-	providers: import('./database').UserModelProvider[];
+	providers: UserModelProvider[];
 }
 
 export interface ModelProviderData {
-	provider: import('./database').UserModelProvider;
+	provider: UserModelProvider;
 }
 
 export interface ModelProviderCreateData {
-	provider: import('./database').UserModelProvider;
+	provider: UserModelProvider;
 }
 
 export interface ModelProviderUpdateData {
-	provider: import('./database').UserModelProvider;
+	provider: UserModelProvider;
 }
 
 export interface ModelProviderDeleteData {

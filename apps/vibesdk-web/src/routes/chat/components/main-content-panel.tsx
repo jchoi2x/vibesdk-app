@@ -1,5 +1,5 @@
 import { type RefObject, type ReactNode, Suspense, useState, useCallback } from 'react';
-import { WebSocket } from 'partysocket';
+import { type WebSocket } from 'partysocket';
 import { MonacoEditor } from '../../../components/monaco-editor/monaco-editor';
 import { motion } from 'framer-motion';
 import { RefreshCw } from 'lucide-react';

@@ -1,18 +1,18 @@
 import { EventEmitter } from 'events';
-import { spawn, ChildProcess } from 'child_process';
-import { StorageManager } from './storage.js';
+import { spawn, type ChildProcess } from 'child_process';
+import { type StorageManager } from './storage.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { StringDecoder } from 'string_decoder';
 import { randomUUID } from 'crypto';
 import {
-  ProcessInfo,
-  ProcessState,
-  MonitoringOptions,
-  MonitoringEvent,
-  LogLine,
-  Result,
-  SimpleError,
+  type ProcessInfo,
+  type ProcessState,
+  type MonitoringOptions,
+  type MonitoringEvent,
+  type LogLine,
+  type Result,
+  type SimpleError,
   getDataDirectory,
   DEFAULT_MONITORING_OPTIONS
 } from './types.js';

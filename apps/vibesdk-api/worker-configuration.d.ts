@@ -5,7 +5,7 @@
 /// <reference types="@cloudflare/workers-types" />
 declare namespace Cloudflare {
 	interface GlobalProps {
-		mainModule: typeof import("./worker/index");
+		mainModule: typeof import("./src/index");
 		durableNamespaces: "CodeGeneratorAgent" | "UserAppSandboxService" | "DORateLimitStore";
 	}
 	interface Env {
@@ -53,10 +53,10 @@ declare namespace Cloudflare {
 		SENTRY_DSN: string;
 		USE_TUNNEL_FOR_PREVIEW: string;
 		USE_CLOUDFLARE_IMAGES: string;
-		CodeGenObject: DurableObjectNamespace<import("./worker/index").CodeGeneratorAgent>;
-		Sandbox: DurableObjectNamespace<import("./worker/index").UserAppSandboxService>;
-		DORateLimitStore: DurableObjectNamespace<import("./worker/index").DORateLimitStore>;
-		UserSecretsStore: DurableObjectNamespace<import("./worker/index").UserSecretsStore>;
+		CodeGenObject: DurableObjectNamespace<import("./src/index").CodeGeneratorAgent>;
+		Sandbox: DurableObjectNamespace<import("./src/index").UserAppSandboxService>;
+		DORateLimitStore: DurableObjectNamespace<import("./src/index").DORateLimitStore>;
+		UserSecretsStore: DurableObjectNamespace<import("./src/index").UserSecretsStore>;
 		TEMPLATES_BUCKET: R2Bucket;
 		DB: D1Database;
 		DISPATCHER: DispatchNamespace;

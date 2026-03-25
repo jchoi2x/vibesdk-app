@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertCircle } from 'lucide-react';
 
