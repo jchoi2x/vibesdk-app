@@ -13,9 +13,9 @@ export default defineConfig({
 		include: ['monaco-editor/esm/vs/editor/editor.api'],
 		force: true,
 	},
-	plugins: [react(), svgr(), tailwindcss(), cloudflare({
+	plugins: [react(), svgr(), cloudflare({
 		configPath: './wrangler.jsonc',
-	})],
+	}), tailwindcss() ],
 	resolve: {
 		alias: {
 			debug: 'debug/src/browser',

@@ -7,8 +7,8 @@
 		"@jchoi2x/types": "workspace:*"
 	},
 	"scripts": {
-		"dev": "vite",
-		"build": "tsc -b --incremental && vite build && wrangler pages functions build --outdir=\"./dist/_worker.js/\" && cp .assetsignore dist/.assetsignore",
+		"dev": "DEV_MODE=true vite",
+		"build": "tsc -b --incremental && vite build",
 		"typecheck": "tsc -b --incremental --noEmit",
 		"lint": "eslint .",
 		"preview": "vite preview",
