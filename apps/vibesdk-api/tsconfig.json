@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		"tsBuildInfoFile": "../../node_modules/.tmp/tsconfig.worker.tsbuildinfo",
+		"target": "ES2022",
+		"lib": ["ES2023"],
+		"module": "ESNext",
+		"skipLibCheck": true,
+
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"noEmit": true,
+
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedSideEffectImports": true,
+
+		"baseUrl": ".",
+		// wrangler types (without --include-runtime false) generates worker-configuration.d.ts
+		// with all Cloudflare runtime types inlined — no need for @cloudflare/workers-types here.
+		"types": ["./worker-configuration.d.ts"],
+		"paths": {
+			"worker/*": ["./worker/*"]
+		}
+	},
+	"include": ["worker-configuration.d.ts", "worker"],
+	"exclude": ["**/__tests__/**/*", "**/*.test.ts"]
+}

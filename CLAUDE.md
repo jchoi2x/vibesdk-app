@@ -147,6 +147,12 @@ Edit `/worker/agents/operations/UserConversationProcessor.ts` (system prompt lin
 
 ## Core Rules (Non-Negotiable)
 
+**0. Source Directory Convention**
+- Every project (app or package) MUST have a `src/` directory as the single root for all source files.
+- The directory must be named exactly `src` — no alternatives (`lib/`, `worker/`, `source/`, etc.).
+- Build artifacts, config files, and generated types live outside `src/`; everything compiled does not.
+- Existing projects that predate this rule (`apps/vibesdk-api/worker/`) should be migrated to `src/` incrementally.
+
 **1. Strict Type Safety**
 - NEVER use `any` type
 - Frontend imports types from `@/api-types` (single source of truth)

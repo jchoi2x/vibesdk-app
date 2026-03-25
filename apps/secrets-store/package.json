@@ -1,0 +1,15 @@
+{
+	"name": "secrets-store",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"dependencies": {
+		"@jchoi2x/cf-crypto": "workspace:*"
+	},
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler deploy",
+		"typecheck": "tsc --noEmit",
+		"cf-typegen": "wrangler types --include-runtime false"
+	}
+}

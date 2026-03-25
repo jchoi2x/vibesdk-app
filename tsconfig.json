@@ -1,20 +1,11 @@
 {
 	"files": [],
 	"references": [
-		{
-			"path": "./tsconfig.app.json"
-		},
-		{
-			"path": "./tsconfig.node.json"
-		},
-		{
-			"path": "./tsconfig.worker.json"
-		}
+		{ "path": "./apps/vibesdk-api/tsconfig.json" },
+		{ "path": "./apps/vibesdk-web/tsconfig.json" }
 	],
 	"compilerOptions": {
 		"composite": true,
-		"types": [
-			"./worker-configuration.d.ts"
-		]
+		"types": ["./apps/vibesdk-api/worker-configuration.d.ts"]
 	}
 }

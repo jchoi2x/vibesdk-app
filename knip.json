@@ -3,11 +3,14 @@
   "workspaces": {
     ".": {
       "entry": [
-        "src/main.tsx",
-        "worker/index.ts",
-        "scripts/**/*.ts",
-        "container/**/*.ts",
-        "debug-tools/**/*.{ts,py}"
+        "apps/vibecode/src/main.tsx",
+        "apps/vibecode/worker/index.ts",
+        "apps/vibecode/scripts/**/*.ts",
+        "apps/vibecode/container/**/*.ts",
+        "apps/vibecode/debug-tools/**/*.{ts,py}",
+        "apps/secrets-store/src/worker.ts",
+        "apps/rate-limit/src/worker.ts",
+        "packages/*/src/index.ts"
       ],
       "project": [
         "**/*.{ts,tsx,js,jsx,mjs,cjs}"

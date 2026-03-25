@@ -1,0 +1,13 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": true,
+		"noUncheckedIndexedAccess": false,
+		"baseUrl": ".",
+		"paths": {
+			"worker/*": ["../../apps/vibesdk-api/worker/*"]
+		},
+		"types": []
+	},
+	"files": ["./src/index.ts"]
+}
