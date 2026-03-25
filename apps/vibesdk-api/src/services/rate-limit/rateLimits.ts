@@ -9,6 +9,22 @@ import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { isDev } from '@/utils/envs';
 import { AI_MODEL_CONFIG, type AIModels } from '@/agents/inferutils/config.types';
 
+/**
+ * Rate Limit Service interface
+ * Note: RateLimitService uses only static methods; this interface describes the static contract.
+ */
+export interface IRateLimitService {
+    buildRateLimitKey(rateLimitType: RateLimitType, identifier: string): string;
+    getUserIdentifier(user: AuthUser): Promise<string>;
+    getRequestIdentifier(request: Request): Promise<string>;
+    getUniversalIdentifier(user: AuthUser | null, request: Request): Promise<string>;
+    enforce(env: Env, key: string, config: RateLimitSettings, limitType: RateLimitType, incrementBy?: number): Promise<RateLimitResult>;
+    enforceGlobalApiRateLimit(env: Env, config: RateLimitSettings, user: AuthUser | null, request: Request): Promise<void>;
+    enforceAuthRateLimit(env: Env, config: RateLimitSettings, user: AuthUser | null, request: Request): Promise<void>;
+    enforceAppCreationRateLimit(env: Env, config: RateLimitSettings, user: AuthUser, request: Request): Promise<void>;
+    enforceLLMCallsRateLimit(env: Env, config: RateLimitSettings, userId: string, model: AIModels | string, suffix?: string): Promise<void>;
+}
+
 export class RateLimitService {
     static logger = createObjectLogger(this, 'RateLimitService');
 

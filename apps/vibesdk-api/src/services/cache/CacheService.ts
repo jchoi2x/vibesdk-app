@@ -7,7 +7,14 @@ export interface CacheOptions {
 	tags?: string[];
 }
 
-export class CacheService {
+export interface ICacheService {
+	get(keyOrRequest: string | Request): Promise<Response | undefined>;
+	put(keyOrRequest: string | Request, response: Response, options: CacheOptions): Promise<void>;
+	generateKey(request: Request, userId?: string): string;
+	withCache(cacheKeyOrRequest: string | Request, operation: () => Promise<Response>, options: CacheOptions): Promise<Response>;
+}
+
+export class CacheService implements ICacheService {
 	/**
 	 * Get cached response
 	 */

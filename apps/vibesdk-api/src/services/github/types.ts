@@ -76,6 +76,17 @@ export interface GitHubServiceConfig {
     clientSecret?: string;
 }
 
+/**
+ * GitHub Service interface
+ * Note: GitHubService uses only static methods; this interface describes the static contract.
+ */
+export interface IGitHubService {
+    createUserRepository(options: CreateRepositoryOptions): Promise<CreateRepositoryResult>;
+    getRepository(options: { owner: string; repo: string; token: string }): Promise<{ success: boolean; repository?: GitHubRepository; error?: string }>;
+    repositoryExists(options: { repositoryUrl: string; token: string }): Promise<boolean>;
+    extractRepoInfo(url: string): { owner: string; repo: string } | null;
+}
+
 export class GitHubServiceError extends Error {
     constructor(
         message: string,

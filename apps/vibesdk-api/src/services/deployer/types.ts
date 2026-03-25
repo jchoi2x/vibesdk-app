@@ -153,3 +153,34 @@ export interface DeployConfig {
 export interface DispatchDeployConfig extends DeployConfig {
 	dispatchNamespace: string;
 }
+
+/**
+ * Worker Deployer interface
+ */
+export interface IWorkerDeployer {
+	deployWithAssets(
+		scriptName: string,
+		workerContent: string,
+		compatibilityDate: string,
+		assetsManifest: AssetManifest,
+		fileContents: Map<string, Buffer>,
+		bindings?: WorkerBinding[],
+		vars?: Record<string, string>,
+		dispatchNamespace?: string,
+		assetsConfig?: WranglerConfig['assets'],
+		additionalModules?: Map<string, string>,
+		compatibilityFlags?: string[],
+		migrations?: WranglerConfig['migrations'],
+	): Promise<void>;
+	deploySimple(
+		scriptName: string,
+		workerContent: string,
+		compatibilityDate: string,
+		bindings?: WorkerBinding[],
+		vars?: Record<string, string>,
+		dispatchNamespace?: string,
+		additionalModules?: Map<string, string>,
+		compatibilityFlags?: string[],
+		migrations?: WranglerConfig['migrations'],
+	): Promise<void>;
+}

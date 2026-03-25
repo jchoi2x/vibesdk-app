@@ -26,9 +26,18 @@ export interface UserSecretsStoreStub extends DurableObjectStub {
 	isVaultUnlocked(): Promise<boolean>;
 }
 
+export interface ISecretsClient {
+	get(query: SecretRequestQuery): Promise<string | null>;
+	getMany(requests: SecretRequestQuery[]): Promise<Map<string, string | null>>;
+	getByProvider(provider: string, envVarName?: string): Promise<string | null>;
+	isUnlocked(): Promise<boolean>;
+	notifyUnlocked(): void;
+	notifyUnlockFailed(reason?: string): void;
+}
+
 const UNLOCK_TIMEOUT_MS = 120_000;
 
-export class SecretsClient {
+export class SecretsClient implements ISecretsClient {
 	private vaultStub: UserSecretsStoreStub;
 	private broadcaster: (type: string, data: Record<string, unknown>) => void;
 	private unlockPromise: Promise<void> | null = null;

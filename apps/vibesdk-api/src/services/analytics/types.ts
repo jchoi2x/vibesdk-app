@@ -149,3 +149,12 @@ export interface QueryResult {
   responseTime: number;
   error?: string;
 }
+
+/**
+ * AI Gateway Analytics Service interface
+ */
+export interface IAiGatewayAnalyticsService {
+  getUserAnalytics(userId: string, days?: number): Promise<UserAnalyticsData>;
+  getChatAnalytics(chatId: string, days?: number): Promise<ChatAnalyticsData>;
+  getTotalAnalytics(days?: number): Promise<AnalyticsData>;
+}

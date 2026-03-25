@@ -5,6 +5,7 @@ import {
 	type WorkerMetadata,
 	type WorkerBinding,
 	type WranglerConfig,
+	type IWorkerDeployer,
 } from '@/services/deployer/types';
 import { mergeMigrations, extractDurableObjectClasses } from '@/services/deployer/utils/index';
 
@@ -14,7 +15,7 @@ const logger = createObjectLogger('WorkerDeployer');
  * Main deployment orchestrator for Cloudflare Workers
  * Handles both simple deployments and deployments with static assets
  */
-export class WorkerDeployer {
+export class WorkerDeployer implements IWorkerDeployer {
 	private readonly api: CloudflareAPI;
 
 	constructor(accountId: string, apiToken: string) {

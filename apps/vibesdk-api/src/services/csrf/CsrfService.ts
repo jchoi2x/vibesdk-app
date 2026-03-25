@@ -13,6 +13,24 @@ import { env } from 'cloudflare:workers'
 
 const logger = createLogger('CsrfService');
 
+/**
+ * CSRF Service interface
+ * Note: CsrfService uses only static methods; this interface describes the static contract.
+ */
+export interface ICsrfService {
+    readonly COOKIE_NAME: string;
+    readonly HEADER_NAME: string;
+    generateToken(): string;
+    setTokenCookie(response: Response, token: string, maxAge?: number): void;
+    getTokenFromCookie(request: Request): string | null;
+    getTokenFromHeader(request: Request): string | null;
+    validateToken(request: Request): boolean;
+    enforce(request: Request, response?: Response): Promise<void>;
+    getOrGenerateToken(request: Request, forceNew?: boolean): string;
+    rotateToken(response: Response): string;
+    clearTokenCookie(response: Response): void;
+}
+
 interface CSRFTokenData {
     token: string;
     timestamp: number;

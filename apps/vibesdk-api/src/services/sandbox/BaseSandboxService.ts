@@ -49,13 +49,34 @@ export interface StreamEvent {
     timestamp: Date;
 }
 
+/**
+ * Sandbox Service interface
+ */
+export interface ISandboxService {
+    initialize(): Promise<void>;
+    createInstance(options: InstanceCreationRequest): Promise<BootstrapResponse>;
+    listAllInstances(): Promise<ListInstancesResponse>;
+    getInstanceDetails(instanceId: string): Promise<GetInstanceResponse>;
+    getInstanceStatus(instanceId: string): Promise<BootstrapStatusResponse>;
+    shutdownInstance(instanceId: string): Promise<ShutdownResponse>;
+    writeFiles(instanceId: string, files: WriteFilesRequest['files'], commitMessage?: string): Promise<WriteFilesResponse>;
+    getFiles(instanceId: string, filePaths?: string[]): Promise<GetFilesResponse>;
+    getLogs(instanceId: string, onlyRecent?: boolean, durationSeconds?: number): Promise<GetLogsResponse>;
+    executeCommands(instanceId: string, commands: string[], timeout?: number): Promise<ExecuteCommandsResponse>;
+    updateProjectName(instanceId: string, projectName: string): Promise<boolean>;
+    getInstanceErrors(instanceId: string, clear?: boolean): Promise<RuntimeErrorResponse>;
+    clearInstanceErrors(instanceId: string): Promise<ClearErrorsResponse>;
+    runStaticAnalysisCode(instanceId: string, lintFiles?: string[]): Promise<StaticAnalysisResponse>;
+    deployToCloudflareWorkers(instanceId: string, target?: DeploymentTarget): Promise<DeploymentResult>;
+}
+
 const templateDetailsCache: Record<string, TemplateDetails> = {};
   
 /**
  * Abstract base class providing complete RunnerService API compatibility
  * All implementations MUST support every method defined here
 */
-export abstract class BaseSandboxService {
+export abstract class BaseSandboxService implements ISandboxService {
     protected logger: StructuredLogger;
     protected sandboxId: string;
   

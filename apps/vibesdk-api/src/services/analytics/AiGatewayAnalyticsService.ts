@@ -15,10 +15,11 @@ import {
   type GraphQLQuery,
   type QueryResult,
   AnalyticsError,
-  type AnalyticsQueryType
+  type AnalyticsQueryType,
+  type IAiGatewayAnalyticsService
 } from '@/services/analytics/types';
 
-export class AiGatewayAnalyticsService {
+export class AiGatewayAnalyticsService implements IAiGatewayAnalyticsService {
   private config: AnalyticsConfig;
   private logger: StructuredLogger;
 

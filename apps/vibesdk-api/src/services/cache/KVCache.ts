@@ -3,7 +3,15 @@ export interface KVCacheOptions {
     prefix?: string;
 }
 
-export class KVCache {
+export interface IKVCache {
+    get<T>(prefix: string, key: string): Promise<T | null>;
+    set<T>(prefix: string, key: string, value: T, ttl?: number): Promise<void>;
+    delete(prefix: string, key: string): Promise<void>;
+    deleteByPrefix(prefix: string): Promise<void>;
+    invalidate(patterns: string[]): Promise<void>;
+}
+
+export class KVCache implements IKVCache {
     constructor(private kv: KVNamespace) {}
 
     private generateKey(prefix: string, key: string): string {

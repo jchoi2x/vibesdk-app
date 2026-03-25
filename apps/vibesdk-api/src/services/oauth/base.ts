@@ -8,7 +8,6 @@ import { createLogger } from '@/logger';
 
 const logger = createLogger('OAuthProvider');
 
-
 /**
  * OAuth tokens returned from providers
  */
@@ -20,9 +19,19 @@ export interface OAuthTokens {
 }
 
 /**
+ * OAuth Provider interface
+ */
+export interface IOAuthProvider {
+    getAuthorizationUrl(state: string, codeVerifier?: string): Promise<string>;
+    exchangeCodeForTokens(code: string, codeVerifier?: string): Promise<OAuthTokens>;
+    getUserInfo(accessToken: string): Promise<OAuthUserInfo>;
+    refreshAccessToken(refreshToken: string): Promise<OAuthTokens>;
+}
+
+/**
  * Base OAuth Provider class
  */
-export abstract class BaseOAuthProvider {
+export abstract class BaseOAuthProvider implements IOAuthProvider {
     protected abstract readonly provider: OAuthProvider;
     protected abstract readonly authorizationUrl: string;
     protected abstract readonly tokenUrl: string;
