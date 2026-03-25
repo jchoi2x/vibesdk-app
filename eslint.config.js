@@ -37,6 +37,10 @@ export default tseslint.config(
       'react-hooks/exhaustive-deps': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
@@ -52,21 +56,21 @@ export default tseslint.config(
   // Disable react-refresh/only-export-components for UI components
   // as shadcn/ui components commonly export both components and utilities
   {
-    files: ['apps/vibecode/src/components/ui/**/*.{ts,tsx}'],
+    files: ['apps/vibesdk-web/src/components/ui/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
   },
   // Contexts and feature modules intentionally export hooks/objects
   {
-    files: ['apps/vibecode/src/contexts/**/*.{ts,tsx}', 'apps/vibecode/src/features/**/*.{ts,tsx}'],
+    files: ['apps/vibesdk-web/src/contexts/**/*.{ts,tsx}', 'apps/vibesdk-web/src/features/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
   },
   // Auth modal provider exports a hook + provider
   {
-    files: ['apps/vibecode/src/components/auth/**/*.{ts,tsx}'],
+    files: ['apps/vibesdk-web/src/components/auth/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
