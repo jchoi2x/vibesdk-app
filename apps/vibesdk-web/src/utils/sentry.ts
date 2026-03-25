@@ -20,6 +20,7 @@ export function initSentry() {
     return;
   }
 
+
   Sentry.init({
     dsn,
     environment,
