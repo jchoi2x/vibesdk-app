@@ -11,8 +11,10 @@
     "build": "tsc -b --incremental && vite build",
     "typecheck": "tsc -b --incremental --noEmit",
     "lint": "eslint .",
+    "db:generate": "echo 'skip'",
+    "db:generate:local": "echo 'skip'",
     "preview": "vite preview",
-    "deploy": "bun --env-file .prod.vars scripts/deploy.ts",
+    "deploy": "wrangler deploy",
     "cf-typegen": "wrangler types"
   }
 }

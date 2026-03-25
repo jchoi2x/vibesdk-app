@@ -20,11 +20,11 @@
   "services": [{ "binding": "VIBESDK_API", "service": "vibesdk-api" }],
   "routes": [
     {
-        "pattern": "vibesdk-app.megabyte.app",
+        "pattern": "vibesdk-web.megabyte.app",
         "custom_domain": true
     },
     {
-        "pattern": "*vibesdk-app.megabyte.app/*",
+        "pattern": "*vibesdk-web.megabyte.app/*",
         "custom_domain": false,
         "zone_id": "a70f14687a2194334e12062447e618f2"
     }
