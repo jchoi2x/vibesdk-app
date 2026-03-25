@@ -78,7 +78,7 @@ export class BlueprintStreamParser {
 	 * Returns the current Markdown representation of the buffer.
 	 */
 	toMarkdown(): string {
-		const startsLikeJson = /^\s*[\[{]/.test(this.buffer);
+		const startsLikeJson = /^\s*[{[]/.test(this.buffer);
 		if (!startsLikeJson) {
 			return this.buffer;
 		}

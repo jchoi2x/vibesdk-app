@@ -246,10 +246,12 @@ class CloudflareDeploymentManager {
 			CLOUDFLARE_API_TOKEN: apiToken,
 			CLOUDFLARE_ACCOUNT_ID:
 				process.env.CLOUDFLARE_ACCOUNT_ID ||
-				this.config.vars?.CLOUDFLARE_ACCOUNT_ID!,
+				this.config.vars?.CLOUDFLARE_ACCOUNT_ID ||
+				'',
 			TEMPLATES_REPOSITORY:
 				process.env.TEMPLATES_REPOSITORY ||
-				this.config.vars?.TEMPLATES_REPOSITORY!,
+				this.config.vars?.TEMPLATES_REPOSITORY ||
+				'',
 			CLOUDFLARE_AI_GATEWAY:
 				process.env.CLOUDFLARE_AI_GATEWAY ||
 				this.config.vars?.CLOUDFLARE_AI_GATEWAY || "orange-build-gateway",
@@ -1087,11 +1089,6 @@ class CloudflareDeploymentManager {
 			}
 
 			// Define the expected routes based on zone detection success
-			let expectedRoutes: Array<{
-				pattern: string;
-				custom_domain: boolean;
-				zone_id?: string;
-			}>;
 			const existingWildcardRoute = config.routes?.find(route => !route.custom_domain);
 
 			// Determine which domain and zone to use for wildcard pattern
@@ -1130,7 +1127,7 @@ class CloudflareDeploymentManager {
                 }
 			}
 
-			expectedRoutes = [
+			const expectedRoutes = [
 				{ pattern: customDomain, custom_domain: true },
 				wildcardRoute,
 			];

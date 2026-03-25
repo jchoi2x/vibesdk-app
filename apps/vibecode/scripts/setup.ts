@@ -330,7 +330,7 @@ class SetupManager {
 		let aiGatewayUrl: string | undefined;
 		const devVars: Record<string, string> = {};
 		const providedProviders: string[] = [];
-		let customProviderKeys: Array<{key: string, provider: string}> = [];
+		const customProviderKeys: Array<{key: string, provider: string}> = [];
 
 		if (useAIGateway) {
 			console.log('✅ AI Gateway enabled - will auto-configure CLOUDFLARE_AI_GATEWAY_TOKEN');
@@ -1877,7 +1877,7 @@ class SetupManager {
 		}
 
 		try {
-			let content = readFileSync(dockerfilePath, 'utf-8');
+			const content = readFileSync(dockerfilePath, 'utf-8');
 			let modified = false;
 
 			// Split content into lines for processing

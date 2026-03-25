@@ -121,7 +121,7 @@ interface QueryResult {
 }
 
 // Configuration (will be updated from env vars)
-let CONFIG = {
+const CONFIG = {
   ACCOUNT_TAG: '',
   GATEWAY: '',
   GRAPHQL_ENDPOINT: 'https://api.cloudflare.com/client/v4/graphql',
@@ -910,13 +910,14 @@ function parseArgs(): {
       case '--show-providers':
         result.showProviders = true;
         break;
-      case '--granularity':
+      case '--granularity': {
         const granularity = args[i + 1];
         if (granularity === 'minute' || granularity === 'hour') {
           result.granularity = granularity;
         }
         i++;
         break;
+      }
       case '--top-models':
         result.topModels = parseInt(args[i + 1]) || 10;
         i++;

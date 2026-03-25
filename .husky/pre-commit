@@ -34,7 +34,13 @@ else
   echo "[pre-commit] No staged TS/TSX; skipping typecheck"
 fi
 
-# 2) Tests
+# 2) Lint (only when JS/TS/TSX is staged)
+if [ "$HAS_TS" = "1" ]; then
+  echo "[pre-commit] Running lint"
+  bun run lint
+fi
+
+# 3) Tests
 # Use Vitest 'related' to run only affected tests for staged files.
 # Exclude heavy directories that are not relevant at commit time.
 if [ "${RUN_ALL_TESTS:-}" = "1" ]; then

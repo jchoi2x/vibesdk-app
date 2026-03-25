@@ -1,5 +1,8 @@
 #!/usr/bin/env bun
 import { parseArgs } from 'util';
+import { promises as fs, existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
+import { randomUUID } from 'crypto';
 import { StorageManager } from './storage.js';
 import { ProcessMonitor } from './process-monitor.js';
 import { 
@@ -791,9 +794,6 @@ class LogCommands {
     durationSeconds?: number;
   }): Promise<void> {
     try {
-      const { promises: fs } = require('fs');
-      const { join } = require('path');
-      const { randomUUID } = require('crypto');
 
       const logFilePath = join(getDataDirectory(), `${options.instanceId}-process.log`);
       const lockFilePath = `${logFilePath}.lock`;
@@ -1158,12 +1158,11 @@ Database Storage:
 }
 
 function initializeDataDirectory(): void {
-  const fs = require('fs');
   const dataDir = getDataDirectory();
   
   try {
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
+    if (!existsSync(dataDir)) {
+      mkdirSync(dataDir, { recursive: true });
       console.log(`Created data directory: ${dataDir}`);
     }
   } catch (error) {
@@ -1250,7 +1249,7 @@ async function main() {
 
 async function handleProcessCommand(subcommand: string, args: Record<string, unknown>, remainingArgs: string[]) {
   switch (subcommand) {
-    case 'start':
+    case 'start': {
       if (remainingArgs.length === 0) {
         OutputFormatter.formatError('No command specified to monitor');
         process.exit(1);
@@ -1273,6 +1272,7 @@ async function handleProcessCommand(subcommand: string, args: Record<string, unk
         logRetentionHours: parseIntArg(args, 'log-retention-hours')
       });
       break;
+    }
       
     case 'stop':
       if (!args['instance-id']) {
