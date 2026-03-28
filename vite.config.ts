@@ -40,9 +40,10 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			debug: 'debug/src/browser',
-			'@': path.resolve(__dirname, './src'),
-			'shared': path.resolve(__dirname, './shared'),
-			'worker': path.resolve(__dirname, './worker'),
+			'@': path.resolve(__dirname, './src/web-app'),
+			'shared': path.resolve(__dirname, './src/shared'),
+			'@shared': path.resolve(__dirname, './src/shared'),
+			'worker': path.resolve(__dirname, './src/worker'),
 		},
 	},
 

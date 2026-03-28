@@ -23,7 +23,7 @@ export default tseslint.config(
       js.configs.recommended,
       ...tseslint.configs.recommended
     ],
-    files: ['src/**/*.{ts,tsx}', 'worker/**/*.{ts,tsx}'],
+    files: ['src/web-app/**/*.{ts,tsx}', 'src/worker/**/*.{ts,tsx}', 'src/shared/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.browser,
@@ -52,21 +52,21 @@ export default tseslint.config(
   // Disable react-refresh/only-export-components for UI components
   // as shadcn/ui components commonly export both components and utilities
   {
-    files: ['src/components/ui/**/*.{ts,tsx}'],
+    files: ['src/web-app/components/ui/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
   },
   // Contexts and feature modules intentionally export hooks/objects
   {
-    files: ['src/contexts/**/*.{ts,tsx}', 'src/features/**/*.{ts,tsx}'],
+    files: ['src/web-app/contexts/**/*.{ts,tsx}', 'src/web-app/features/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
   },
   // Auth modal provider exports a hook + provider
   {
-    files: ['src/components/auth/**/*.{ts,tsx}'],
+    files: ['src/web-app/components/auth/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },

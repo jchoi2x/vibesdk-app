@@ -1,7 +1,7 @@
 {
 	"name": "vibesdk-test",
 	"compatibility_date": "2024-12-12",
-	"main": "worker/index.ts",
+	"main": "src/worker/index.ts",
 	"compatibility_flags": ["nodejs_compat"],
 	"send_metrics": false,
 	"durable_objects": {

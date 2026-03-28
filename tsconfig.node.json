@@ -3,11 +3,17 @@
 		"baseUrl": ".",
 		"paths": {
             "shared/*": [
-              "./shared/*"
+              "src/shared/*"
+            ],
+            "@shared/*": [
+              "src/shared/*"
             ],
             "worker/*": [
-              "./worker/*"
-            ]
+              "src/worker/*"
+			],
+			"*": [
+				"./*"
+			],
 		},
 		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
 		"target": "ES2022",

@@ -11,23 +11,23 @@ export type {
 	ModelConfigsInfoMessage,
 	AgentDisplayConfig,
 	ModelConfigsInfo,
-} from '../../worker/api/websocketTypes';
+} from '../../src/worker/api/websocketTypes';
 
-export type { AgentState } from '../../worker/agents/core/state';
-export type { BehaviorType, ProjectType } from '../../worker/agents/core/types';
-export type { FileOutputType, FileConceptType, PhaseConceptType } from '../../worker/agents/schemas';
-export type { TemplateDetails } from '../../worker/services/sandbox/sandboxTypes';
+export type { AgentState } from '../../src/worker/agents/core/state';
+export type { BehaviorType, ProjectType } from '../../src/worker/agents/core/types';
+export type { FileOutputType, FileConceptType, PhaseConceptType } from '../../src/worker/agents/schemas';
+export type { TemplateDetails } from '../../src/worker/services/sandbox/sandboxTypes';
 
 export type {
 	AgentConnectionData,
 	CodeGenArgs as PlatformCodeGenArgs,
 	AgentPreviewResponse,
-} from '../../worker/api/controllers/agent/types';
+} from '../../src/worker/api/controllers/agent/types';
 
-export type { ImageAttachment } from '../../worker/types/image-attachment';
+export type { ImageAttachment } from '../../src/worker/types/image-attachment';
 
 // App schema type
-export type { App } from '../../worker/database/schema';
+export type { App } from '../../src/worker/database/schema';
 
 // Database types
 export type {
@@ -37,7 +37,7 @@ export type {
 	FavoriteToggleResult,
 	PaginationInfo,
 	PublicAppQueryOptions,
-} from '../../worker/database/types';
+} from '../../src/worker/database/types';
 
 // Apps controller response types
 export type {
@@ -46,14 +46,14 @@ export type {
 	PublicAppsData as PlatformPublicAppsData,
 	UpdateAppVisibilityData as PlatformUpdateAppVisibilityData,
 	AppDeleteData,
-} from '../../worker/api/controllers/apps/types';
+} from '../../src/worker/api/controllers/apps/types';
 
 // AppView controller response types
 export type {
 	AppDetailsData as PlatformAppDetailsData,
 	AppStarToggleData,
 	GitCloneTokenData,
-} from '../../worker/api/controllers/appView/types';
+} from '../../src/worker/api/controllers/appView/types';
 
 // API response wrapper
-export type { BaseApiResponse } from '../../worker/api/responses';
+export type { BaseApiResponse } from '../../src/worker/api/responses';
