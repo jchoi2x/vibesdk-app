@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "bun --env-file .prod.vars scripts/deploy.ts",
+    "deploy:legacy": "bun --env-file .prod.vars scripts/deploy.ts",
+    "deploy": "wrangler deploy",
     "build": "echo 'no applicable'",
     "typecheck": "tsc -b --incremental --noEmit",
     "lint": "eslint .",

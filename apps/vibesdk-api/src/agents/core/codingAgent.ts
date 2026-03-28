@@ -57,10 +57,8 @@ import { type ImageAttachment } from '@/types/image-attachment';
 import { RateLimitExceededError } from '@jchoi2x/types/errors';
 import { ProjectObjective } from '@/agents/core/objectives/base';
 import { type FileOutputType } from '@/agents/schemas';
-import {
-  SecretsClient,
-  type UserSecretsStoreStub,
-} from '@/services/secrets/SecretsClient';
+import { SecretsClient } from '@/services/secrets/SecretsClient';
+import { createVaultAgentStub } from '@/services/secrets/vault-agent-stub';
 import { StateMigration } from '@/agents/core/stateMigration';
 import {
   type PendingWsTicket,
@@ -353,9 +351,7 @@ export class CodeGeneratorAgent
   private getSecretsClient(): SecretsClient {
     if (!this.secretsClient) {
       const userId = this.state.metadata.userId;
-      const stub = this.env.UserSecretsStore.get(
-        this.env.UserSecretsStore.idFromName(userId),
-      ) as unknown as UserSecretsStoreStub;
+      const stub = createVaultAgentStub(this.env.SECRETS_STORE, userId);
 
       this.secretsClient = new SecretsClient(stub, (type, data) => {
         if (type === 'vault_required') {

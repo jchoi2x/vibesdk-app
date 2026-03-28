@@ -17,8 +17,8 @@
   "durable_objects": {
     "bindings": [
       {
-        "name": "SECRETS_STORE",
-        "class_name": "SecretsStore",
+        "name": "USER_VAULT",
+        "class_name": "UserSecretsStore",
       },
     ],
   },
@@ -26,7 +26,16 @@
     {
       "tag": "v1",
       "new_sqlite_classes": [
-        "SecretsStore"
+        "SecretsStore",
+      ],
+    },
+    {
+      "tag": "v2",
+      "deleted_classes": [
+        "SecretsStore",
+      ],
+      "new_sqlite_classes": [
+        "UserSecretsStore",
       ],
     },
   ],

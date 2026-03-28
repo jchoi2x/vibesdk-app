@@ -12,8 +12,8 @@ import { createLogger } from '@/logger';
 import type {
   VaultStatusResponse,
   VaultConfigResponse,
-  SetupVaultRequest,
 } from '@/services/secrets/vault-types';
+import { vaultServiceFetch, vaultServiceUrl } from '@/services/secrets/vault-service';
 
 type VaultStatusData = VaultStatusResponse;
 type VaultConfigData = { config: VaultConfigResponse };
@@ -34,20 +34,6 @@ interface SetupVaultBody {
 
 export class UserSecretsController extends BaseController {
   static logger = createLogger('UserSecretsController');
-
-  private static getVaultStub(env: Env, userId: string) {
-    const id = env.UserSecretsStore.idFromName(userId);
-    return env.UserSecretsStore.get(id);
-  }
-
-  /** Convert Uint8Array to base64 string for JSON response */
-  private static uint8ArrayToBase64(arr: Uint8Array): string {
-    let binary = '';
-    for (let i = 0; i < arr.length; i++) {
-      binary += String.fromCharCode(arr[i]);
-    }
-    return btoa(binary);
-  }
 
   private static base64ToUint8Array(str: string): Uint8Array {
     const binary = atob(str);
@@ -81,8 +67,9 @@ export class UserSecretsController extends BaseController {
     this.logger.info('Vault WebSocket connection request', { userId });
 
     try {
-      const stub = this.getVaultStub(env, userId);
-      return stub.fetch(request);
+      return env.SECRETS_STORE.fetch(
+        new Request(vaultServiceUrl('/vault/ws', userId), request),
+      );
     } catch (error) {
       this.logger.error(
         'Failed to establish vault WebSocket connection:',
@@ -113,8 +100,18 @@ export class UserSecretsController extends BaseController {
     context: RouteContext,
   ): Promise<ControllerResponse<ApiResponse<VaultStatusData>>> {
     try {
-      const stub = this.getVaultStub(env, context.user!.id);
-      const status = await stub.getVaultStatus();
+      const r = await vaultServiceFetch(
+        env.SECRETS_STORE,
+        '/vault/status',
+        context.user!.id,
+      );
+      if (!r.ok) {
+        return this.createErrorResponse<VaultStatusData>(
+          'Failed to get vault status',
+          500,
+        );
+      }
+      const status = (await r.json()) as VaultStatusData;
       return this.createSuccessResponse(status);
     } catch (error) {
       this.logger.error('Error getting vault status:', error);
@@ -135,24 +132,37 @@ export class UserSecretsController extends BaseController {
     context: RouteContext,
   ): Promise<ControllerResponse<ApiResponse<VaultConfigData>>> {
     try {
-      const stub = this.getVaultStub(env, context.user!.id);
-      const config = await stub.getVaultConfig();
+      const r = await vaultServiceFetch(
+        env.SECRETS_STORE,
+        '/vault/config',
+        context.user!.id,
+      );
 
-      if (!config) {
+      if (r.status === 404) {
         return this.createErrorResponse<VaultConfigData>(
           'Vault not set up',
           404,
         );
       }
 
+      if (!r.ok) {
+        return this.createErrorResponse<VaultConfigData>(
+          'Failed to get vault config',
+          500,
+        );
+      }
+
+      const configResponse = (await r.json()) as VaultConfigResponse;
+
       const isInvalidConfig =
-        config.kdfSalt.length !== 32 ||
-        config.verificationBlob.length === 0 ||
-        config.verificationNonce.length === 0 ||
-        (config.kdfAlgorithm === 'webauthn-prf' &&
-          (!config.prfCredentialId ||
-            !config.prfSalt ||
-            config.prfSalt.length !== 32));
+        typeof configResponse.kdfSalt !== 'string' ||
+        atob(configResponse.kdfSalt).length !== 32 ||
+        !configResponse.verificationBlob?.length ||
+        !configResponse.verificationNonce?.length ||
+        (configResponse.kdfAlgorithm === 'webauthn-prf' &&
+          (!configResponse.prfCredentialId ||
+            !configResponse.prfSalt ||
+            atob(configResponse.prfSalt).length !== 32));
 
       if (isInvalidConfig) {
         return this.createErrorResponse<VaultConfigData>(
@@ -160,20 +170,6 @@ export class UserSecretsController extends BaseController {
           500,
         );
       }
-
-      // Convert Uint8Array fields to base64 strings for JSON response
-      const configResponse: VaultConfigResponse = {
-        kdfAlgorithm: config.kdfAlgorithm,
-        kdfSalt: this.uint8ArrayToBase64(config.kdfSalt),
-        kdfParams: config.kdfParams,
-        prfCredentialId: config.prfCredentialId,
-        prfSalt: config.prfSalt
-          ? this.uint8ArrayToBase64(config.prfSalt)
-          : undefined,
-        verificationBlob: this.uint8ArrayToBase64(config.verificationBlob),
-        verificationNonce: this.uint8ArrayToBase64(config.verificationNonce),
-        hasRecoveryCodes: config.hasRecoveryCodes,
-      };
 
       return this.createSuccessResponse({ config: configResponse });
     } catch (error) {
@@ -219,17 +215,14 @@ export class UserSecretsController extends BaseController {
         );
       }
 
-      let kdfSalt: ArrayBuffer;
-      let verificationBlob: ArrayBuffer;
-      let verificationNonce: ArrayBuffer;
-      let prfSalt: ArrayBuffer | undefined;
-      let encryptedRecoveryCodes: ArrayBuffer | undefined;
-      let recoveryCodesNonce: ArrayBuffer | undefined;
-
       try {
-        kdfSalt = this.base64ToArrayBuffer(trimmedKdfSalt);
-        verificationBlob = this.base64ToArrayBuffer(trimmedVerificationBlob);
-        verificationNonce = this.base64ToArrayBuffer(trimmedVerificationNonce);
+        const kdfSalt = this.base64ToArrayBuffer(trimmedKdfSalt);
+        const verificationBlob = this.base64ToArrayBuffer(
+          trimmedVerificationBlob,
+        );
+        const verificationNonce = this.base64ToArrayBuffer(
+          trimmedVerificationNonce,
+        );
 
         if (
           kdfSalt.byteLength !== 32 ||
@@ -251,7 +244,7 @@ export class UserSecretsController extends BaseController {
               400,
             );
           }
-          prfSalt = this.base64ToArrayBuffer(trimmedPrfSalt);
+          const prfSalt = this.base64ToArrayBuffer(trimmedPrfSalt);
           if (prfSalt.byteLength !== 32) {
             return this.createErrorResponse<VaultSetupData>(
               'Invalid PRF salt',
@@ -270,10 +263,10 @@ export class UserSecretsController extends BaseController {
               400,
             );
           }
-          encryptedRecoveryCodes = this.base64ToArrayBuffer(
+          const encryptedRecoveryCodes = this.base64ToArrayBuffer(
             trimmedEncryptedRecoveryCodes,
           );
-          recoveryCodesNonce = this.base64ToArrayBuffer(
+          const recoveryCodesNonce = this.base64ToArrayBuffer(
             trimmedRecoveryCodesNonce,
           );
           if (
@@ -293,25 +286,40 @@ export class UserSecretsController extends BaseController {
         );
       }
 
-      const setupRequest: SetupVaultRequest = {
+      const wire = {
         kdfAlgorithm: body.kdfAlgorithm,
-        kdfSalt,
+        kdfSalt: trimmedKdfSalt,
         kdfParams: body.kdfParams,
         prfCredentialId: body.prfCredentialId?.trim() || undefined,
-        prfSalt,
-        encryptedRecoveryCodes,
-        recoveryCodesNonce,
-        verificationBlob,
-        verificationNonce,
+        prfSalt: body.prfSalt?.trim() || undefined,
+        encryptedRecoveryCodes: body.encryptedRecoveryCodes?.trim() || undefined,
+        recoveryCodesNonce: body.recoveryCodesNonce?.trim() || undefined,
+        verificationBlob: trimmedVerificationBlob,
+        verificationNonce: trimmedVerificationNonce,
       };
 
-      const stub = this.getVaultStub(env, context.user!.id);
-      const success = await stub.setupVault(setupRequest);
+      const setupRes = await vaultServiceFetch(
+        env.SECRETS_STORE,
+        '/vault/setup',
+        context.user!.id,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(wire),
+        },
+      );
 
-      if (!success) {
+      if (setupRes.status === 409) {
         return this.createErrorResponse<VaultSetupData>(
           'Vault already exists',
           409,
+        );
+      }
+
+      if (!setupRes.ok) {
+        return this.createErrorResponse<VaultSetupData>(
+          'Failed to setup vault',
+          500,
         );
       }
 
@@ -335,8 +343,18 @@ export class UserSecretsController extends BaseController {
     context: RouteContext,
   ): Promise<ControllerResponse<ApiResponse<{ success: boolean }>>> {
     try {
-      const stub = this.getVaultStub(env, context.user!.id);
-      await stub.resetVault();
+      const r = await vaultServiceFetch(
+        env.SECRETS_STORE,
+        '/vault/reset',
+        context.user!.id,
+        { method: 'POST' },
+      );
+      if (!r.ok) {
+        return this.createErrorResponse<{ success: boolean }>(
+          'Failed to reset vault',
+          500,
+        );
+      }
       return this.createSuccessResponse({ success: true });
     } catch (error) {
       this.logger.error('Error resetting vault:', error);

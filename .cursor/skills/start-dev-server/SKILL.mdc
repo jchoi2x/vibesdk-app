@@ -1,26 +1,37 @@
 ---
 name: start-dev-server
-description: Starts (or restarts) dev servers using bun. Use when the user asks to start the dev server, run the app locally, or restart local dev.
+description: >-
+  Starts the full vibesdk monorepo for local development: rate-limit, secrets-store,
+  vibesdk-api, and vibesdk-web via Nx. Use when the user asks to start the app
+  locally, run the full stack, dev all services, open localhost, or restart local
+  development.
 ---
 
-# Start Dev Servers (frontend + worker)
+# Start full local development (vibesdk)
 
-Use this skill when you need to run the app locally in dev, which includes the frontend and the Cloudflare Worker.
+The app is an Nx monorepo. **All four dev targets must run** (each in its own terminal or background process). Run from the **repository root**.
 
-## Default commands
+## Commands (repository root)
 
-- App: `bun run dev`
+Use `bunx` so the workspace Nx CLI is used consistently:
 
-## Instructions (restart semantics)
+```bash
+bunx nx run rate-limit:dev
+bunx nx run secrets-store:dev
+bunx nx run vibesdk-api:dev
+bunx nx run vibesdk-web:dev
+```
 
-1. Check if `bun run dev` are already running (port 5173 by default).
-2. If they are running, stop them first (kill their process by PID).
-3. Start dev server in a separate terminal:
-    - Run `bun run dev`
-4. Verify both are healthy:
-    - Prints that it is listening/ready for requests
+Start **rate-limit** and **secrets-store** before or alongside **vibesdk-api** if the API depends on those Workers locally (typical for integrated dev).
 
-## Notes
+## Frontend URL
 
-- Always avoid starting duplicate dev servers; prefer a clean restart when asked to “restart” or when ports are in use.
-- If a process doesn’t shut down cleanly, kill by PID and then start again.
+After **vibesdk-web** is up, the UI is at:
+
+**http://localhost:5173**
+
+## Agent execution notes
+
+- Avoid duplicate dev processes: check existing terminals or listeners on the ports those Workers/Vite use before starting again.
+- To run from the agent, start each command in the background (or tell the user to use four terminal tabs).
+- Optional convenience (also from root): `bun run dev:rate-limit`, `bun run dev:secrets-store`, `bun run dev:api`, `bun run dev:web` mirror the same Nx targets without `bunx`.

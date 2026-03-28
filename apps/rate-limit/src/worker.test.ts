@@ -1,4 +1,5 @@
-import worker from './worker';
+import { describe, it, expect } from 'vitest';
+import worker from './index';
 
 describe('rate-limit worker', () => {
   it('returns 404 for unknown route', async () => {

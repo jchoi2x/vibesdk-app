@@ -23,6 +23,4 @@
       "service": "vibesdk-api"
     }
   ],
-  "workers_dev": true,
-  "preview_urls": true,
 }

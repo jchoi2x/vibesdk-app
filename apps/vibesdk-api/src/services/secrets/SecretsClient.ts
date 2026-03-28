@@ -2,12 +2,10 @@
  * SecretsClient - Abstraction layer for Agent DO to access vault secrets
  *
  * Handles:
- * - RPC calls to UserSecretsStore
+ * - Calls to the secrets-store Worker (vault durable objects)
  * - Automatic vault unlock prompting
  * - Blocking until unlock completes or times out
  */
-
-import type { DurableObjectStub } from '@cloudflare/workers-types';
 
 export type SecretRequestQuery = {
   provider?: string;
@@ -27,7 +25,7 @@ export type SecretRequestResult = {
     | string;
 };
 
-export interface UserSecretsStoreStub extends DurableObjectStub {
+export interface VaultSecretsRpc {
   requestSecret(query: SecretRequestQuery): Promise<SecretRequestResult>;
   isVaultUnlocked(): Promise<boolean>;
 }
@@ -35,14 +33,14 @@ export interface UserSecretsStoreStub extends DurableObjectStub {
 const UNLOCK_TIMEOUT_MS = 120_000;
 
 export class SecretsClient {
-  private vaultStub: UserSecretsStoreStub;
+  private vaultStub: VaultSecretsRpc;
   private broadcaster: (type: string, data: Record<string, unknown>) => void;
   private unlockPromise: Promise<void> | null = null;
   private resolveUnlock: (() => void) | null = null;
   private rejectUnlock: ((err: Error) => void) | null = null;
 
   constructor(
-    vaultStub: UserSecretsStoreStub,
+    vaultStub: VaultSecretsRpc,
     broadcaster: (type: string, data: Record<string, unknown>) => void,
   ) {
     this.vaultStub = vaultStub;

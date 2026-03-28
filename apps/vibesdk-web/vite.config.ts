@@ -16,10 +16,10 @@ export default defineConfig({
   plugins: [
     react(),
     svgr(),
+    tailwindcss(),
     cloudflare({
       configPath: './wrangler.jsonc',
     }),
-    tailwindcss(),
   ],
   resolve: {
     alias: {

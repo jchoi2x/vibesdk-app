@@ -13,7 +13,7 @@ import {
 } from '@/utils/authUtils';
 import { captureSecurityEvent } from '@/observability/sentry';
 import { KVRateLimitStore } from '@/services/rate-limit/KVRateLimitStore';
-import { type RateLimitResult } from '@/services/rate-limit/DORateLimitStore';
+import { type RateLimitResult } from '@/services/rate-limit/rate-limit-result';
 import { RateLimitExceededError, SecurityError } from '@jchoi2x/types/errors';
 import { isDev } from '@/utils/envs';
 import {
@@ -62,35 +62,93 @@ export class RateLimitService {
     return this.getRequestIdentifier(request);
   }
 
+  private static exceededKindFromWindowIndex(
+    idx: number | undefined,
+    config: DORateLimitConfig,
+  ): 'main' | 'burst' | 'daily' {
+    if (idx === undefined || idx === 0) {
+      return 'main';
+    }
+    if (idx === 1) {
+      return config.burst ? 'burst' : 'daily';
+    }
+    return 'daily';
+  }
+
   /**
-   * Durable Object-based rate limiting using bucketed sliding window algorithm
-   * Provides better consistency and performance compared to KV
+   * Sliding-window rate limits via the rate-limit Worker service (shared DOs).
    */
-  private static async enforceDORateLimit(
+  private static async enforceServiceSlidingRateLimit(
     env: Env,
     key: string,
     config: DORateLimitConfig,
     incrementBy: number = 1,
   ): Promise<RateLimitResult> {
     try {
-      const stub = env.DORateLimitStore.getByName(key);
+      const windows: { windowMs: number; max: number }[] = [
+        { windowMs: config.period * 1000, max: config.limit },
+      ];
+      if (config.burst) {
+        windows.push({
+          windowMs: (config.burstWindow ?? 60) * 1000,
+          max: config.burst,
+        });
+      }
+      if (config.dailyLimit) {
+        windows.push({ windowMs: 86_400_000, max: config.dailyLimit });
+      }
 
-      const result = await stub.increment(
-        key,
-        {
-          limit: config.limit,
-          period: config.period,
-          burst: config.burst,
-          burstWindow: config.burstWindow,
-          bucketSize: config.bucketSize,
-          dailyLimit: config.dailyLimit,
-        },
-        incrementBy,
+      const url = new URL('https://rate-limit/rate-limit/exec');
+      url.searchParams.set('key', key);
+
+      const res = await env.RATE_LIMIT.fetch(
+        new Request(url.toString(), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            key,
+            windows,
+            count: incrementBy,
+          }),
+        }),
       );
 
-      return result;
+      const data = (await res.json()) as {
+        allowed: boolean;
+        remaining?: number;
+        exceededWindowIndex?: number;
+      };
+
+      if (data.allowed) {
+        return { success: true, remainingLimit: data.remaining };
+      }
+
+      const exceededLimit = this.exceededKindFromWindowIndex(
+        data.exceededWindowIndex,
+        config,
+      );
+      const limitValue =
+        exceededLimit === 'burst'
+          ? config.burst!
+          : exceededLimit === 'daily'
+            ? config.dailyLimit!
+            : config.limit;
+      const periodSeconds =
+        exceededLimit === 'daily'
+          ? 86_400
+          : exceededLimit === 'burst'
+            ? (config.burstWindow ?? 60)
+            : config.period;
+
+      return {
+        success: false,
+        remainingLimit: 0,
+        exceededLimit,
+        limitValue,
+        periodSeconds,
+      };
     } catch (error) {
-      this.logger.error('Failed to enforce DO rate limit', {
+      this.logger.error('Failed to enforce remote rate limit', {
         key,
         error: error instanceof Error ? error.message : 'Unknown error',
       });
@@ -127,7 +185,7 @@ export class RateLimitService {
         );
       }
       case RateLimitStore.DURABLE_OBJECT:
-        return await this.enforceDORateLimit(
+        return await this.enforceServiceSlidingRateLimit(
           env,
           key,
           rateLimitConfig as DORateLimitConfig,

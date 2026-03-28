@@ -107,7 +107,6 @@
       "devDependencies": {
         "@cloudflare/vite-plugin": "^1.17.1",
         "@cloudflare/vitest-pool-workers": "^0.8.71",
-        "@cloudflare/workers-types": "^4.20251213.0",
         "@eslint/js": "^9.39.2",
         "@tailwindcss/typography": "^0.5.19",
         "@tailwindcss/vite": "^4.1.18",
@@ -155,9 +154,6 @@
     "apps/secrets-store": {
       "name": "secrets-store",
       "version": "0.1.0",
-      "dependencies": {
-        "@jchoi2x/cf-crypto": "workspace:*",
-      },
     },
     "apps/vibesdk-api": {
       "name": "vibesdk-api",

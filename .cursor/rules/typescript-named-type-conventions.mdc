@@ -1,0 +1,30 @@
+---
+description: Naming for interfaces (I), type aliases (T), and enums (Enum suffix)
+globs: **/*.{ts,tsx}
+alwaysApply: false
+---
+
+# TypeScript named type conventions
+
+When introducing or renaming declarations in TypeScript:
+
+- **`interface`**: Name must start with `I` (e.g. `IUserProfile`, not `UserProfile`).
+- **`type` (type alias)**: Name must start with `T` (e.g. `TResult`, not `Result`).
+- **`enum`**: Name must end with `Enum` (e.g. `StatusEnum`, not `Status`).
+
+**Exceptions**
+
+- Generic **type parameters** on functions, classes, and interfaces are not covered (e.g. `function id<T>(x: T)`, `interface Box<T>`). Use normal TypeScript conventions there.
+- Do not rename unrelated symbols just to satisfy this rule in a focused change unless the task explicitly covers cleanup.
+
+```typescript
+// Good
+interface IUser { id: string; }
+type TUserId = string;
+enum RoleEnum { Admin = 'admin', User = 'user' }
+
+// Bad
+interface User { id: string; }
+type UserId = string;
+enum Role { Admin = 'admin', User = 'user' }
+```

@@ -1,10 +1,11 @@
+import { Hono } from 'hono';
 import { createLogger } from '@/logger';
 import { isDispatcherAvailable } from '@/utils/dispatcherUtils';
 import { createApp } from '@/app';
+import type { AppEnv } from '@/types/appenv';
 import { env } from 'cloudflare:workers';
 // import * as Sentry from '@sentry/cloudflare';
 // import { sentryOptions } from '@/observability/sentry';
-import { DORateLimitStore as BaseDORateLimitStore } from '@/services/rate-limit/DORateLimitStore';
 import { getPreviewDomain } from '@/utils/urls';
 import { proxyToAiGateway } from '@/services/aigateway-proxy/controller';
 import { isOriginAllowed } from '@/config/security';
@@ -18,11 +19,6 @@ import { getAgentStub } from '@/agents';
 // Durable Object and Service exports
 export { UserAppSandboxService } from '@/services/sandbox/sandboxSdkClient';
 export { CodeGeneratorAgent } from '@/agents/core/codingAgent';
-export { UserSecretsStore } from '@/services/secrets/UserSecretsStore';
-
-// export const CodeGeneratorAgent = Sentry.instrumentDurableObjectWithSentry(sentryOptions, CodeGeneratorAgent);
-// export const DORateLimitStore = Sentry.instrumentDurableObjectWithSentry(sentryOptions, BaseDORateLimitStore);
-export const DORateLimitStore = BaseDORateLimitStore;
 
 // Logger for the main application and handlers
 const logger = createLogger('App');
@@ -152,97 +148,75 @@ async function handleUserAppRequest(
   }
 }
 
-/**
- * Main Worker fetch handler with robust, secure routing.
- */
-const app = createApp(env);
-const worker = {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext,
-  ): Promise<Response> {
-    // logger.info(`Received request: ${request.method} ${request.url}`);
-    // --- Pre-flight Checks ---
+const ipHostnameRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 
-    // 1. Critical configuration check: Ensure custom domain is set.
-    const previewDomain = getPreviewDomain(env);
+/**
+ * Top-level Hono app: pre-flight checks, hostname routing, Git / AI proxy,
+ * and delegation to the main API Hono app.
+ */
+function createWorkerApp(apiApp: Hono<AppEnv>): Hono<AppEnv> {
+  const workerApp = new Hono<AppEnv>();
+
+  workerApp.all('*', async (c) => {
+    const request = c.req.raw;
+    const workerEnv = c.env;
+    const ctx = c.executionCtx;
+
+    const previewDomain = getPreviewDomain(workerEnv);
     if (!previewDomain || previewDomain.trim() === '') {
       logger.error(
         'FATAL: env.CUSTOM_DOMAIN is not configured in wrangler.toml or the Cloudflare dashboard.',
       );
-      return new Response(
+      return c.text(
         'Server configuration error: Application domain is not set.',
-        { status: 500 },
+        500,
       );
     }
 
     const url = new URL(request.url);
     const { hostname, pathname } = url;
 
-    // 2. Security: Immediately reject any requests made via an IP address.
-    const ipRegex = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-    if (ipRegex.test(hostname)) {
-      return new Response(
-        'Access denied. Please use the assigned domain name.',
-        { status: 403 },
-      );
+    if (ipHostnameRegex.test(hostname)) {
+      return c.text('Access denied. Please use the assigned domain name.', 403);
     }
 
-    // --- Domain-based Routing ---
-
-    // Normalize hostnames for both local development (localhost) and production.
     const isMainDomainRequest =
-      hostname === env.CUSTOM_DOMAIN || hostname === 'localhost';
+      hostname === workerEnv.CUSTOM_DOMAIN || hostname === 'localhost';
     const isSubdomainRequest =
       hostname.endsWith(`.${previewDomain}`) ||
       (hostname.endsWith('.localhost') && hostname !== 'localhost');
 
-    // Route 1: Main Platform Request (e.g., build.cloudflare.dev or localhost)
     if (isMainDomainRequest) {
-      // Handle Git protocol endpoints directly
-      // Route: /apps/:id.git/info/refs or /apps/:id.git/git-upload-pack
       if (isGitProtocolRequest(pathname)) {
-        return handleGitProtocolRequest(request, env, ctx);
+        return handleGitProtocolRequest(request, workerEnv, ctx);
       }
 
-      // Static assets are served by vibesdk-web (Cloudflare Pages).
-      // Non-API requests should not reach this worker under normal operation,
-      // because _routes.json on the Pages project only forwards /api/* here.
       if (!pathname.startsWith('/api/')) {
-        return new Response('Not Found', { status: 404 });
+        return c.text('Not Found', 404);
       }
-      // AI Gateway proxy for generated apps
+
       if (pathname.startsWith('/api/proxy/openai')) {
-        // Only handle requests from valid origins of the preview domain
         const origin = request.headers.get('Origin');
-        const previewDomain = getPreviewDomain(env);
-
         logger.info(`Origin: ${origin}, Preview Domain: ${previewDomain}`);
-
-        return proxyToAiGateway(request, env, ctx);
-        // if (origin && origin.endsWith(`.${previewDomain}`)) {
-        //     return proxyToAiGateway(request, env, ctx);
-        // }
-        // logger.warn(`Access denied. Invalid origin: ${origin}, preview domain: ${previewDomain}`);
-        // return new Response('Access denied. Invalid origin.', { status: 403 });
+        return proxyToAiGateway(request, workerEnv, ctx);
       }
 
-      // Handle all API requests with the main Hono application.
       logger.info(`Handling API request for: ${url}`);
-      return app.fetch(request, env, ctx);
+      return apiApp.fetch(request, workerEnv, ctx);
     }
 
-    // Route 2: User App Request (e.g., xyz.build.cloudflare.dev or test.localhost)
     if (isSubdomainRequest) {
-      return handleUserAppRequest(request, env);
+      return handleUserAppRequest(request, workerEnv);
     }
 
-    return new Response('Not Found', { status: 404 });
-  },
-} satisfies ExportedHandler<Env>;
+    return c.text('Not Found', 404);
+  });
 
-export default worker;
+  return workerApp;
+}
+
+const apiApp = createApp(env);
+export default createWorkerApp(apiApp);
 
 // Wrap the entire worker with Sentry for comprehensive error monitoring.
 // export default Sentry.withSentry(sentryOptions, worker);

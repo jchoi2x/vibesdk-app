@@ -1,20 +1,5 @@
-/**
- * UserSecretsStore - Session-bound vault architecture
- *
- * Security Model:
- * - VMK (Vault Master Key): Derived client-side, never stored on server
- * - SK (Session Key): Random per-session, sent via WebSocket
- * - encryptedVMK: AES-GCM(SK, VMK), stored in DO memory only
- *
- * Single session design - one active vault session per user at a time.
- * DB dump = useless encrypted blobs. Server memory = needs client SK.
- */
-
 import { DurableObject } from 'cloudflare:workers';
-import type {
-  DurableObjectState,
-  SqlStorageValue,
-} from '@cloudflare/workers-types';
+
 import {
   type VaultConfig,
   type VaultStatusResponse,
@@ -26,12 +11,12 @@ import {
   SESSION_TIMEOUT_MS,
   CLEANUP_INTERVAL_MS,
   STORAGE_LIMITS,
-} from '@/services/secrets/vault-types';
+} from '@/vault-types';
 import {
   type PendingWsTicket,
   type TicketConsumptionResult,
-} from '@/types/auth-types';
-import { WsTicketManager } from '@/utils/wsTicketManager';
+} from '@/ticket-types';
+import { WsTicketManager } from '@/ws-ticket-manager';
 
 interface VaultSession {
   encryptedVMK: ArrayBuffer;
@@ -49,11 +34,12 @@ export class UserSecretsStore extends DurableObject<Env> {
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
-    ctx.blockConcurrencyWhile(async () => {
+      ctx.blockConcurrencyWhile(async () => {
       await this.initializeSchema();
       await this.scheduleCleanup();
     });
   }
+
 
   async fetch(request: Request): Promise<Response> {
     if (request.headers.get('Upgrade') !== 'websocket') {

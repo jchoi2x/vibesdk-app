@@ -10,6 +10,7 @@
  */
 
 import { getAgentStub } from '@/agents';
+import { vaultServiceFetch } from '@/services/secrets/vault-service';
 import type {
   AuthUserSession,
   PendingWsTicket,
@@ -62,8 +63,42 @@ export async function getResourceStub(
     case 'agent':
       return getAgentStub(env, resourceId);
     case 'vault': {
-      const id = env.UserSecretsStore.idFromName(resourceId);
-      return env.UserSecretsStore.get(id);
+      return {
+        async storeWsTicket(ticket: PendingWsTicket) {
+          const r = await vaultServiceFetch(
+            env.SECRETS_STORE,
+            '/vault/ticket/store',
+            resourceId,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(ticket),
+            },
+          );
+          if (!r.ok) {
+            throw new Error('Failed to store vault WebSocket ticket');
+          }
+        },
+        async consumeWsTicket(token: string) {
+          const r = await vaultServiceFetch(
+            env.SECRETS_STORE,
+            '/vault/ticket/consume',
+            resourceId,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token }),
+            },
+          );
+          if (r.status === 404) {
+            return null;
+          }
+          if (!r.ok) {
+            return null;
+          }
+          return r.json() as Promise<TicketConsumptionResult>;
+        },
+      };
     }
   }
 }

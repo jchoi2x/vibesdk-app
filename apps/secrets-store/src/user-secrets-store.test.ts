@@ -1,14 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { env, runInDurableObject } from 'cloudflare:test';
-import type { UserSecretsStore } from '@/services/secrets/UserSecretsStore';
-import type {} from '@/services/secrets/test-env';
+import type { UserSecretsStore } from '@/user-secrets-store';
 
-// Helper to create a unique Durable Object instance per test
 function getUniqueStub(testName: string) {
-  const id = env.UserSecretsStore.idFromName(
+  const id = env.USER_VAULT.idFromName(
     `test-${testName}-${Date.now()}-${Math.random()}`,
   );
-  return env.UserSecretsStore.get(id);
+  return env.USER_VAULT.get(id);
 }
 
 describe('UserSecretsStore - Session Validation', () => {

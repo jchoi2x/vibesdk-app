@@ -1,5 +1,62 @@
 import { describe, it, expect, vi } from 'vitest';
-import { createInMemoryRateLimiter, createKVRateLimiter } from '../index';
+import {
+  createInMemoryRateLimiter,
+  createKVRateLimiter,
+  slidingWindowCheck,
+} from '../index';
+
+describe('slidingWindowCheck', () => {
+  it('allows under max and appends now', () => {
+    const nowMs = 1_000_000;
+    const { result, timestamps } = slidingWindowCheck({
+      timestamps: [],
+      windowMs: 60_000,
+      max: 2,
+      nowMs,
+    });
+    expect(result.allowed).toBe(true);
+    expect(result.remaining).toBe(1);
+    expect(result.resetAt).toBe(nowMs + 60_000);
+    expect(timestamps).toEqual([nowMs]);
+  });
+
+  it('drops timestamps outside the window', () => {
+    const nowMs = 100_000;
+    const { result, timestamps } = slidingWindowCheck({
+      timestamps: [nowMs - 61_000, nowMs - 30_000],
+      windowMs: 60_000,
+      max: 5,
+      nowMs,
+    });
+    expect(result.allowed).toBe(true);
+    expect(timestamps).toEqual([nowMs - 30_000, nowMs]);
+  });
+
+  it('blocks when at max without appending', () => {
+    const nowMs = 50_000;
+    const { result, timestamps } = slidingWindowCheck({
+      timestamps: [nowMs - 1_000, nowMs - 500],
+      windowMs: 60_000,
+      max: 2,
+      nowMs,
+    });
+    expect(result.allowed).toBe(false);
+    expect(result.remaining).toBe(0);
+    expect(timestamps).toEqual([nowMs - 1_000, nowMs - 500]);
+  });
+
+  it('does not mutate the input array', () => {
+    const original = [40_000, 45_000];
+    const copy = [...original];
+    slidingWindowCheck({
+      timestamps: original,
+      windowMs: 60_000,
+      max: 10,
+      nowMs: 50_000,
+    });
+    expect(original).toEqual(copy);
+  });
+});
 
 describe('createInMemoryRateLimiter', () => {
   it('allows requests up to the configured max', async () => {

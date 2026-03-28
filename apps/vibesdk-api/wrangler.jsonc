@@ -31,10 +31,7 @@
       },
     ],
   },
-  // Service bindings to the standalone rate-limit and secrets-store Workers.
-  // These replace direct DO access for those concerns in the long run,
-  // but the local DOs (DORateLimitStore, UserSecretsStore) remain until
-  // the service layer migration is complete.
+  // Rate limits and user vault durable objects live in sibling Workers.
   "services": [
     { "binding": "RATE_LIMIT", "service": "rate-limit" },
     { "binding": "SECRETS_STORE", "service": "secrets-store" },
@@ -80,14 +77,6 @@
         "class_name": "UserAppSandboxService",
         "name": "Sandbox",
       },
-      {
-        "class_name": "DORateLimitStore",
-        "name": "DORateLimitStore",
-      },
-      {
-        "class_name": "UserSecretsStore",
-        "name": "UserSecretsStore",
-      },
     ],
   },
   "r2_buckets": [
@@ -118,6 +107,13 @@
       "new_sqlite_classes": ["UserSecretsStore"],
       "tag": "v3",
     },
+    {
+      "deleted_classes": [
+        "DORateLimitStore",
+        "UserSecretsStore"
+      ],
+      "tag": "v4"
+    }
   ],
   "vars": {
     "ALLOWED_EMAIL": "choijjames@gmail.com",

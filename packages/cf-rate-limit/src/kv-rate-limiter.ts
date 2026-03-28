@@ -1,8 +1,5 @@
-import type {
-  ISlidingWindowOptions,
-  IRateLimiter,
-  IRateLimitResult,
-} from './types';
+import type { ISlidingWindowOptions, IRateLimiter } from './types';
+import { slidingWindowCheck } from './sliding-window';
 
 /**
  * KV-backed sliding window rate limiter.
@@ -15,24 +12,21 @@ export function createKVRateLimiter(
   const prefixedKey = (k: string) => `rl:${k}`;
 
   return {
-    async check(k): Promise<IRateLimitResult> {
+    async check(k) {
       const now = Date.now();
-      const cutoff = now - opts.windowMs;
       const stored = (await kv.get(prefixedKey(k), 'json')) as number[] | null;
-      const timestamps = (stored ?? []).filter((t) => t > cutoff);
-      const allowed = timestamps.length < opts.max;
-
-      if (allowed) timestamps.push(now);
+      const { result, timestamps } = slidingWindowCheck({
+        timestamps: stored ?? [],
+        windowMs: opts.windowMs,
+        max: opts.max,
+        nowMs: now,
+      });
 
       await kv.put(prefixedKey(k), JSON.stringify(timestamps), {
         expirationTtl: Math.ceil(opts.windowMs / 1000),
       });
 
-      return {
-        allowed,
-        remaining: Math.max(0, opts.max - timestamps.length),
-        resetAt: now + opts.windowMs,
-      };
+      return result;
     },
     async reset(k) {
       await kv.delete(prefixedKey(k));
