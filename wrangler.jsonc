@@ -165,7 +165,6 @@
         },
         "MAX_SANDBOX_INSTANCES": "10",
         "SANDBOX_INSTANCE_TYPE": "standard-3",
-        "CUSTOM_DOMAIN": "vibesdk-app.megabyte.app",
         "TEMPLATES_REPOSITORY": "https://github.com/cloudflare/vibesdk-templates",
         "CLOUDFLARE_AI_GATEWAY": "enl-ai-gateway"
     },

@@ -154,13 +154,13 @@ export function MarkdownDocsPreview({
 									remarkPlugins={[remarkGfm]}
 									rehypePlugins={[[rehypeExternalLinks, { target: '_blank' }]]}
 									components={{
-										h1: ({ node, ...props }) => (
+										h1: ({ node, ref: _ref, ...props }) => (
 											<h1 id={createId(props.children)} {...props} />
 										),
-										h2: ({ node, ...props }) => (
+										h2: ({ node, ref: _ref, ...props }) => (
 											<h2 id={createId(props.children)} {...props} />
 										),
-										h3: ({ node, ...props }) => (
+										h3: ({ node, ref: _ref, ...props }) => (
 											<h3 id={createId(props.children)} {...props} />
 										),
 									}}
